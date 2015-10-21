@@ -1,0 +1,208 @@
+.save-icon32{
+	background:transparent url(../imagen/save30x30.png) 0 0 no-repeat!important;
+}
+.clear-icon32{
+	background:transparent url(../imagen/clear32.png) 0 0 no-repeat!important;
+}
+.agregar{
+	background:transparent url(../imagen/agregar.png) 0 0 no-repeat!important;
+}
+.eliminar{
+	background:transparent url(../imagen/eliminar2.png) 0 0 no-repeat!important;
+}
+.add-icon32{
+	background:transparent url(../imagen/add32.png) 0 0 no-repeat!important;
+}
+.SignIn-icon32{
+	background:transparent url(../imagen/login32.png) 0 0 no-repeat!important;
+}
+.metodo{
+	background:transparent url(../imagen/metodo.png) 0 0 no-repeat!important;
+}
+.inicio-icon32{
+	background:transparent url(../imagen/logout32.png) 0 0 no-repeat!important;
+}
+.pdf32{
+	background:transparent url(../imagen/pdf32.png) 0 0 no-repeat!important;
+}
+.cerrar{
+	background:transparent url(../imagen/cerrar.png) 0 0 no-repeat!important;
+}
+.listado{
+	background:transparent url(../imagen/listado.png) 0 0 no-repeat!important;
+}
+.file32{
+	background:transparent url(../imagen/file32.png) 0 0 no-repeat!important;
+}
+.lista{
+	background:transparent url(../imagen/lista.png) 0 0 no-repeat!important;
+}
+.doc{
+	background:transparent url(../imagen/doc.png) 0 0 no-repeat!important;
+}
+.edit{
+	background:transparent url(../imagen/edit.png) 0 0 no-repeat!important;
+}
+.sign-out{
+	background:transparent url(../imagen/sign-out.png) 0 0 no-repeat!important;
+}
+.buscar32{
+	background:transparent url(../imagen/buscar32.png) 0 0 no-repeat!important;
+}
+.pesas40{
+	background:transparent url(../imagen/pesas40.png) 0 0 no-repeat!important;
+}
+.usuario28{
+	background:transparent url(../imagen/usuario28.png) 0 0 no-repeat!important;
+}
+.calificar30{
+	background:transparent url(../imagen/calificar30.png) 0 0 no-repeat!important;
+}
+.entrenador28{
+	background:transparent url(../imagen/entrenador28.png) 0 0 no-repeat!important;
+}
+.operador28{
+	background:transparent url(../imagen/operador28.png) 0 0 no-repeat!important;
+}
+.evaluacion32{
+	background:transparent url(../imagen/evaluacion32.png) 0 0 no-repeat!important;
+}
+.camara{
+	background:transparent url(../imagen/camara.png) 0 0 no-repeat!important;
+}
+.cruz30{
+	background:transparent url(../imagen/cruz30.png) 0 0 no-repeat!important;
+}
+.eliminar32{
+	background:transparent url(../imagen/eliminar32.png) 0 0 no-repeat!important;
+}
+.graph32{
+	background:transparent url(../imagen/graph32.png) 0 0 no-repeat!important;
+}
+.asistencia32{
+	background:transparent url(../imagen/asistencia32.png) 0 0 no-repeat!important;
+}
+.userlist{
+	background:transparent url(../imagen/userlist.png) 0 0 no-repeat!important;
+}
+.driver{
+	background:transparent url(../imagen/driver.png) 0 0 no-repeat!important;
+}
+.moto{
+	background:transparent url(../imagen/moto.png) 0 0 no-repeat!important;
+}
+.add{
+	background:transparent url(../imagen/add.png) 0 0 no-repeat!important;
+}
+.buscar{
+	background:transparent url(../imagen/buscar.png) 0 0 no-repeat!important;
+}
+.edit{
+	background:transparent url(../imagen/btn/edit.png) 0 0 no-repeat!important;
+}
+.eliminar{
+	background:transparent url(../imagen/btn/cerrar.png) 0 0 no-repeat!important;
+}
+
+.editar{
+	background:transparent url(../imagen/editar.png) 0 0 no-repeat!important;
+}
+.tick{
+	background:transparent url(../imagen/btn/tick.png) 0 0 no-repeat!important;
+}
+.go{
+	background:transparent url(../imagen/btn/go.png) 0 0 no-repeat!important;
+}
+.cancel{
+	background:transparent url(../imagen/btn/cancel.png) 0 0 no-repeat!important;
+}
+.logout{
+	background:white url(../imagen/btn/logout.png) 0 0 no-repeat!important;
+}
+.user{
+	background:white url(../imagen/btn/user.png) 0 0 no-repeat!important;
+}
+.useradd{
+	background:transparent url(../imagen/btn/useradd.png) 0 0 no-repeat!important;
+}
+.generar{
+	background:white url(../imagen/btn/generar.png) 0 0 no-repeat!important;
+}
+.registro{
+	background:transparent url(../imagen/btn/registro.png) 0 0 no-repeat!important;
+}
+.save {
+	background-image:url(../imagen/btn/disk.png) 0 0 no-repeat!important;
+}
+.icon-limpiar{
+	background:transparent url(../imagen/btn/icon-limpiar.png) 0 0 no-repeat!important;
+}
+.actualizar{
+	background:white url(../imagen/btn/actualizar.png) 0 0 no-repeat!important;
+}
+.degradado{
+  	background:url('../imagen/logo/degradado.PNG') !important;
+}
+.price{
+    background-image:url('../imagen/logo/bbaner1.png') !important;
+    color:white;
+}
+.menu_planacciones {
+  background-image:url('../imagen/btn/planacciones.png') !important;
+}
+.menu_registro {
+  background-image:url('../imagen/btn/jefe.png') !important;
+}
+.menu_asignacion {
+  background-image:url('../imagen/btn/asignacion.png') !important;
+}
+.menu_pinforme {
+  background-image:url('../imagen/btn/pinforme.png') !important;
+}
+.menu_recomendaciones {
+  background-image:url('../imagen/btn/recomendaciones.png') !important;
+}
+.menu_descargos {
+  background-image:url('../imagen/btn/descargos.png') !important;
+}
+.menu_ejecucion {
+  background-image:url('../imagen/btn/ejecucion.png') !important;
+}
+.ajustar-texto-grid{
+  white-space: normal;
+  word-wrap: break-word !important;
+}
+.price-fall .x-change-cell {
+    background-color: #EB5252;
+    color:black;
+}
+.price-rise .x-change-cell {
+    background-color: #98FB98;
+    color:black;
+}
+.price-gol .x-change-cell {
+    background-color: #FAFF68;
+    color:black;
+}
+.price-naranja .x-change-cell {
+    background-color: #EB8C18;
+    color:black;
+}
+
+.Three-Dee{
+  font-family: 'Helvetica Neue',Helvetica, sans-serif;
+  line-height: 1em;
+  color: #ffffff;
+  font-weight:bold;
+  font-size: 30px;
+  text-shadow:0px 0px 0 rgb(173,173,173),
+  -1px 0px 0 rgb(161,161,161),
+  -2px 0px 0 rgb(148,148,148),
+  -3px 0px 0 rgb(135,135,135),
+  -4px 0px 0 rgb(123,123,123),
+  -5px 0px 0 rgb(110,110,110),
+  -6px 0px 0 rgb(97,97,97),
+  -7px 0px 6px rgba(0,0,0,0.8),
+  -7px 0px 1px rgba(0,0,0,0.5),
+  0px 0px 6px rgba(0,0,0,.2);
+}

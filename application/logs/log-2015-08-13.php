@@ -1,0 +1,14 @@
+<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed'); ?>
+
+ERROR - 2015-08-13 16:35:57 --> Severity: 8192  --> mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead C:\xampp\htdocs\ciudadano\system\database\drivers\mysql\mysql_driver.php 73
+ERROR - 2015-08-13 16:36:06 --> Severity: 8192  --> mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead C:\xampp\htdocs\ciudadano\system\database\drivers\mysql\mysql_driver.php 73
+ERROR - 2015-08-13 16:36:18 --> Severity: 8192  --> mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead C:\xampp\htdocs\ciudadano\system\database\drivers\mysql\mysql_driver.php 73
+ERROR - 2015-08-13 16:36:27 --> Severity: 8192  --> mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead C:\xampp\htdocs\ciudadano\system\database\drivers\mysql\mysql_driver.php 73
+ERROR - 2015-08-13 16:36:27 --> Severity: 8192  --> mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead C:\xampp\htdocs\ciudadano\system\database\drivers\mysql\mysql_driver.php 73
+ERROR - 2015-08-13 16:36:29 --> Severity: 8192  --> mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead C:\xampp\htdocs\ciudadano\system\database\drivers\mysql\mysql_driver.php 73
+ERROR - 2015-08-13 16:36:33 --> Severity: 8192  --> mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead C:\xampp\htdocs\ciudadano\system\database\drivers\mysql\mysql_driver.php 73
+ERROR - 2015-08-13 16:36:33 --> Severity: 8192  --> mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead C:\xampp\htdocs\ciudadano\system\database\drivers\mysql\mysql_driver.php 73
+ERROR - 2015-08-13 16:36:33 --> Severity: 8192  --> mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead C:\xampp\htdocs\ciudadano\system\database\drivers\mysql\mysql_driver.php 73
+ERROR - 2015-08-13 16:36:37 --> Severity: 8192  --> mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead C:\xampp\htdocs\ciudadano\system\database\drivers\mysql\mysql_driver.php 73
+ERROR - 2015-08-13 16:36:38 --> Severity: 8192  --> mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead C:\xampp\htdocs\ciudadano\system\database\drivers\mysql\mysql_driver.php 73
+ERROR - 2015-08-13 16:36:39 --> Severity: 8192  --> mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead C:\xampp\htdocs\ciudadano\system\database\drivers\mysql\mysql_driver.php 73

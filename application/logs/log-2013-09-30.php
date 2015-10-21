@@ -1,0 +1,55 @@
+<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed'); ?>
+
+ERROR - 2013-09-30 07:56:56 --> Severity: Notice  --> Undefined variable: output /var/www/gimnasio/application/controllers/stores.php 126
+ERROR - 2013-09-30 08:07:53 --> Severity: Notice  --> Undefined variable: output /var/www/gimnasio/application/controllers/stores.php 126
+ERROR - 2013-09-30 08:09:26 --> Severity: Notice  --> Undefined variable: output /var/www/gimnasio/application/controllers/stores.php 126
+ERROR - 2013-09-30 08:09:42 --> Severity: Warning  --> Missing argument 2 for Pdfs_model::reporteDiarioAsistencia(), called in /var/www/gimnasio/application/controllers/pdfs.php on line 219 and defined /var/www/gimnasio/application/models/pdfs_model.php 93
+ERROR - 2013-09-30 08:09:42 --> Severity: Notice  --> Undefined variable: fecha2 /var/www/gimnasio/application/models/pdfs_model.php 98
+ERROR - 2013-09-30 08:13:45 --> Severity: Notice  --> Undefined variable: output /var/www/gimnasio/application/controllers/stores.php 126
+ERROR - 2013-09-30 08:44:51 --> Severity: Notice  --> Undefined variable: output /var/www/gimnasio/application/controllers/stores.php 126
+ERROR - 2013-09-30 08:45:44 --> Severity: Notice  --> Undefined variable: output /var/www/gimnasio/application/controllers/stores.php 126
+ERROR - 2013-09-30 08:45:59 --> Severity: Notice  --> Undefined variable: output /var/www/gimnasio/application/controllers/stores.php 126
+ERROR - 2013-09-30 08:46:38 --> Severity: Notice  --> Undefined variable: output /var/www/gimnasio/application/controllers/stores.php 126
+ERROR - 2013-09-30 08:46:43 --> Severity: Notice  --> Undefined variable: output /var/www/gimnasio/application/controllers/stores.php 126
+ERROR - 2013-09-30 08:47:28 --> Severity: Notice  --> Undefined variable: output /var/www/gimnasio/application/controllers/stores.php 126
+ERROR - 2013-09-30 08:47:54 --> Severity: Notice  --> Undefined variable: output /var/www/gimnasio/application/controllers/stores.php 126
+ERROR - 2013-09-30 08:48:11 --> Severity: Notice  --> Undefined variable: output /var/www/gimnasio/application/controllers/stores.php 126
+ERROR - 2013-09-30 08:48:31 --> Severity: Notice  --> Undefined variable: output /var/www/gimnasio/application/controllers/stores.php 126
+ERROR - 2013-09-30 08:48:51 --> Severity: Notice  --> Undefined variable: output /var/www/gimnasio/application/controllers/stores.php 126
+ERROR - 2013-09-30 08:49:45 --> Severity: Notice  --> Undefined variable: output /var/www/gimnasio/application/controllers/stores.php 126
+ERROR - 2013-09-30 08:50:34 --> Severity: Notice  --> Undefined variable: output /var/www/gimnasio/application/controllers/stores.php 126
+ERROR - 2013-09-30 08:51:05 --> Severity: Notice  --> Undefined variable: output /var/www/gimnasio/application/controllers/stores.php 126
+ERROR - 2013-09-30 08:51:33 --> Severity: Notice  --> Undefined variable: output /var/www/gimnasio/application/controllers/stores.php 126
+ERROR - 2013-09-30 08:51:55 --> Severity: Notice  --> Undefined variable: output /var/www/gimnasio/application/controllers/stores.php 126
+ERROR - 2013-09-30 08:53:12 --> Severity: Notice  --> Undefined variable: output /var/www/gimnasio/application/controllers/stores.php 126
+ERROR - 2013-09-30 08:53:43 --> Severity: Notice  --> Undefined variable: output /var/www/gimnasio/application/controllers/stores.php 126
+ERROR - 2013-09-30 08:53:49 --> Severity: Notice  --> Undefined variable: output /var/www/gimnasio/application/controllers/stores.php 126
+ERROR - 2013-09-30 08:55:17 --> Severity: Notice  --> Undefined variable: output /var/www/gimnasio/application/controllers/stores.php 126
+ERROR - 2013-09-30 08:55:57 --> Severity: Notice  --> Undefined variable: output /var/www/gimnasio/application/controllers/stores.php 126
+ERROR - 2013-09-30 08:56:38 --> Severity: Notice  --> Undefined variable: output /var/www/gimnasio/application/controllers/stores.php 126
+ERROR - 2013-09-30 08:58:38 --> Severity: Notice  --> Undefined variable: output /var/www/gimnasio/application/controllers/stores.php 126
+ERROR - 2013-09-30 08:59:02 --> Severity: Notice  --> Undefined variable: output /var/www/gimnasio/application/controllers/stores.php 126
+ERROR - 2013-09-30 09:00:17 --> Severity: Notice  --> Undefined variable: output /var/www/gimnasio/application/controllers/stores.php 126
+ERROR - 2013-09-30 09:00:48 --> Severity: Notice  --> Undefined variable: output /var/www/gimnasio/application/controllers/stores.php 126
+ERROR - 2013-09-30 09:02:11 --> Severity: Notice  --> Undefined variable: output /var/www/gimnasio/application/controllers/stores.php 126
+ERROR - 2013-09-30 09:02:30 --> Severity: Notice  --> Undefined variable: output /var/www/gimnasio/application/controllers/stores.php 126
+ERROR - 2013-09-30 09:33:08 --> Severity: Notice  --> Undefined variable: output /var/www/gimnasio/application/controllers/stores.php 126
+ERROR - 2013-09-30 09:36:08 --> Severity: Notice  --> Undefined variable: output /var/www/gimnasio/application/controllers/stores.php 126
+ERROR - 2013-09-30 09:36:42 --> Severity: Notice  --> Undefined variable: output /var/www/gimnasio/application/controllers/stores.php 126
+ERROR - 2013-09-30 09:37:26 --> Severity: Notice  --> Undefined variable: output /var/www/gimnasio/application/controllers/stores.php 126
+ERROR - 2013-09-30 09:37:43 --> Severity: Notice  --> Undefined variable: output /var/www/gimnasio/application/controllers/stores.php 126
+ERROR - 2013-09-30 09:38:01 --> Severity: Notice  --> Undefined variable: output /var/www/gimnasio/application/controllers/stores.php 126
+ERROR - 2013-09-30 09:38:41 --> Severity: Notice  --> Undefined variable: output /var/www/gimnasio/application/controllers/stores.php 126
+ERROR - 2013-09-30 09:38:45 --> Severity: Notice  --> Undefined variable: output /var/www/gimnasio/application/controllers/stores.php 126
+ERROR - 2013-09-30 09:38:48 --> Severity: Notice  --> Undefined variable: output /var/www/gimnasio/application/controllers/stores.php 126
+ERROR - 2013-09-30 09:40:18 --> Severity: Notice  --> Undefined variable: output /var/www/gimnasio/application/controllers/stores.php 126
+ERROR - 2013-09-30 10:23:28 --> Severity: Notice  --> Undefined variable: output /var/www/gimnasio/application/controllers/stores.php 126
+ERROR - 2013-09-30 12:05:59 --> Severity: Notice  --> Undefined variable: output /var/www/gimnasio/application/controllers/stores.php 126
+ERROR - 2013-09-30 13:26:25 --> Severity: Notice  --> Undefined variable: output /var/www/gimnasio/application/controllers/stores.php 126
+ERROR - 2013-09-30 13:33:22 --> Severity: Notice  --> Use of undefined constant fecha2 - assumed 'fecha2' /var/www/gimnasio/application/controllers/pdfs.php 219
+ERROR - 2013-09-30 13:48:00 --> Severity: Notice  --> Undefined variable: output /var/www/gimnasio/application/controllers/stores.php 126
+ERROR - 2013-09-30 13:48:59 --> Severity: Notice  --> Undefined variable: output /var/www/gimnasio/application/controllers/stores.php 126
+ERROR - 2013-09-30 13:49:15 --> Severity: Notice  --> Undefined variable: output /var/www/gimnasio/application/controllers/stores.php 126
+ERROR - 2013-09-30 13:49:53 --> Severity: Notice  --> Undefined variable: output /var/www/gimnasio/application/controllers/stores.php 126
+ERROR - 2013-09-30 13:50:07 --> Severity: Notice  --> Undefined variable: output /var/www/gimnasio/application/controllers/stores.php 126
+ERROR - 2013-09-30 15:28:14 --> Severity: Notice  --> Undefined variable: output /var/www/gimnasio/application/controllers/stores.php 126

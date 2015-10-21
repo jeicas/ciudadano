@@ -1,0 +1,74 @@
+<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed'); ?>
+
+ERROR - 2014-03-18 13:58:50 --> Severity: Notice  --> Undefined variable: cedula C:\xampp\htdocs\Motorizado\application\controllers\usuario\usuario.php 77
+ERROR - 2014-03-18 13:58:50 --> Severity: Notice  --> Undefined variable: nacionalidad C:\xampp\htdocs\Motorizado\application\controllers\usuario\usuario.php 77
+ERROR - 2014-03-18 13:58:50 --> Severity: Notice  --> Undefined property: Usuario::$usuarios_model C:\xampp\htdocs\Motorizado\application\controllers\usuario\usuario.php 123
+ERROR - 2014-03-18 14:02:01 --> Severity: Notice  --> Undefined variable: cedula C:\xampp\htdocs\Motorizado\application\controllers\usuario\usuario.php 77
+ERROR - 2014-03-18 14:02:01 --> Severity: Notice  --> Undefined variable: nacionalidad C:\xampp\htdocs\Motorizado\application\controllers\usuario\usuario.php 77
+ERROR - 2014-03-18 14:02:01 --> Severity: Notice  --> Undefined property: Usuario::$usuarios_model C:\xampp\htdocs\Motorizado\application\controllers\usuario\usuario.php 123
+ERROR - 2014-03-18 14:05:55 --> Severity: Notice  --> Undefined variable: cedula C:\xampp\htdocs\Motorizado\application\controllers\usuario\usuario.php 77
+ERROR - 2014-03-18 14:05:55 --> Severity: Notice  --> Undefined variable: nacionalidad C:\xampp\htdocs\Motorizado\application\controllers\usuario\usuario.php 77
+ERROR - 2014-03-18 14:05:55 --> Severity: Notice  --> Undefined property: Usuario::$usuarios_model C:\xampp\htdocs\Motorizado\application\controllers\usuario\usuario.php 123
+ERROR - 2014-03-18 14:08:07 --> Severity: Notice  --> Undefined variable: cedula C:\xampp\htdocs\Motorizado\application\controllers\usuario\usuario.php 77
+ERROR - 2014-03-18 14:08:07 --> Severity: Notice  --> Undefined variable: nacionalidad C:\xampp\htdocs\Motorizado\application\controllers\usuario\usuario.php 77
+ERROR - 2014-03-18 14:08:07 --> Severity: Notice  --> Undefined property: Usuario::$usuarios_model C:\xampp\htdocs\Motorizado\application\controllers\usuario\usuario.php 123
+ERROR - 2014-03-18 14:10:22 --> Severity: Notice  --> Undefined variable: data C:\xampp\htdocs\Motorizado\application\controllers\store\StoreEstado.php 55
+ERROR - 2014-03-18 14:10:22 --> Severity: Notice  --> Undefined variable: data C:\xampp\htdocs\Motorizado\application\controllers\store\StoreEstado.php 56
+ERROR - 2014-03-18 14:12:17 --> Query error: Duplicate entry 'V-18923923' for key 'PRIMARY'
+ERROR - 2014-03-18 14:13:41 --> Severity: Notice  --> Undefined variable: cedula C:\xampp\htdocs\Motorizado\application\controllers\usuario\usuario.php 77
+ERROR - 2014-03-18 14:13:41 --> Severity: Notice  --> Undefined variable: nacionalidad C:\xampp\htdocs\Motorizado\application\controllers\usuario\usuario.php 77
+ERROR - 2014-03-18 14:13:41 --> Severity: Notice  --> Undefined property: Usuario::$usuarios_model C:\xampp\htdocs\Motorizado\application\controllers\usuario\usuario.php 123
+ERROR - 2014-03-18 14:19:17 --> The session cookie data did not match what was expected. This could be a possible hacking attempt.
+ERROR - 2014-03-18 14:22:25 --> Severity: Notice  --> Undefined variable: cedula C:\xampp\htdocs\Motorizado\application\controllers\usuario\usuario.php 77
+ERROR - 2014-03-18 14:22:25 --> Severity: Notice  --> Undefined variable: nacionalidad C:\xampp\htdocs\Motorizado\application\controllers\usuario\usuario.php 77
+ERROR - 2014-03-18 14:22:25 --> Severity: Notice  --> Undefined property: Usuario::$usuarios_model C:\xampp\htdocs\Motorizado\application\controllers\usuario\usuario.php 123
+ERROR - 2014-03-18 14:25:22 --> Severity: Notice  --> Undefined variable: cedula C:\xampp\htdocs\Motorizado\application\controllers\usuario\usuario.php 77
+ERROR - 2014-03-18 14:25:22 --> Severity: Notice  --> Undefined variable: nacionalidad C:\xampp\htdocs\Motorizado\application\controllers\usuario\usuario.php 77
+ERROR - 2014-03-18 14:25:22 --> Severity: Notice  --> Undefined property: Usuario::$usuarios_model C:\xampp\htdocs\Motorizado\application\controllers\usuario\usuario.php 123
+ERROR - 2014-03-18 14:29:01 --> Severity: Notice  --> Undefined variable: cedula C:\xampp\htdocs\Motorizado\application\controllers\usuario\usuario.php 77
+ERROR - 2014-03-18 14:29:01 --> Severity: Notice  --> Undefined variable: nacionalidad C:\xampp\htdocs\Motorizado\application\controllers\usuario\usuario.php 77
+ERROR - 2014-03-18 14:29:01 --> Severity: Notice  --> Undefined property: Usuario::$usuarios_model C:\xampp\htdocs\Motorizado\application\controllers\usuario\usuario.php 123
+ERROR - 2014-03-18 14:46:10 --> Severity: Notice  --> Use of undefined constant MyApp - assumed 'MyApp' C:\xampp\htdocs\Motorizado\application\controllers\usuario\usuario.php 133
+ERROR - 2014-03-18 14:46:10 --> Severity: Notice  --> Use of undefined constant util - assumed 'util' C:\xampp\htdocs\Motorizado\application\controllers\usuario\usuario.php 133
+ERROR - 2014-03-18 14:46:10 --> Severity: Notice  --> Use of undefined constant Md5 - assumed 'Md5' C:\xampp\htdocs\Motorizado\application\controllers\usuario\usuario.php 133
+ERROR - 2014-03-18 14:47:41 --> Query error: Unknown column 'nombres' in 'field list'
+ERROR - 2014-03-18 15:12:26 --> Query error: Unknown column 'nombres' in 'field list'
+ERROR - 2014-03-18 15:13:15 --> Query error: Duplicate entry 'V-19377480' for key 'PRIMARY'
+ERROR - 2014-03-18 16:03:51 --> Severity: Notice  --> Undefined variable: data C:\xampp\htdocs\Motorizado\application\controllers\store\StoreEstado.php 55
+ERROR - 2014-03-18 16:03:51 --> Severity: Notice  --> Undefined variable: data C:\xampp\htdocs\Motorizado\application\controllers\store\StoreEstado.php 56
+ERROR - 2014-03-18 17:25:28 --> Severity: Notice  --> Undefined variable: data C:\xampp\htdocs\Motorizado\application\controllers\store\StoreEstado.php 55
+ERROR - 2014-03-18 17:25:28 --> Severity: Notice  --> Undefined variable: data C:\xampp\htdocs\Motorizado\application\controllers\store\StoreEstado.php 56
+ERROR - 2014-03-18 20:15:13 --> Severity: Notice  --> Undefined variable: data C:\xampp\htdocs\Motorizado\application\controllers\store\StoreEstado.php 55
+ERROR - 2014-03-18 20:15:13 --> Severity: Notice  --> Undefined variable: data C:\xampp\htdocs\Motorizado\application\controllers\store\StoreEstado.php 56
+ERROR - 2014-03-18 20:16:56 --> Severity: Notice  --> Undefined variable: data C:\xampp\htdocs\Motorizado\application\controllers\store\StoreEstado.php 55
+ERROR - 2014-03-18 20:16:56 --> Severity: Notice  --> Undefined variable: data C:\xampp\htdocs\Motorizado\application\controllers\store\StoreEstado.php 56
+ERROR - 2014-03-18 20:19:37 --> Severity: Notice  --> Undefined variable: data C:\xampp\htdocs\Motorizado\application\controllers\store\StoreEstado.php 55
+ERROR - 2014-03-18 20:19:37 --> Severity: Notice  --> Undefined variable: data C:\xampp\htdocs\Motorizado\application\controllers\store\StoreEstado.php 56
+ERROR - 2014-03-18 20:19:53 --> Severity: Notice  --> Undefined variable: data C:\xampp\htdocs\Motorizado\application\controllers\store\StoreEstado.php 55
+ERROR - 2014-03-18 20:19:53 --> Severity: Notice  --> Undefined variable: data C:\xampp\htdocs\Motorizado\application\controllers\store\StoreEstado.php 56
+ERROR - 2014-03-18 20:20:11 --> Severity: Notice  --> Undefined variable: data C:\xampp\htdocs\Motorizado\application\controllers\store\StoreEstado.php 55
+ERROR - 2014-03-18 20:20:11 --> Severity: Notice  --> Undefined variable: data C:\xampp\htdocs\Motorizado\application\controllers\store\StoreEstado.php 56
+ERROR - 2014-03-18 20:20:34 --> Severity: Notice  --> Undefined variable: data C:\xampp\htdocs\Motorizado\application\controllers\store\StoreEstado.php 55
+ERROR - 2014-03-18 20:20:34 --> Severity: Notice  --> Undefined variable: data C:\xampp\htdocs\Motorizado\application\controllers\store\StoreEstado.php 56
+ERROR - 2014-03-18 20:40:00 --> Severity: Notice  --> Undefined variable: data C:\xampp\htdocs\Motorizado\application\controllers\store\StoreEstado.php 55
+ERROR - 2014-03-18 20:40:00 --> Severity: Notice  --> Undefined variable: data C:\xampp\htdocs\Motorizado\application\controllers\store\StoreEstado.php 56
+ERROR - 2014-03-18 20:40:30 --> Severity: Notice  --> Undefined variable: data C:\xampp\htdocs\Motorizado\application\controllers\store\StoreEstado.php 55
+ERROR - 2014-03-18 20:40:30 --> Severity: Notice  --> Undefined variable: data C:\xampp\htdocs\Motorizado\application\controllers\store\StoreEstado.php 56
+ERROR - 2014-03-18 20:47:36 --> Severity: Notice  --> Undefined variable: data C:\xampp\htdocs\Motorizado\application\controllers\store\StoreEstado.php 55
+ERROR - 2014-03-18 20:47:36 --> Severity: Notice  --> Undefined variable: data C:\xampp\htdocs\Motorizado\application\controllers\store\StoreEstado.php 56
+ERROR - 2014-03-18 20:50:05 --> Severity: Notice  --> Undefined variable: data C:\xampp\htdocs\Motorizado\application\controllers\store\StoreEstado.php 55
+ERROR - 2014-03-18 20:50:05 --> Severity: Notice  --> Undefined variable: data C:\xampp\htdocs\Motorizado\application\controllers\store\StoreEstado.php 56
+ERROR - 2014-03-18 21:03:26 --> Severity: Notice  --> Undefined variable: data C:\xampp\htdocs\Motorizado\application\controllers\store\StoreEstado.php 55
+ERROR - 2014-03-18 21:03:26 --> Severity: Notice  --> Undefined variable: data C:\xampp\htdocs\Motorizado\application\controllers\store\StoreEstado.php 56
+ERROR - 2014-03-18 21:17:18 --> Severity: Notice  --> Undefined variable: data C:\xampp\htdocs\Motorizado\application\controllers\store\StoreEstado.php 55
+ERROR - 2014-03-18 21:17:18 --> Severity: Notice  --> Undefined variable: data C:\xampp\htdocs\Motorizado\application\controllers\store\StoreEstado.php 56
+ERROR - 2014-03-18 21:19:44 --> Severity: Notice  --> Undefined variable: data C:\xampp\htdocs\Motorizado\application\controllers\store\StoreEstado.php 55
+ERROR - 2014-03-18 21:19:44 --> Severity: Notice  --> Undefined variable: data C:\xampp\htdocs\Motorizado\application\controllers\store\StoreEstado.php 56
+ERROR - 2014-03-18 21:25:18 --> Severity: Notice  --> Undefined variable: data C:\xampp\htdocs\Motorizado\application\controllers\store\StoreEstado.php 55
+ERROR - 2014-03-18 21:25:18 --> Severity: Notice  --> Undefined variable: data C:\xampp\htdocs\Motorizado\application\controllers\store\StoreEstado.php 56
+ERROR - 2014-03-18 21:26:47 --> Severity: Notice  --> Undefined variable: data C:\xampp\htdocs\Motorizado\application\controllers\store\StoreEstado.php 55
+ERROR - 2014-03-18 21:26:47 --> Severity: Notice  --> Undefined variable: data C:\xampp\htdocs\Motorizado\application\controllers\store\StoreEstado.php 56
+ERROR - 2014-03-18 21:31:42 --> Severity: Notice  --> Undefined variable: data C:\xampp\htdocs\Motorizado\application\controllers\store\StoreEstado.php 55
+ERROR - 2014-03-18 21:31:42 --> Severity: Notice  --> Undefined variable: data C:\xampp\htdocs\Motorizado\application\controllers\store\StoreEstado.php 56
+ERROR - 2014-03-18 21:35:24 --> Severity: Notice  --> Undefined variable: data C:\xampp\htdocs\Motorizado\application\controllers\store\StoreEstado.php 55
+ERROR - 2014-03-18 21:35:24 --> Severity: Notice  --> Undefined variable: data C:\xampp\htdocs\Motorizado\application\controllers\store\StoreEstado.php 56

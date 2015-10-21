@@ -1,0 +1,9 @@
+<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed'); ?>
+
+ERROR - 2013-07-08 09:13:49 --> Query error: Cannot add or update a child row: a foreign key constraint fails (`cv`.`personas`, CONSTRAINT `fk_personas_carreras_academicas1` FOREIGN KEY (`carreras_academicas_idcarrera_academica`) REFERENCES `carreras_academicas` (`idcarrera_academica`) ON DELETE NO ACT)
+ERROR - 2013-07-08 09:14:52 --> Severity: Notice  --> Undefined offset: 1 /var/www/cv/application/controllers/usuarios.php 264
+ERROR - 2013-07-08 09:14:53 --> Query error: Cannot add or update a child row: a foreign key constraint fails (`cv`.`personas`, CONSTRAINT `fk_personas_carreras_academicas1` FOREIGN KEY (`carreras_academicas_idcarrera_academica`) REFERENCES `carreras_academicas` (`idcarrera_academica`) ON DELETE NO ACT)
+ERROR - 2013-07-08 09:22:16 --> Query error: Cannot add or update a child row: a foreign key constraint fails (`cv`.`personas`, CONSTRAINT `fk_personas_carreras_academicas1` FOREIGN KEY (`carreras_academicas_idcarrera_academica`) REFERENCES `carreras_academicas` (`idcarrera_academica`) ON DELETE NO ACT)
+ERROR - 2013-07-08 11:09:42 --> Severity: Notice  --> Undefined offset: 1 /var/www/cv/application/controllers/usuarios.php 264
+ERROR - 2013-07-08 11:09:42 --> Query error: Cannot add or update a child row: a foreign key constraint fails (`cv`.`personas`, CONSTRAINT `fk_personas_carreras_academicas1` FOREIGN KEY (`carreras_academicas_idcarrera_academica`) REFERENCES `carreras_academicas` (`idcarrera_academica`) ON DELETE NO ACT)
+ERROR - 2013-07-08 11:10:42 --> Query error: Cannot add or update a child row: a foreign key constraint fails (`cv`.`personas`, CONSTRAINT `fk_persona_nacionalidad` FOREIGN KEY (`idnacionalidad`) REFERENCES `nacionalidades` (`idnacionalidad`) ON DELETE NO ACTION ON UPDATE NO ACTION)

@@ -1,0 +1,536 @@
+Ext.define('MyApp.controller.registrobasico.solicitante.SolicitanteController',{
+    extend: 'Ext.app.Controller',
+    views: [
+        'registrobasico.solicitante.SolicitantePanel'
+    ],
+    refs: [{
+        ref: 'panelSolicitante',
+        selector: 'panelSolicitante'
+    }],
+    init: function(application){
+        this.control({          
+            'panelSolicitante radiogroup[name=rgSolicitante]': {
+                change: this.changeSeleccion
+            },
+            'panelSolicitante button[name=catalogoCiudadano]':{
+                click: this.buscarSolicitante
+            },
+            'panelSolicitante button[name=catalogoComunidad]':{
+                click: this.buscarSolicitante
+            },
+            'panelSolicitante datefield[name=fechanacimiento]':{
+                change: this.cambiarEdad
+            },
+            'panelSolicitante datefield[name=fechanacimientoC]':{
+                change: this.cambiarEdadC
+            },
+            'panelSolicitante button[name=salir]':{
+                click: this.salir
+            },
+            'panelSolicitante button[name=limpiar]':{
+                click: this.limpiar
+            },
+            'panelSolicitante button[name=guardar]':{
+                click: this.guardar
+            },
+            'panelSolicitante combobox[itemId=estado]':{
+                select: this.seleccionEstado
+            },
+            'panelSolicitante combobox[itemId=municipio]': {
+                select: this.seleccionMunicipio
+            },
+            'panelSolicitante combobox[itemId=parroquia]': {
+                select: this.seleccionParroquia
+            },
+            'panelSolicitante button[name=buscarSolicitante]': {
+                click: this.buscarSolicitante
+            },
+            'panelSolicitante button[name=buscarContacto]': {
+                click: this.buscarSolicitante
+            },
+            'panelSolicitante textfield[name=cedula]': {
+                specialkey: this.entebuscarsolicitante
+            },
+            'panelSolicitante #codTlf':{
+                change: this.cambiarCodTlf
+            }
+        });
+    },
+/////////////////Busquedas
+      entebuscarsolicitante: function (field, el) {
+        var form=this.getPanelSolicitante();
+        if (field.isValid()){
+            if(el.getKey() == el.ENTER){
+                //if(Ext.ComponentQuery.query('#correspondencia textfield[name=txtnrooficio]')[0].getValue()!="" && Ext.ComponentQuery.query('#correspondencia combobox[name=cmbente]')[0].getValue()!=null) {
+                    this.buscarSolicitante();
+                // }else{
+                //     Ext.MessageBox.show({ title: 'Verifique los datos', msg: 'Algunos campos no fueron introducidos correctamente', buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.ERROR });
+                // }
+            }else{
+                this.limpiar();       
+            }
+        }else{
+            this.limpiar();       
+        }
+
+    },
+    buscarSolicitante: function(button, e, options){
+        me=this;
+        var formulario = this.getPanelSolicitante();        
+        // switch(button.name){
+        //     case 'buscarContacto':
+            if(formulario.down('textfield[name=cedula]').getValue()!=""){                    
+                contacto=Ext.create('MyApp.store.registrobasico.solicitante.ContactoStore');
+                contacto.proxy.extraParams.nacionalidad=formulario.down("combobox[name=nacionalidadC]").getValue();
+                contacto.proxy.extraParams.cedula=formulario.down("textfield[name=cedula]").getValue();
+                contacto.load(function(records,operation,success){
+                    formulario.down("form[name=completo2]").setDisabled(false);
+                    if(operation.resultSet.total>0){
+                        contacto.each(function (record){
+                            formulario.down("form[name=completo2]").getForm().loadRecord(record);
+                            if(record.get('parroquiaC')!='' && record.get('parroquiaC')!=null){
+                                if(record.get('parroquiaC').length>5){
+                                    estado=record.get('parroquiaC').substring(0, 2);
+                                    municipio=record.get('parroquiaC').substring(0, 4);
+                                }else{
+                                    estado=record.get('parroquiaC').substring(0, 1);
+                                    municipio=record.get('parroquiaC').substring(0, 3);   
+                                }
+                                formulario.down('combobox[name=estadoC]').setValue(estado);
+                                formulario.down('combobox[name=municipioC]').setValue(municipio);
+                                municipioStore = formulario.down("combobox[name=municipioC]").getStore();
+                                municipioStore.proxy.extraParams.estado=estado;
+                                municipioStore.load();
+                                parroquiaStore = formulario.down("combobox[name=parroquiaC]").getStore();
+                                parroquiaStore.proxy.extraParams.municipio=municipio;
+                                parroquiaStore.load();
+                                formulario.down("combobox[name=parroquiaC]").setDisabled(0);
+                                formulario.down("textfield[name=direccionC]").setDisabled(0);
+                            }else{
+                                formulario.down('combobox[name=estadoC]').setValue('11');
+                                municipioStore = formulario.down("combobox[name=municipioC]").getStore();
+                                municipioStore.proxy.extraParams.estado=11;
+                                municipioStore.load();
+                                formulario.down("combobox[name=parroquiaC]").setDisabled(1);
+                                formulario.down("textfield[name=direccionC]").setDisabled(1);
+                            }
+                        })
+                    }else{                        
+                        nacionalidadC=formulario.down('combobox[name=nacionalidadC]').getValue();
+                        cedula=formulario.down('textfield[name=cedula]').getValue();
+                        //formulario.down('radiogroup[name=rgSolicitante]').items.items[0].setValue(true);
+                        formulario.down("form[name=completo2]").getForm().reset();
+                        formulario.down('combobox[name=nacionalidadC]').setValue(nacionalidadC);
+                        formulario.down('textfield[name=cedula]').setValue(cedula);
+                        Ext.MessageBox.show({ title: 'Informaci&oacute;n', msg: 'No se encontraron datos relacionados.', buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.INFO });
+                    }
+                })
+            }else{
+                Ext.MessageBox.show({ title: 'Informaci&oacute;n', msg: 'Debe ingresar la nacionalidad y cedula del contacto a buscar.', buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.INFO });                    
+            }
+            // break;
+            // case 'buscarSolicitante':                
+            if(formulario.down('textfield[name=cedula]').getValue()!=""){
+                if(formulario.down("radiogroup[name=rgSolicitante]").getValue().seleccion==1){
+                    var mensaje= "Debe ingresar la nacionalidad y cedula del solicitante a buscar.";
+                    store=Ext.create('MyApp.store.registrobasico.solicitante.PersonaStore');                        
+                }else if(formulario.down("radiogroup[name=rgSolicitante]").getValue().seleccion==2){
+                    var mensaje= "Debe ingresar la rif completo del consejo comunal a buscar.";
+                    store=Ext.create('MyApp.store.registrobasico.solicitante.ComunidadStore');
+                }
+                store.proxy.extraParams.nacionalidad=formulario.down("combobox[name=nacionalidad]").getValue();
+                store.proxy.extraParams.cedula=formulario.down("textfield[name=cedula]").getValue();
+                store.load(function(records,operation,success){
+                    formulario.down("form[name=completo1]").setDisabled(false);
+                    if(operation.resultSet.total>0){
+                        store.each(function (record){                            
+                            formulario.down("form[name=completo1]").getForm().loadRecord(record);
+                            if(record.get('parroquia')!='' && record.get('parroquia')!=null){
+                                if(record.get('parroquia').length>5){
+                                    estado=record.get('parroquia').substring(0, 2);
+                                    municipio=record.get('parroquia').substring(0, 4);
+                                }else{
+                                    estado=record.get('parroquia').substring(0, 1);
+                                    municipio=record.get('parroquia').substring(0, 3);   
+                                }
+                                formulario.down('combobox[name=estado]').setValue(estado);
+                                formulario.down('combobox[name=municipio]').setValue(municipio);
+                                municipioStore = formulario.down("combobox[name=municipio]").getStore();
+                                municipioStore.proxy.extraParams.estado=estado;
+                                municipioStore.load();
+                                parroquiaStore = formulario.down("combobox[name=parroquia]").getStore();
+                                parroquiaStore.proxy.extraParams.municipio=municipio;
+                                parroquiaStore.load();
+                                formulario.down("combobox[name=parroquia]").setDisabled(0);
+                                formulario.down("textfield[name=direccion]").setDisabled(0);
+                            }else{
+                                formulario.down('combobox[name=estado]').setValue('11');
+                                municipioStore = formulario.down("combobox[name=municipio]").getStore();
+                                municipioStore.proxy.extraParams.estado=11;
+                                municipioStore.load();
+                                formulario.down("combobox[name=parroquia]").setDisabled(1);
+                                formulario.down("textfield[name=direccion]").setDisabled(1);
+                            }
+                            if(record.get('nombreContacto')!='' && record.get('nombreContacto')!=null){
+                                formulario.down("form[name=completo2]").setDisabled(false);
+                                formulario.down("form[name=completo]").getForm().loadRecord(record);
+                                formulario.down("form[name=completo2]").getForm().loadRecord(record);
+                                if(record.get('parroquiaC')!='' && record.get('parroquiaC')!=null){
+                                    if(record.get('parroquiaC').length>5){
+                                        estado=record.get('parroquiaC').substring(0, 2);
+                                        municipio=record.get('parroquiaC').substring(0, 4);
+                                    }else{
+                                        estado=record.get('parroquiaC').substring(0, 1);
+                                        municipio=record.get('parroquiaC').substring(0, 3);   
+                                    }
+                                    formulario.down('combobox[name=estadoC]').setValue(estado);
+                                    formulario.down('combobox[name=municipioC]').setValue(municipio);
+                                    municipioStore = formulario.down("combobox[name=municipioC]").getStore();
+                                    municipioStore.proxy.extraParams.estado=estado;
+                                    municipioStore.load();
+                                    parroquiaStore = formulario.down("combobox[name=parroquiaC]").getStore();
+                                    parroquiaStore.proxy.extraParams.municipio=municipio;
+                                    parroquiaStore.load();
+                                    formulario.down("combobox[name=parroquiaC]").setDisabled(0);
+                                    formulario.down("textfield[name=direccionC]").setDisabled(0);
+                                }else{
+                                    formulario.down('combobox[name=estadoC]').setValue('11');
+                                    municipioStore = formulario.down("combobox[name=municipioC]").getStore();
+                                    municipioStore.proxy.extraParams.estado=11;
+                                    municipioStore.load();
+                                    formulario.down("combobox[name=parroquiaC]").setDisabled(1);
+                                    formulario.down("textfield[name=direccionC]").setDisabled(1);
+                                }
+                            }else{
+                                formulario.down("form[name=completo2]").setDisabled(true);
+                                formulario.down("form[name=completo2]").getForm().reset();
+                            }
+                        })
+                    }else{                        
+                        nacionalidad=formulario.down('combobox[name=nacionalidad]').getValue();
+                        cedula=formulario.down('textfield[name=cedula]').getValue();
+                        formulario.down("form[name=completo1]").getForm().reset();
+                        formulario.down("form[name=completo2]").getForm().reset();
+                        //formulario.down('radiogroup[name=rgSolicitante]').items.items[0].setValue(true);
+                        formulario.down('combobox[name=nacionalidad]').setValue(nacionalidad);
+                        formulario.down('textfield[name=cedula]').setValue(cedula);                       
+                        Ext.MessageBox.show({ title: 'Informaci&oacute;n', msg: 'No se encontraron datos relacionados.', buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.INFO });                                                   
+                    }
+                })
+            }else{
+                Ext.MessageBox.show({ title: 'Informaci&oacute;n', msg: mensaje, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.INFO });
+            }
+        //}        
+    },
+/////////////////Cambio seleccion principal
+    changeSeleccion: function(grupo,cmp){
+        var form = this.getPanelSolicitante();
+        form.down("form[name=completo2]").getForm().reset();
+        form.down("fieldset[name=fcContacto]").setVisible(false);
+        form.down("fieldset[name=datos]").setVisible(true);
+        form.down("form[name=completo1]").getForm().reset();
+        form.down("fieldcontainer[name=fcCedula]").setVisible(true);        
+        municipioC=form.down("combobox[name=municipioC]").getStore();
+        municipioC.proxy.extraParams.estado="";
+        municipioC.load();
+        municipio=form.down("combobox[name=municipio]").getStore();
+        municipio.proxy.extraParams.estado="";
+        municipio.load();
+        form.down("form[name=completo1]").setDisabled(true);
+        form.down("form[name=completo2]").setDisabled(true);
+        form.down("combobox[name=nacionalidadC]").reset();
+        form.down("textfield[name=cedulaC]").reset();
+        form.down("combobox[name=nacionalidad]").reset();
+        form.down("textfield[name=cedula]").reset();
+        form.down("combobox[name=parroquia]").setDisabled(true);
+        form.down("textfield[name=direccion]").setDisabled(true);
+        form.down("combobox[name=parroquiaC]").setDisabled(true);
+        form.down("textfield[name=direccionC]").setDisabled(true);
+        form.down("label[name=edad]").setText('Edad: 0 años.');
+        form.down("label[name=edadC]").setText('Edad: 0 años.');
+        if(cmp.seleccion!=null){            
+            if(cmp.seleccion==1){                
+                form.down('textfield[name=correo]').width = '50%';                
+                form.down('textfield[name=razonSolicitante]').setVisible(false);
+                form.down('fieldcontainer[name=fcNombre]').setVisible(true);                
+                form.down("datefield[name=fechanacimiento]").setVisible(true);
+                form.down("label[name=edad]").setVisible(true);
+                form.down('textfield[name=razonSolicitante]').allowBlank = true;
+                form.down('textfield[name=razonSolicitante]').validateValue(form.down('textfield[name=razonSolicitante]').getValue());
+                form.down('textfield[name=nombreSolicitante]').allowBlank = false;
+                form.down('textfield[name=nombreSolicitante]').validateValue(form.down('textfield[name=nombreSolicitante]').getValue());
+                form.down('textfield[name=apellidoSolicitante]').allowBlank = false;
+                form.down('textfield[name=apellidoSolicitante]').validateValue(form.down('textfield[name=apellidoSolicitante]').getValue());
+            }else{
+                form.down('textfield[name=correo]').width = '100%';
+                form.down("fieldset[name=fcContacto]").setVisible(true);                
+                form.down('textfield[name=razonSolicitante]').setVisible(true);
+                form.down('fieldcontainer[name=fcNombre]').setVisible(false);
+                form.down("datefield[name=fechanacimiento]").setVisible(false);
+                form.down("label[name=edad]").setVisible(false);
+                form.down('textfield[name=nombreSolicitante]').allowBlank = true;
+                form.down('textfield[name=nombreSolicitante]').validateValue(form.down('textfield[name=nombreSolicitante]').getValue());
+                form.down('textfield[name=apellidoSolicitante]').allowBlank = true;
+                form.down('textfield[name=apellidoSolicitante]').validateValue(form.down('textfield[name=apellidoSolicitante]').getValue());
+                form.down('textfield[name=razonSolicitante]').allowBlank = false;
+                form.down('textfield[name=razonSolicitante]').validateValue(form.down('textfield[name=razonSolicitante]').getValue());
+            }
+        }
+    },
+/////////////////Cambiar telefono
+    cambiarCodTlf: function(cmp, r){
+        formulario=this.getPanelSolicitante();
+        switch( cmp.name ){
+            case 'codTlf1':
+                if(formulario.down('combobox[name=codTlf1]').getValue()!='Ninguno' && formulario.down('combobox[name=codTlf1]').getValue()!=0) {
+                    formulario.down('textfield[name=movil]').reset();
+                    formulario.down('textfield[name=movil]').setDisabled(false);
+                    formulario.down('textfield[name=movil]').allowBlank = false;
+                    formulario.down('textfield[name=movil]').validateValue(formulario.down('textfield[name=movil]').getValue());
+                }else{
+                    formulario.down('combobox[name=codTlf1]').reset();
+                    formulario.down('textfield[name=movil]').reset();                    
+                    formulario.down('textfield[name=movil]').setDisabled(true);
+                    formulario.down('textfield[name=movil]').allowBlank = true;
+                    formulario.down('textfield[name=movil]').validateValue(formulario.down('textfield[name=movil]').getValue());
+                }
+            break;
+            case 'codTlf2':
+                if(formulario.down('combobox[name=codTlf2]').getValue()!='Ninguno' && formulario.down('combobox[name=codTlf2]').getValue()!=0){
+                    formulario.down('textfield[name=local]').reset();                    
+                    formulario.down('textfield[name=local]').setDisabled(false);
+                    formulario.down('textfield[name=local]').allowBlank = false;
+                    formulario.down('textfield[name=local]').validateValue(formulario.down('textfield[name=local]').getValue());
+                }else{
+                    formulario.down('combobox[name=codTlf2]').reset();
+                    formulario.down('textfield[name=local]').reset();
+                    formulario.down('textfield[name=local]').setDisabled(true);
+                    formulario.down('textfield[name=local]').allowBlank = true;
+                    formulario.down('textfield[name=local]').validateValue(formulario.down('textfield[name=local]').getValue());
+                }
+            break;
+            case 'ccodTlf1':
+                if(formulario.down('combobox[name=ccodTlf1]').getValue()!='Ninguno' && formulario.down('combobox[name=ccodTlf1]').getValue()!=0) {
+                    formulario.down('textfield[name=movilC]').reset();
+                    formulario.down('textfield[name=movilC]').setDisabled(false);
+                    formulario.down('textfield[name=movilC]').allowBlank = false;
+                    formulario.down('textfield[name=movilC]').validateValue(formulario.down('textfield[name=movilC]').getValue());
+                }else{
+                    formulario.down('combobox[name=ccodTlf1]').reset();
+                    formulario.down('textfield[name=movilC]').reset();                    
+                    formulario.down('textfield[name=movilC]').setDisabled(true);
+                    formulario.down('textfield[name=movilC]').allowBlank = true;
+                    formulario.down('textfield[name=movilC]').validateValue(formulario.down('textfield[name=movilC]').getValue());
+                }
+            break;
+            case 'ccodTlf2':
+                if(formulario.down('combobox[name=ccodTlf2]').getValue()!='Ninguno' && formulario.down('combobox[name=ccodTlf2]').getValue()!=0){
+                    formulario.down('textfield[name=localC]').reset();                    
+                    formulario.down('textfield[name=localC]').setDisabled(false);
+                    formulario.down('textfield[name=localC]').allowBlank = false;
+                    formulario.down('textfield[name=localC]').validateValue(formulario.down('textfield[name=localC]').getValue());
+                }else{
+                    formulario.down('combobox[name=ccodTlf2]').reset();
+                    formulario.down('textfield[name=localC]').reset();
+                    formulario.down('textfield[name=localC]').setDisabled(true);
+                    formulario.down('textfield[name=localC]').allowBlank = true;
+                    formulario.down('textfield[name=localC]').validateValue(formulario.down('textfield[name=localC]').getValue());
+                }
+            break;
+        }
+    },
+/////////////////Cambiar edad
+    cambiarEdad: function(){
+        me=this;
+        formulario=this.getPanelSolicitante();
+        var fechanacimiento=formulario.down('datefield[name=fechanacimiento]').getValue();
+        if(fechanacimiento!=null){
+            var ano=Ext.Date.format(fechanacimiento, 'Y');
+            var mes=Ext.Date.format(fechanacimiento, 'm');
+            var dia=Ext.Date.format(fechanacimiento, 'd');
+            numero=me.displayage(ano,mes,dia, "years", 0, "rounddown");
+            formulario.down('label[name=edad]').setText('Edad: '+numero+' años.');
+        }else{
+            formulario.down('label[name=edad]').setText('Edad: 0 años.');
+        }
+    },
+/////////////////Cambiar edadC
+    cambiarEdadC: function(){
+        me=this;
+        formulario=this.getPanelSolicitante();
+        var fechanacimiento=formulario.down('datefield[name=fechanacimientoC]').getValue();
+        if(fechanacimiento!=null){
+            var ano=Ext.Date.format(fechanacimiento, 'Y');
+            var mes=Ext.Date.format(fechanacimiento, 'm');
+            var dia=Ext.Date.format(fechanacimiento, 'd');
+            numero=me.displayage(ano,mes,dia, "years", 0, "rounddown");
+            formulario.down('label[name=edadC]').setText('Edad: '+numero+' años.');
+        }else{
+            formulario.down('label[name=edadC]').setText('Edad: 0 años.');
+        }
+    },
+////////////Calcular edad
+    displayage: function(yr, mon, day, unit, decimal, round){
+        var one_day = 1000 * 60 * 60 * 24;
+        var one_month = 1000 * 60 * 60 * 24 * 30;
+        var one_year = 1000 * 60 * 60 * 24 * 30 * 12;
+        today = new Date();
+        var pastdate = new Date(yr, mon - 1, day);
+        var countunit = unit;
+        var decimals = decimal;
+        var rounding = round;
+
+        finalunit = (countunit == "days") ? one_day : (countunit == "months") ? one_month : one_year;
+        decimals = (decimals <= 0) ? 1 : decimals * 10;
+
+        if (unit != "years") {
+            if (rounding == "rounddown") {            
+                return (Math.floor((today.getTime() - pastdate.getTime()) / (finalunit) * decimals) / decimals);
+            }else{
+            return (Math.ceil((today.getTime() - pastdate.getTime()) / (finalunit) * decimals) / decimals);
+            }
+        }else{
+            yearspast = today.getFullYear() - yr - 1;
+            tail = (today.getMonth() > mon - 1 || today.getMonth() == mon - 1 && today.getDate() >= day) ? 1 : 0;
+            pastdate.setFullYear(today.getFullYear());
+            pastdate2 = new Date(today.getFullYear() - 1, mon - 1, day);
+            tail = (tail == 1) ? tail + Math.floor((today.getTime() - pastdate.getTime()) / (finalunit) * decimals) / decimals : Math.floor((today.getTime() - pastdate2.getTime()) / (finalunit) * decimals) / decimals;
+            return (yearspast + tail);
+        }
+    },
+//////////////Combox direccion(estado,municipio,parroquia)
+    seleccionEstado: function(combo,records, eOpts){
+        me=this;
+        formulario=this.getPanelSolicitante();
+        switch(combo.name ){
+            case 'estado':        
+                municipioStore = formulario.down("combobox[name=municipio]").getStore();
+                formulario.down("combobox[name=parroquia]").clearValue();
+                formulario.down("combobox[name=parroquia]").setDisabled(1);
+                formulario.down("combobox[name=parroquia]").reset();
+                formulario.down("combobox[name=municipio]").clearValue();
+                formulario.down("combobox[name=municipio]").setDisabled(0);
+                formulario.down("combobox[name=municipio]").reset();
+                formulario.down("textfield[name=direccion]").setValue('');
+                formulario.down("textfield[name=direccion]").setDisabled(1);
+                formulario.down("textfield[name=direccion]").reset();
+                municipioStore.proxy.extraParams.estado=formulario.down("combobox[name=estado]").getValue();
+                municipioStore.load();
+            break;
+            case 'estadoC':
+                municipioStore = formulario.down("combobox[name=municipioC]").getStore();
+                formulario.down("combobox[name=parroquiaC]").clearValue();
+                formulario.down("combobox[name=parroquiaC]").setDisabled(1);
+                formulario.down("combobox[name=parroquiaC]").reset();
+                formulario.down("combobox[name=municipioC]").clearValue();
+                formulario.down("combobox[name=municipioC]").setDisabled(0);
+                formulario.down("combobox[name=municipioC]").reset();
+                formulario.down("textfield[name=direccionC]").setValue('');
+                formulario.down("textfield[name=direccionC]").setDisabled(1);
+                formulario.down("textfield[name=direccionC]").reset();
+                municipioStore.proxy.extraParams.estado=formulario.down("combobox[name=estadoC]").getValue();
+                municipioStore.load();
+        }
+    },
+    seleccionMunicipio: function(combo,records, eOpts){
+        me=this;
+        formulario=this.getPanelSolicitante();
+        switch(combo.name ){
+            case 'municipio': 
+                parroquiaStore = formulario.down("combobox[name=parroquia]").getStore();
+                formulario.down("combobox[name=parroquia]").clearValue();
+                formulario.down("combobox[name=parroquia]").reset();
+                formulario.down("textfield[name=direccion]").reset();
+                formulario.down("combobox[name=parroquia]").setDisabled(0);
+                formulario.down("textfield[name=direccion]").setValue('');
+                formulario.down("textfield[name=direccion]").setDisabled(1);
+                parroquiaStore.proxy.extraParams.municipio=formulario.down("combobox[name=municipio]").getValue();
+                parroquiaStore.load();
+            break;
+            case 'municipioC':
+                parroquiaStore = formulario.down("combobox[name=parroquiaC]").getStore();
+                formulario.down("combobox[name=parroquiaC]").clearValue();
+                formulario.down("combobox[name=parroquiaC]").reset();
+                formulario.down("textfield[name=direccionC]").reset();
+                formulario.down("combobox[name=parroquiaC]").setDisabled(0);
+                formulario.down("textfield[name=direccionC]").setValue('');
+                formulario.down("textfield[name=direccionC]").setDisabled(1);
+                parroquiaStore.proxy.extraParams.municipio=formulario.down("combobox[name=municipioC]").getValue();
+                parroquiaStore.load();
+        }
+    },
+    seleccionParroquia: function(combo,records, eOpts){
+        me=this;
+        formulario=this.getPanelSolicitante();
+        switch(combo.name ){
+            case 'parroquia':
+                formulario.down("textfield[name=direccion]").reset();
+                formulario.down("textfield[name=direccion]").setValue('');
+                formulario.down("textfield[name=direccion]").setDisabled(0);
+            break;
+            case 'parroquiaC':
+                formulario.down("textfield[name=direccionC]").reset();
+                formulario.down("textfield[name=direccionC]").setValue('');
+                formulario.down("textfield[name=direccionC]").setDisabled(0);
+        }
+    },
+
+/////////////////Botones
+    limpiar: function(){
+        var form = this.getPanelSolicitante();
+        form.getForm().reset();        
+        form.down("fieldset[name=datos]").setVisible(false);        
+        form.down("fieldset[name=fcContacto]").setVisible(false);        
+    },
+    guardar: function(){
+        me=this;
+        formulario=this.getPanelSolicitante();
+        if(formulario.down("radiogroup[name=rgSolicitante]").getValue().seleccion){
+            if(formulario.down("radiogroup[name=rgSolicitante]").getValue().seleccion==1){
+                direccion='persona/persona/guardarPersona';
+            }else if(formulario.down("radiogroup[name=rgSolicitante]").getValue().seleccion==2){
+                direccion='persona/comunidad/guardarComunidad';                
+            }
+            if(formulario.getForm().isValid()){
+                Ext.get(formulario.getEl()).mask("Guardando... Por favor espere...",'loading');
+                var str = new Array(6).join().replace(/(.|$)/g, function(){return ((Math.random()*36)|0).toString(36);});
+                password = MyApp.util.Md5.encode(str);
+                formulario.getForm().submit({
+                    url: BASE_URL+direccion,
+                    method:'POST',
+                    params: {clave :  str, password  : password},
+                    failure: function(form,action){
+                        switch (action.failureType){
+                            case Ext.form.Action.CLIENT_INVALID:
+                                 Ext.MessageBox.show({ title: 'Verifique los datos', msg: 'Algunos campos no fueron introducidos correctamente', buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.ERROR });
+                            break;
+                            case Ext.form.Action.CONNECT_FAILURE:
+                                 Ext.MessageBox.show({ title: 'Error', msg: 'Error en comunicaci&oacute;n Ajax', buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.ERROR });
+                            break;
+                            case Ext.form.Action.SERVER_INVALID:
+                                 Ext.MessageBox.show({ title: 'Error---Verifique!', msg: 'Informacion ingresada es invalida/Servidor invalido', buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.ERROR });
+                            break;
+                            default:
+                                Ext.MessageBox.show({ title: 'Alerta', msg: 'Se ha detectado algun error', buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING });
+                        }
+                    },
+                    success: function(form,action){
+                        Ext.get(formulario.getEl()).unmask();
+                        var data= Ext.JSON.decode(action.response.responseText);
+                        Ext.Msg.show({
+                            title:'Informaci&oacute;n',
+                            msg: data.msg,
+                            icon: Ext.Msg.INFO,
+                            buttons: Ext.Msg.OK
+                        });                                
+                        me.limpiar();
+                    },
+                });
+            }else{
+                Ext.MessageBox.show({ title: 'Informaci&oacute;n', msg: 'Debe ingresar todos los datos solicitados.', buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.INFO });
+            }
+        }else{
+            Ext.MessageBox.show({ title: 'Informaci&oacute;n', msg: 'Debe seleccionar tipo de solicitante.', buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.INFO });
+        }     
+    }
+});

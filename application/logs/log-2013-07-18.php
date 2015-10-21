@@ -1,0 +1,40 @@
+<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed'); ?>
+
+ERROR - 2013-07-18 09:10:26 --> Severity: Notice  --> Undefined variable: data /var/www/html/cv/application/controllers/stores.php 199
+ERROR - 2013-07-18 09:10:26 --> Severity: Notice  --> Undefined variable: data /var/www/html/cv/application/controllers/stores.php 200
+ERROR - 2013-07-18 10:15:32 --> Query error: Subquery returns more than 1 row
+ERROR - 2013-07-18 10:20:03 --> Severity: Notice  --> Undefined variable: data /var/www/html/cv/application/controllers/stores.php 199
+ERROR - 2013-07-18 10:20:03 --> Severity: Notice  --> Undefined variable: data /var/www/html/cv/application/controllers/stores.php 200
+ERROR - 2013-07-18 10:21:45 --> Query error: Subquery returns more than 1 row
+ERROR - 2013-07-18 10:24:53 --> Severity: Notice  --> Undefined variable: data /var/www/html/cv/application/controllers/stores.php 156
+ERROR - 2013-07-18 10:24:53 --> Severity: Notice  --> Undefined variable: data /var/www/html/cv/application/controllers/stores.php 157
+ERROR - 2013-07-18 10:25:05 --> Query error: Subquery returns more than 1 row
+ERROR - 2013-07-18 11:45:17 --> Severity: Notice  --> Undefined variable: data /var/www/html/cv/application/controllers/stores.php 199
+ERROR - 2013-07-18 11:45:17 --> Severity: Notice  --> Undefined variable: data /var/www/html/cv/application/controllers/stores.php 200
+ERROR - 2013-07-18 11:49:39 --> Severity: Notice  --> Undefined variable: data /var/www/html/cv/application/controllers/stores.php 156
+ERROR - 2013-07-18 11:49:39 --> Severity: Notice  --> Undefined variable: data /var/www/html/cv/application/controllers/stores.php 157
+ERROR - 2013-07-18 11:50:35 --> Severity: Notice  --> Undefined variable: grados_academicos_idgrados /var/www/html/cv/application/models/usuarios_model.php 50
+ERROR - 2013-07-18 11:50:35 --> Severity: Notice  --> Undefined variable: data /var/www/html/cv/application/controllers/stores.php 199
+ERROR - 2013-07-18 11:50:35 --> Severity: Notice  --> Undefined variable: data /var/www/html/cv/application/controllers/stores.php 200
+ERROR - 2013-07-18 12:06:31 --> Severity: Notice  --> Undefined variable: grados_academicos_idgrados /var/www/html/cv/application/models/usuarios_model.php 50
+ERROR - 2013-07-18 12:06:31 --> Severity: Notice  --> Undefined variable: data /var/www/html/cv/application/controllers/stores.php 199
+ERROR - 2013-07-18 12:06:31 --> Severity: Notice  --> Undefined variable: data /var/www/html/cv/application/controllers/stores.php 200
+ERROR - 2013-07-18 12:11:40 --> Severity: Notice  --> Undefined variable: grados_academicos_idgrados /var/www/html/cv/application/models/usuarios_model.php 49
+ERROR - 2013-07-18 12:11:40 --> Severity: Notice  --> Undefined variable: grados_academicos_idgrados /var/www/html/cv/application/models/usuarios_model.php 50
+ERROR - 2013-07-18 12:11:40 --> Query error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 7
+ERROR - 2013-07-18 13:57:05 --> Severity: Notice  --> Undefined variable: data /var/www/html/cv/application/controllers/stores.php 199
+ERROR - 2013-07-18 13:57:05 --> Severity: Notice  --> Undefined variable: data /var/www/html/cv/application/controllers/stores.php 200
+ERROR - 2013-07-18 15:23:25 --> Severity: Notice  --> Undefined variable: data /var/www/html/cv/application/controllers/stores.php 199
+ERROR - 2013-07-18 15:23:26 --> Severity: Notice  --> Undefined variable: data /var/www/html/cv/application/controllers/stores.php 200
+ERROR - 2013-07-18 15:24:49 --> Severity: Notice  --> Undefined variable: data /var/www/html/cv/application/controllers/stores.php 199
+ERROR - 2013-07-18 15:24:49 --> Severity: Notice  --> Undefined variable: data /var/www/html/cv/application/controllers/stores.php 200
+ERROR - 2013-07-18 15:24:55 --> Severity: Notice  --> Undefined variable: data /var/www/html/cv/application/controllers/stores.php 199
+ERROR - 2013-07-18 15:24:55 --> Severity: Notice  --> Undefined variable: data /var/www/html/cv/application/controllers/stores.php 200
+ERROR - 2013-07-18 15:24:55 --> Severity: Notice  --> Undefined variable: data /var/www/html/cv/application/controllers/stores.php 199
+ERROR - 2013-07-18 15:24:55 --> Severity: Notice  --> Undefined variable: data /var/www/html/cv/application/controllers/stores.php 200
+ERROR - 2013-07-18 15:24:55 --> Severity: Notice  --> Undefined variable: data /var/www/html/cv/application/controllers/stores.php 199
+ERROR - 2013-07-18 15:24:55 --> Severity: Notice  --> Undefined variable: data /var/www/html/cv/application/controllers/stores.php 200
+ERROR - 2013-07-18 15:24:56 --> Severity: Notice  --> Undefined variable: data /var/www/html/cv/application/controllers/stores.php 199
+ERROR - 2013-07-18 15:24:56 --> Severity: Notice  --> Undefined variable: data /var/www/html/cv/application/controllers/stores.php 200
+ERROR - 2013-07-18 15:24:56 --> Severity: Notice  --> Undefined variable: data /var/www/html/cv/application/controllers/stores.php 199
+ERROR - 2013-07-18 15:24:56 --> Severity: Notice  --> Undefined variable: data /var/www/html/cv/application/controllers/stores.php 200
