@@ -267,18 +267,18 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
         } else {
             formPanel.down('radiofield[name=seleccionar]').setValue(2);
         }
-
+        
         store2 = grid3.getStore();
         store2.clearData();
         store2.proxy.extraParams.tramite = tramite;
         grid3.getView().refresh(true);
         store2.load();
-        grid5 = Ext.ComponentQuery.query('gridActividad')[0];
+        /* grid5 = Ext.ComponentQuery.query('gridActividad')[0];
         store3 = grid5.columns[5].editor.getStore();
         store3.clearData();
         store3.proxy.extraParams.tramite = tramite;
         grid3.getView().refresh(true);
-        store3.load();
+        store3.load();*/
         win.close();
     },
     recaudos: function (grupo, cmp) {
