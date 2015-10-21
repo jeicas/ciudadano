@@ -352,13 +352,19 @@ class Tramite extends CI_Controller {
             );
         }
 
+ $depende=$this->input->post("actividadDepende");
 
+    if ($depende== ''){
+        $depende=null;
+    }else {
+       $depende=$this->input->post("actividadDepende"); 
+    }
         $actividades = array(
             "descripcion" => $this->input->post('descripcion'),
             "unidadresponsable" => $this->input->post("unidadresponsable"),
             "tiempo" => $this->input->post("tiempo"),
             "estatus" => $estatus,
-            "actividad_id" => $this->input->post("actividadDepende"),
+            "actividad_id" => $depende,
             "tramite" => $this->input->post("tramite"),
         );
 
