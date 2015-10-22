@@ -339,6 +339,81 @@ class Tramite extends CI_Controller {
         }
     }
 
+public function guardarTipoTramite() {
+
+        $username = $this->session->userdata('data');
+        $id = $this->input->post("idtipotramite");
+        $descripcion = $this->input->post("nombre");
+       
+        if ($id == 0) {
+            $arreglotramite = array(
+                "nombre" => $descripcion, 
+                "ente" => $username['ente'],
+            
+            );
+            $ttramite = $this->tramite_model->insertTipoTramite($arreglotramite);
+            $tramiteUp=true;
+        } else {
+
+            $arreglotramiteUp = array(
+                "id" => $id,
+                "nombre" => $descripcion,
+                
+            );
+            $ttramite=true;
+            $tramiteUp = $this->tramite_model->updateTipoTramite($arreglotramiteUp);
+        }
+
+
+        if ($ttramite || $tramiteUp) {
+            echo json_encode(array(
+                "success" => true,
+                "actualizo" => $tramiteUp,
+                "guardo" => $ttramite,
+                "msg" => 'Operación Exitosa.'
+            ));
+        } else {
+            echo json_encode(array(
+                "success" => false,
+                "actualizo" => $tramiteUp,
+                "guardo" => $ttramite,
+                "msg" => 'No se pudo realizar la operación.'
+            ));
+        }
+    }
+
+public function eliminarTipoTramite() {
+
+        
+        $id = $this->input->post("idtipotramite");
+       
+    
+
+            $arreglotramiteUp = array(
+                "id" => $id,  
+            );
+            $ttramite = $this->tramite_model->deleteTipoTramite($arreglotramiteUp);
+        
+
+
+        if ($ttramite) {
+            echo json_encode(array(
+                "success" => true,
+                "guardo" => $ttramite,
+                "msg" => 'Operación Exitosa.'
+            ));
+        } else {
+            echo json_encode(array(
+                "success" => false,
+                "guardo" => $ttramite,
+                "msg" => 'No se pudo realizar la operación.'
+            ));
+        }
+    }
+
+
+
+
     public function guardarActividad() {
         if ($this->input->post('estatus') == 'INICIO' || $this->input->post('estatus') == '') {
             $estatus = 1;

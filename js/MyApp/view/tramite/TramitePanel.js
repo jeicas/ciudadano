@@ -35,6 +35,20 @@ Ext.define('MyApp.view.tramite.TramitePanel', {
                     name        : 'idtramite',
                     width       : '100%',
                     hidden  : true,
+                },
+                {
+                    xtype       : 'textfield',                        
+                    margins     : '5 0 5 0',
+                    name        : 'idtipotramite',
+                    width       : '100%',
+                    hidden  : true,
+                },
+                {
+                    xtype       : 'textfield',                        
+                    margins     : '5 0 5 0',
+                    name        : 'idayudatramite',
+                    width       : '100%',
+                    hidden  : true,
                 },{
                     xtype       : 'fieldcontainer',
                     layout      : 'hbox',
@@ -121,13 +135,8 @@ Ext.define('MyApp.view.tramite.TramitePanel', {
                         iconCls : 'edit',
                         tooltip : 'Editar',
                         margins : '5 0 0 7',
+                        hidden: true,
                         name    : 'editarTipoTramite',
-                    },{
-                        xtype   : 'button',
-                        iconCls : 'eliminar',
-                        tooltip : 'Eliminar',
-                        margins : '5 0 0 7',
-                        name    : 'eliminarTipoTramite',
                     },{
                         xtype       : 'numberfield',
                         margins     : '0 0 0 100',

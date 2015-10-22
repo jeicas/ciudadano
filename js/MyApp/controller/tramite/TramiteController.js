@@ -6,7 +6,8 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
         'tramite.GridActividad',
         'tramite.buscarTramite.GridBuscarTramite',
         'tramite.buscarTramite.BuscarTramite',
-        'tramite.WinMaestroTramite'
+        'tramite.WinMaestroTramite',
+        'tramite.WinMaestroTipoTramite'
     ],
     refs: [{
             ref: 'panelTramite',
@@ -40,6 +41,9 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
         }, {
             ref: 'WinMaestroTramite',
             selector: 'winMaestroTramite'
+        }, {
+            ref: 'WinMaestroTipoTramite',
+            selector: 'winMaestroTipoTramite'
         }],
     init: function (application) {
         this.control({
@@ -80,19 +84,31 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
             "panelTramite button[name=agregarAyuda]": {
                 click: this.ventanaagregarAyuda
             },
-            "panelTramite button[name=agregarTipoTramite]": {
-                click: this.ventanaaagregarTipoTramite
-            },
+           
             "panelTramite button[name=nuevo]": {
                 click: this.ventanaaagregarNombreTramite
             },
              "panelTramite button[name=editar]": {
                 click: this.ventanaeditarNombreTramite
             },
+
+              "panelTramite button[name=agregarTipoTramite]": {
+                click: this.ventanaaagregarTipoTramite
+            },
+             "panelTramite button[name=editarTipoTramite]": {
+                click: this.ventanaeditarTipoTramite
+            },
+             
               "panelTramite combobox[name=nombret]": {
                 change: this.cambiar
+            }, 
+              "panelTramite combobox[name=tipot]": {
+                change: this.cambiarTipoTramite
             },
-            
+
+              "panelTramite combobox[name=ayudat]": {
+                change: this.cambiarTipoAyuda
+            },
             "panelTramite button[name=buscarTramites]": {
                 click: this.listaTramites
             },
@@ -102,6 +118,10 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
             "winMaestroTramite button[name=btnGuardar]": {
                 click: this.guardarnombre
             },
+              "winMaestroTipoTramite button[name=btnGuardar]": {
+                click: this.guardarTipoTramite
+            },
+           
            
         });
     },
@@ -115,6 +135,14 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
         formPanel.down("textfield[name=idtramite]").setValue(tramite);
         formPanel.down("button[name=editar]").setVisible(true);
         formPanel.down("button[name=nuevo]").setVisible(false);
+    },
+      cambiarTipoTramite: function (button, combobox, e, options) {
+       formPanel = this.getPanelTramite();
+        tramite = formPanel.down("combobox[name=tipot]").getValue();
+        formPanel.down("textfield[name=idtipotramite]").setValue(tramite);
+        formPanel.down("button[name=agregarTipoTramite]").setVisible(false);
+        formPanel.down("button[name=editarTipoTramite]").setVisible(true);
+        
     },
     
     guardarActividad: function (field, e, option) {
@@ -210,9 +238,60 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
 
     },
     ventanaaagregarTipoTramite: function (win, options) {
-        var win = Ext.create('MyApp.view.tramite.ventanasagregar.GridbuscartipoT');
+       var win = Ext.create('MyApp.view.tramite.WinMaestroTipoTramite');
         win.show();
     },
+    
+    /*eliminarTipoTramite: function (win, options) {
+     
+      formPanel= this.getPanelTramite();
+             Ext.Msg.show({
+                    title: 'Confirmar',
+                    msg: 'Esta seguro que desea Eliminar el Tipo de Evento Seleccionado?',
+                    buttons: Ext.Msg.YESNO,
+                    icon: Ext.Msg.QUESTION,
+                    fn: function (buttonId) {
+                        if (buttonId == 'yes') {
+                           
+          idtram=formPanel.down('textfield[name=idtipotramite]').getValue();
+          
+               Ext.Ajax.request({//AQUI ENVIO LA DATA 
+            url: BASE_URL + 'tramite/tramite/eliminarTipoTramite',
+            method: 'POST',
+            params: {
+                idtipotramite: idtram,
+               
+            },
+            success: function (result, request) {
+                result = Ext.JSON.decode(result.responseText);
+                if (result.success) {
+                    Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+                     formPanel.down('textfield[name=tipot]').getStore().clearData();
+
+                     
+                }
+
+
+                
+                else {
+
+                    Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+                }
+            },
+            failure: function (form, action) {
+                var result = action.result;
+                loadingMask.hide();
+                Ext.MessageBox.show({title: 'Alerta', msg: "Ha ocurrido un error. Por vuelva a intentarlo, si el problema persiste comuniquese con el administrador", buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+            }
+        });
+
+
+                        }
+                    }
+                }); 
+     
+    },*/
+    
     ventanaaagregarNombreTramite: function (button, e, options) {
         var win = Ext.create('MyApp.view.tramite.WinMaestroTramite');
         win.down('textfield[name=idtramite]').setValue(0);
@@ -240,6 +319,31 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
         win.setTitle('Editar Tramite');
         win.show();
     },
+
+    
+     ventanaeditarTipoTramite: function (button, e, options) {
+
+
+         formPanel= this.getPanelTramite();
+         idtram=formPanel.down('textfield[name=idtipotramite]').getValue();
+         store=formPanel.down('combobox[name=tipot]').getStore();
+          for (i = 0; i < store.data.items.length; ++i) {
+              if (store.data.items[i].data['id']== idtram){
+                  nomb=store.data.items[i].data['nombre'];
+                     i=store.data.items.length+1;
+              }
+               
+          }
+
+        var win = Ext.create('MyApp.view.tramite.WinMaestroTipoTramite');
+        win.down('textfield[name=idtipotramite]').setValue(idtram);
+        win.down('textfield[name=nombre]').setValue(nomb);
+        win.setTitle('Editar Tipo Tramite');
+        win.show();
+    },
+
+
+
     ventanaagregarAyuda: function (win, options) {
         var win = Ext.create('MyApp.view.tramite.ventanasagregar.GridbuscartipoA');
         win.show();
@@ -450,6 +554,55 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
          } else {
          Ext.MessageBox.show({title: 'Informaci&oacute;n', msg: 'Ingresar los datos de la grid Descripcion,Responsable y Division', buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.INFO});
          }*/
+
+    },
+    guardarTipoTramite: function () {
+
+        me = this;
+        formular = this.getWinMaestroTipoTramite();
+        formulari = this.getPanelTramite();
+        store = formulari.down('combobox[name=tipot]').getStore();
+        formulario = formular.down('form[name=formTramite]').getForm();
+        if (formulario.isValid()) {
+           
+            var loadingMask = new Ext.LoadMask(Ext.getBody(), {msg: "Guardando por Favor espere..."});
+            loadingMask.show();
+            formulario.submit({
+                url: BASE_URL + 'tramite/tramite/guardarTipoTramite',
+                method: 'POST',
+                success: function (form, action) {
+
+                    loadingMask.hide();
+                    var data = Ext.JSON.decode(action.response.responseText);
+                    Ext.Msg.show({
+                        title: 'Informaci&oacute;n',
+                        msg: data.msg,
+                        icon: Ext.Msg.INFO,
+                        buttons: Ext.Msg.OK
+                    });
+                    formular.close();
+                    store.load();
+                },
+                failure: function (form, action) {
+                    loadingMask.hide();
+                    switch (action.failureType) {
+                        case Ext.form.Action.CLIENT_INVALID:
+                            Ext.MessageBox.show({title: 'Verifique los datos', msg: 'Algunos campos no fueron introducidos correctamente', buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.ERROR});
+                            break;
+                        case Ext.form.Action.CONNECT_FAILURE:
+                            Ext.MessageBox.show({title: 'Error', msg: 'Error en comunicaci&oacute;n Ajax', buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.ERROR});
+                            break;
+                        case Ext.form.Action.SERVER_INVALID:
+                            Ext.MessageBox.show({title: 'Error---Verifique!', msg: 'Informacion ingresada es invalida/Servidor invalido', buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.ERROR});
+                            break;
+                        default:
+                            Ext.MessageBox.show({title: 'Alerta', msg: 'Se ha detectado algun error', buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+                    }
+                },
+            });
+        } else {
+            Ext.MessageBox.show({title: 'Informaci&oacute;n', msg: 'Debe ingresar todos los datos solicitados.', buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.INFO});
+        }
 
     },
     guardarTramite: function () {

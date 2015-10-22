@@ -168,7 +168,11 @@ class Tramite_model extends CI_Model {
         $this->db->insert('tramite', $arregloTicket);
         return mysql_insert_id();
     }
-
+    public function insertTipoTramite($arregloTicket) {
+       
+        return $this->db->insert('tipotramite', $arregloTicket);
+    }
+    
     public function insertRecaudos($arregloTicket) {
         $this->db->insert('recaudos', $arregloTicket);
         return mysql_insert_id();
@@ -218,7 +222,15 @@ class Tramite_model extends CI_Model {
         return $this->db->update('tramite', $ticket);
     }
     
+    public function updateTipoTramite($ticket) {
+        $this->db->where('id', $ticket['id']);
+        return $this->db->update('tipotramite', $ticket);
+    }
     
+     public function deleteTipoTramite($ticket) {
+        $this->db->where('id', $ticket['id']);
+        return $this->db->delete('tipotramite');
+    }
    
 
 }
