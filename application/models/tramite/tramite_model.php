@@ -215,7 +215,7 @@ class Tramite_model extends CI_Model {
 
     public function updateTramite($ticket) {
         $this->db->where('id', $ticket['id']);
-        $this->db->update('tramite', $ticket);
+        return $this->db->update('tramite', $ticket);
     }
     
     

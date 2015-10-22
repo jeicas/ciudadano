@@ -87,10 +87,10 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
                 click: this.ventanaaagregarNombreTramite
             },
              "panelTramite button[name=editar]": {
-                click: this.ventanaaagregarNombreTramite
+                click: this.ventanaeditarNombreTramite
             },
               "panelTramite combobox[name=nombret]": {
-                selection: this.cambiar
+                change: this.cambiar
             },
             
             "panelTramite button[name=buscarTramites]": {
@@ -109,9 +109,12 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
         var win = Ext.create('MyApp.view.tramite.buscarTramite.GridBuscarTramite');
         win.show();
     },
-    cambiar: function (win, options) {
-        var win = Ext.create('MyApp.view.tramite.buscarTramite.GridBuscarTramite');
-        win.show();
+    cambiar: function (button, combobox, e, options) {
+       formPanel = this.getPanelTramite();
+        tramite = formPanel.down("combobox[name=nombret]").getValue();
+        formPanel.down("textfield[name=idtramite]").setValue(tramite);
+        formPanel.down("button[name=editar]").setVisible(true);
+        formPanel.down("button[name=nuevo]").setVisible(false);
     },
     
     guardarActividad: function (field, e, option) {
@@ -216,6 +219,27 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
         win.setTitle('Nuevo Tramite');
         win.show();
     },
+
+     ventanaeditarNombreTramite: function (button, e, options) {
+
+
+         formPanel= this.getPanelTramite();
+         idtram=formPanel.down('textfield[name=idtramite]').getValue();
+         store=formPanel.down('combobox[name=nombret]').getStore();
+          for (i = 0; i < store.data.items.length; ++i) {
+              if (store.data.items[i].data['id']== idtram){
+                  nomb=store.data.items[i].data['descripcion'];
+                     i=store.data.items.length+1;
+              }
+               
+          }
+
+        var win = Ext.create('MyApp.view.tramite.WinMaestroTramite');
+        win.down('textfield[name=idtramite]').setValue(idtram);
+        win.down('textfield[name=nombre]').setValue(nomb);
+        win.setTitle('Editar Tramite');
+        win.show();
+    },
     ventanaagregarAyuda: function (win, options) {
         var win = Ext.create('MyApp.view.tramite.ventanasagregar.GridbuscartipoA');
         win.show();
@@ -250,7 +274,10 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
         record = grid.getSelectionModel().getSelection();
         grid2 = this.getRecaudosLista();
         grid3 = this.getGridActividad();
-        tramite = record[0].get('idtramite');
+        tramiteid = record[0].get('idtramite');
+
+        console.log(tramiteid);
+
         formPanel.down('textfield[name=idtramite]').setValue(record[0].get('idtramite'));
         formPanel.down('textfield[name=nombret]').setValue(record[0].get('nombret'));
         formPanel.down('textfield[name=codigotr]').setValue(record[0].get('codigotr'));
@@ -263,7 +290,7 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
 
         storeRL = grid2.getStore();
         storeRL.clearData();
-        storeRL.proxy.extraParams.tramite = tramite;
+        storeRL.proxy.extraParams.tramite = tramiteid;
         grid2.getView().refresh(true);
         storeRL.load();
         //console.log(store1.data.items[0].get('idrecaudo'));
@@ -275,7 +302,7 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
         
         store2 = grid3.getStore();
         store2.clearData();
-        store2.proxy.extraParams.tramite = tramite;
+        store2.proxy.extraParams.tramite = tramiteid;
         grid3.getView().refresh(true);
         store2.load();
         /* grid5 = Ext.ComponentQuery.query('gridActividad')[0];
@@ -338,7 +365,7 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
         store = formulari.down('combobox[name=nombret]').getStore();
         formulario = formular.down('form[name=formTramite]').getForm();
         if (formulario.isValid()) {
-
+           
             var loadingMask = new Ext.LoadMask(Ext.getBody(), {msg: "Guardando por Favor espere..."});
             loadingMask.show();
             formulario.submit({

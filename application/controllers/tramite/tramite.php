@@ -309,6 +309,7 @@ class Tramite extends CI_Controller {
                 "estatus" => 1
             );
             $tramite = $this->tramite_model->insertTramite($arreglotramite);
+            $tramiteUp=true;
         } else {
 
             $arreglotramiteUp = array(
@@ -316,23 +317,24 @@ class Tramite extends CI_Controller {
                 "descripcion" => $descripcion,
                 "estatus" => 1
             );
-            $tramite = $this->tramite_model->updateTramite($arreglotramiteUp);
+            $tramite=1;
+            $tramiteUp = $this->tramite_model->updateTramite($arreglotramiteUp);
         }
 
 
-
-
-        if ($tramite > 0 || $tramite) {
+        if ($tramite > 0 || $tramiteUp) {
             echo json_encode(array(
                 "success" => true,
-                "actualizo" => $tramite,
+                "actualizo" => $tramiteUp,
                 "guardo" => $tramite,
-                "msg" => 'Registrado con exito.'
+                "msg" => 'Operación Exitosa.'
             ));
         } else {
             echo json_encode(array(
                 "success" => false,
-                "msg" => 'No se pudo registrar.' . $obj
+                "actualizo" => $tramiteUp,
+                "guardo" => $tramite,
+                "msg" => 'No se pudo realizar la operación.'
             ));
         }
     }
