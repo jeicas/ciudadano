@@ -181,6 +181,11 @@ class Tramite_model extends CI_Model {
         $this->db->insert('recaudostramite', $agregar);
         return $query = mysql_insert_id();
     }
+    
+     function deleteTramiteRecaudos($agregar) {
+         $this->db->where('id', $agregar);
+        return $this->db->delete('recaudostramite'); 
+    }
 
     function insertTramiteFuncionario($agregar, $datadiscapacitado) {
         $this->db->set($agregar);
@@ -188,6 +193,14 @@ class Tramite_model extends CI_Model {
         $this->db->insert('tramite_funcionario', $agregar);
         return $query = mysql_insert_id();
     }
+    
+    function deleteTramiteFuncionario($agregar, $datadiscapacitado) {
+         $this->db->where('tramite', $agregar);
+         $this->db->where('funcionario', $datadiscapacitado);
+        return $this->db->delete('tramite_funcionario'); 
+    }
+    
+    
 
     public function insertActividades($arregloTicket, $dataactividad) {
         $this->db->set('tramite', $dataactividad);

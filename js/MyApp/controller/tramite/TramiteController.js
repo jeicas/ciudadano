@@ -85,8 +85,14 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
             },
             "panelTramite button[name=nuevo]": {
                 click: this.ventanaaagregarNombreTramite
-            }
-            ,
+            },
+             "panelTramite button[name=editar]": {
+                click: this.ventanaaagregarNombreTramite
+            },
+              "panelTramite combobox[name=nombret]": {
+                selection: this.cambiar
+            },
+            
             "panelTramite button[name=buscarTramites]": {
                 click: this.listaTramites
             },
@@ -96,12 +102,18 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
             "winMaestroTramite button[name=btnGuardar]": {
                 click: this.guardarnombre
             },
+           
         });
     },
     listaTramites: function (win, options) {
         var win = Ext.create('MyApp.view.tramite.buscarTramite.GridBuscarTramite');
         win.show();
     },
+    cambiar: function (win, options) {
+        var win = Ext.create('MyApp.view.tramite.buscarTramite.GridBuscarTramite');
+        win.show();
+    },
+    
     guardarActividad: function (field, e, option) {
         // Ext.MessageBox.show({title: 'Alerta', msg: 'Wiii, Ingrso', buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
 
@@ -128,16 +140,16 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
 
         }
 
-        if (store.data.items[num - 1].data.cmbprocedimiento == '' || store.data.items[num - 1].data.cmbprocedimiento == null) {
+        if (store.data.items[num-1].data.cmbprocedimiento == '' || store.data.items[num-1].data.cmbprocedimiento == null) {
 
             actividaddependiente = null;
 
         } else
         {
-            if (store.data.items[num - 1].data['estatus'] === 'INICIO') {
+            if (store.data.items[num-1].data['estatus'] === 'INICIO') {
 
                 Ext.MessageBox.show({title: 'Alerta', msg: 'Este tipo de procedimiento no puede depender de una actividad previa', buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
-                 Ext
+                 
             }
              else {
                 storeP = grid.down('combobox[name=cmbprocedimiento]').getStore();
@@ -192,13 +204,6 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
                 Ext.MessageBox.show({title: 'Alerta', msg: "Ha ocurrido un error. Por vuelva a intentarlo, si el problema persiste comuniquese con el administrador", buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
             }
         });
-
-
-
-
-
-
-
 
     },
     ventanaaagregarTipoTramite: function (win, options) {
@@ -450,7 +455,40 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
             }
 
         }
+        
+          storeS = formulario.down('combobox[name=sector]').getStore();
+        valorS = formulario.down('combobox[name=sector]').getValue();
+        for (k = 0; k < storeS.data.items.length; ++k) {
 
+            if (storeS.data.items[k].data['nombre'] == valorS) {
+                sectorr = storeS.data.items[k].data['id'];
+                k = storeS.data.items.length + 1;
+            } else {
+                if (storeS.data.items[k].data['id'] == valorS) {
+                    sectorr = storeS.data.items[k].data['id'];
+                    k = storeS.data.items.length + 1;
+                }
+            }
+
+        }
+           
+               storeTT = formulario.down('combobox[name=tipot]').getStore();
+        valorTT = formulario.down('combobox[name=tipot]').getValue();
+        for (j = 0; j < storeTT.data.items.length; ++j) {
+
+            if (storeTT.data.items[j].data['nombre'] == valorTT) {
+                tipot = storeTT.data.items[j].data['id'];
+                j = storeTT.data.items.length + 1;
+            } else {
+                if (storeTT.data.items[j].data['id'] == valorTT) {
+                    tipot = storeTT.data.items[j].data['id'];
+                    j = storeTT.data.items.length + 1;
+                }
+            }
+
+        }
+           
+           
 
         if (formulario.getForm().isValid()) {
             if (nobj > 0) {
@@ -470,9 +508,11 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
                     url: BASE_URL + 'tramite/tramite/guardar',
                     method: 'POST',
                     params: {
-                        recordsGrid: arregloItems,
+                        //recordsGrid: arregloItems,
                         recordsGridRecaudos: arregloItemsrecaudos,
-                        cedula: cedula1
+                        cedula: cedula1, 
+                        tipo: tipot, 
+                        sectorr: sectorr
                     },
                     success: function (form, action) {
                         loadingMask.hide();

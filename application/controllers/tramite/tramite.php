@@ -195,7 +195,7 @@ class Tramite extends CI_Controller {
     }
 
     public function guardar() {
-        $obj = $_POST['recordsGrid'];
+        //$obj = $_POST['recordsGrid'];
         $username = $this->session->userdata('data');
         $recaudos = $_POST['recordsGridRecaudos'];
         $codigo = $this->obtenercodigo();
@@ -212,9 +212,9 @@ class Tramite extends CI_Controller {
             "id" => $this->input->post("idtramite"),
             "codigo" => $codigo,
             "tiempo" => $this->input->post("tiempot"),
-            "tipotramite" => $this->input->post("tipot"),
+            "tipotramite" => $this->input->post("tipo"),
             "usuario" => $username['id'],
-            "sector_tipoayuda" => $this->input->post("sector"),
+            "sector_tipoayuda" => $this->input->post("sectorr"),
             "estatus" => 1,
         );
         $funcionariotramite = array(
@@ -222,6 +222,7 @@ class Tramite extends CI_Controller {
         );
         if ($arreglotramite['id'] != "") {
             $tramite = $this->tramite_model->updateTramite($arreglotramite);
+            $tramite_funcionario = $this->tramite_model->deleteTramiteFuncionario($arreglotramite['id'], $funcionariotramite['funcionario']);
             $tramitefuncionario = $this->tramite_model->insertTramiteFuncionario($funcionariotramite, $arreglotramite['id']);
             /* if (isset($obj)) {
               $records = json_decode($obj);
@@ -272,6 +273,9 @@ class Tramite extends CI_Controller {
                         "id" => $record1->idrecaudo,
                         "estatus" => $estatusrecaudo,
                     );
+                    
+                    
+                    $deleterecaudos = $this->tramite_model->deleteTramiteRecaudos($record1->idrecaudo);
                     $recaudos = $this->tramite_model->insertRecaudos($arreglorecaudos);
                     $tramiterecaudos = $this->tramite_model->insertTramiteRecaudos($tramiterecaudos, $arreglotramite['id'], $recaudos);
                 }
@@ -279,8 +283,8 @@ class Tramite extends CI_Controller {
 
             echo json_encode(array(
                 "success" => true,
-                "actualizo" => true,
-                "guardo" => false,
+                "actualizo" => $recaudos,
+                "guardo" => $tramiterecaudos,
                 "msg" => 'Registrado con exito.'
             ));
         } else {

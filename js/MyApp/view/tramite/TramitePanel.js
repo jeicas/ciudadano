@@ -88,6 +88,7 @@ Ext.define('MyApp.view.tramite.TramitePanel', {
                         margins: '5 5 5 0',
                         itemId: 'editar',
                         name: 'editar',
+                        hidden: true,
                         tooltip : 'Editar',
                         iconCls: 'edit' 
                   },]
