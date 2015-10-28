@@ -35,20 +35,19 @@ class Tramite extends CI_Controller {
     public function obtenerTramiteProcedimiento() {
         if ($tipoticket = $this->tramite_model->obtenerprocedimiento($this->input->get('tramite'))) {
             foreach ($tipoticket->result_array() as $row) {
-                if ($row['cmbprocedimiento']!=NULL){
-                     $procedimientod=$row['cmbprocedimiento'];
+                if ($row['cmbprocedimiento'] != NULL) {
+                    $procedimientod = $row['cmbprocedimiento'];
+                } else {
+                    $procedimientod = '';
                 }
-                else {
-                    $procedimientod='';
-                }
-                
+
                 $data[] = array(
                     'idprocedimiento' => $row['id'],
                     'descripcion' => $row['descripcion'],
                     'unidad' => $row['unidadresponsable'],
                     'tiempo' => $row['tiempo'],
                     'estatus' => $row['estatus'],
-                    'cmbprocedimiento' =>$procedimientod,
+                    'cmbprocedimiento' => $procedimientod,
                     'funcionario' => $row['funcionario']
                 );
             }
@@ -66,18 +65,16 @@ class Tramite extends CI_Controller {
             echo json_encode($output);
         }
     }
-    
-    
-        public function obtenerProcedimientosTramite() {
-          
-            
+
+    public function obtenerProcedimientosTramite() {
+
+
         if ($tipoticket = $this->tramite_model->obtenerprocedimiento($this->input->get('tramite'))) {
             foreach ($tipoticket->result_array() as $row) {
                 $data[] = array(
                     'idprocedimiento' => $row['id'],
                     'descripcion' => $row['descripcion'],
                     'estatus' => $row['estatus']
-                    
                 );
             }
             $output = array(
@@ -94,9 +91,6 @@ class Tramite extends CI_Controller {
             echo json_encode($output);
         }
     }
-    
-    
-    
 
     public function obtenerTramitetODO() {
         $username = $this->session->userdata('data');
@@ -209,7 +203,7 @@ class Tramite extends CI_Controller {
         }
 
         $arreglotramite = array(
-            "id" => $this->input->post("idtramite"),
+            "id" => $this->input->post("idtramit"),
             "codigo" => $codigo,
             "tiempo" => $this->input->post("tiempot"),
             "tipotramite" => $this->input->post("tipo"),
@@ -273,8 +267,8 @@ class Tramite extends CI_Controller {
                         "id" => $record1->idrecaudo,
                         "estatus" => $estatusrecaudo,
                     );
-                    
-                    
+
+
                     $deleterecaudos = $this->tramite_model->deleteTramiteRecaudos($record1->idrecaudo);
                     $recaudos = $this->tramite_model->insertRecaudos($arreglorecaudos);
                     $tramiterecaudos = $this->tramite_model->insertTramiteRecaudos($tramiterecaudos, $arreglotramite['id'], $recaudos);
@@ -284,7 +278,7 @@ class Tramite extends CI_Controller {
             echo json_encode(array(
                 "success" => true,
                 "actualizo" => $recaudos,
-                "guardo" => $tramiterecaudos,
+               
                 "msg" => 'Registrado con exito.'
             ));
         } else {
@@ -309,7 +303,7 @@ class Tramite extends CI_Controller {
                 "estatus" => 1
             );
             $tramite = $this->tramite_model->insertTramite($arreglotramite);
-            $tramiteUp=true;
+            $tramiteUp = true;
         } else {
 
             $arreglotramiteUp = array(
@@ -317,7 +311,7 @@ class Tramite extends CI_Controller {
                 "descripcion" => $descripcion,
                 "estatus" => 1
             );
-            $tramite=1;
+            $tramite = 1;
             $tramiteUp = $this->tramite_model->updateTramite($arreglotramiteUp);
         }
 
@@ -339,28 +333,26 @@ class Tramite extends CI_Controller {
         }
     }
 
-public function guardarTipoTramite() {
+    public function guardarTipoTramite() {
 
         $username = $this->session->userdata('data');
         $id = $this->input->post("idtipotramite");
         $descripcion = $this->input->post("nombre");
-       
+
         if ($id == 0) {
             $arreglotramite = array(
-                "nombre" => $descripcion, 
+                "nombre" => $descripcion,
                 "ente" => $username['ente'],
-            
             );
             $ttramite = $this->tramite_model->insertTipoTramite($arreglotramite);
-            $tramiteUp=true;
+            $tramiteUp = true;
         } else {
 
             $arreglotramiteUp = array(
                 "id" => $id,
                 "nombre" => $descripcion,
-                
             );
-            $ttramite=true;
+            $ttramite = true;
             $tramiteUp = $this->tramite_model->updateTipoTramite($arreglotramiteUp);
         }
 
@@ -382,18 +374,18 @@ public function guardarTipoTramite() {
         }
     }
 
-public function eliminarTipoTramite() {
+    public function eliminarTipoTramite() {
 
-        
+
         $id = $this->input->post("idtipotramite");
-       
-    
 
-            $arreglotramiteUp = array(
-                "id" => $id,  
-            );
-            $ttramite = $this->tramite_model->deleteTipoTramite($arreglotramiteUp);
-        
+
+
+        $arreglotramiteUp = array(
+            "id" => $id,
+        );
+        $ttramite = $this->tramite_model->deleteTipoTramite($arreglotramiteUp);
+
 
 
         if ($ttramite) {
@@ -411,8 +403,54 @@ public function eliminarTipoTramite() {
         }
     }
 
+    public function guardarTipoAyuda() {
+
+        
+        $id = $this->input->post("idtipoayuda");
+        $descripcion = $this->input->post("nombre");
+        $sector = $this->input->post("idsector");
+
+        if ($id == 0) {
+            $arreglo = array(
+                "nombre" => $descripcion,
+                
+            );
+            $tatramite = $this->tramite_model->insertTipoAyuda($arreglo);
+            $arreglota = array(
+                "sector" => $sector,
+                "tipoayuda" =>$tatramite
+            );
+            $tastramite = $this->tramite_model->insertSectorTipoAyuda($arreglota);
+            $tramiteUp=$tastramite;
+        } else {
+
+                $arreglo = array(
+                  "id"=>$id,
+                  "nombre" => $descripcion,
+                
+            );
+            $tramiteUp = $this->tramite_model->updateTipoAyuda($arreglo);
+           $tastramite =  $tramiteUp;
+            
+        }
 
 
+        if ($tastramite || $tramiteUp) {
+            echo json_encode(array(
+                "success" => true,
+                "actualizo" => $tramiteUp,
+                "guardo" => $tastramite,
+                "msg" => 'Operación Exitosa.'
+            ));
+        } else {
+            echo json_encode(array(
+                "success" => false,
+                "actualizo" => $tramiteUp,
+                "guardo" => $tastramite,
+                "msg" => 'No se pudo realizar la operación.'
+            ));
+        }
+    }
 
     public function guardarActividad() {
         if ($this->input->post('estatus') == 'INICIO' || $this->input->post('estatus') == '') {
@@ -433,13 +471,13 @@ public function eliminarTipoTramite() {
             );
         }
 
- $depende=$this->input->post("actividadDepende");
+        $depende = $this->input->post("actividadDepende");
 
-    if ($depende== ''){
-        $depende=null;
-    }else {
-       $depende=$this->input->post("actividadDepende"); 
-    }
+        if ($depende == '') {
+            $depende = null;
+        } else {
+            $depende = $this->input->post("actividadDepende");
+        }
         $actividades = array(
             "descripcion" => $this->input->post('descripcion'),
             "unidadresponsable" => $this->input->post("unidadresponsable"),
@@ -453,12 +491,12 @@ public function eliminarTipoTramite() {
 
 
             $actividad = $this->tramite_model->insertActividades($actividades, $actividades['tramite']);
-            
+
             $actividadesfuncionario = array(
                 "funcionario" => $row['idfuncionario'],
                 "actividad" => $actividad
             );
-            
+
             $actividadfuncionario = $this->tramite_model->insertActividadesFuncionarios($actividadesfuncionario);
         }
 

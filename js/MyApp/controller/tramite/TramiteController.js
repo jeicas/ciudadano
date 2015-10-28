@@ -7,7 +7,8 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
         'tramite.buscarTramite.GridBuscarTramite',
         'tramite.buscarTramite.BuscarTramite',
         'tramite.WinMaestroTramite',
-        'tramite.WinMaestroTipoTramite'
+        'tramite.WinMaestroTipoTramite',
+        'tramite.WinMaestroTipoAyuda'
     ],
     refs: [{
             ref: 'panelTramite',
@@ -44,6 +45,9 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
         }, {
             ref: 'WinMaestroTipoTramite',
             selector: 'winMaestroTipoTramite'
+        }, {
+            ref: 'WinMaestroTipoAyuda',
+            selector: 'winMaestroTipoAyuda'
         }],
     init: function (application) {
         this.control({
@@ -54,7 +58,7 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
                 change: this.changeSeleccion
             },
             'panelTramite combobox[name=sector]': {
-                select: this.seleccionartipoayuda
+                change: this.seleccionartipoayuda
             },
             'gridActividad button[name=agregar]': {
                 click: this.agregarItem
@@ -62,7 +66,7 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
             'gridActividad textfield[name=lapso]': {
                 blur: this.guardarActividad
             },
-            'gridActividad combobox[name=cmbprocedimiento]': {
+            'gridActividad combobox[name=cmbprocedimiento1]': {
                 focus: this.buscarActividaddepende
             },
             'panelTramite combobox[name=ente]': {
@@ -81,33 +85,32 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
             ' panelTramite combobox[name=nombret]': {
                 select: this.buscarActividad
             },
-            "panelTramite button[name=agregarAyuda]": {
-                click: this.ventanaagregarAyuda
+            ' panelTramite button[name=editarAyuda]': {
+                click: this.ventanaeditarTipoAyuda
             },
-           
             "panelTramite button[name=nuevo]": {
                 click: this.ventanaaagregarNombreTramite
             },
-             "panelTramite button[name=editar]": {
+            "panelTramite button[name=editar]": {
                 click: this.ventanaeditarNombreTramite
             },
-
-              "panelTramite button[name=agregarTipoTramite]": {
+            "panelTramite button[name=agregarTipoTramite]": {
                 click: this.ventanaaagregarTipoTramite
             },
-             "panelTramite button[name=editarTipoTramite]": {
+            "panelTramite button[name=editarTipoTramite]": {
                 click: this.ventanaeditarTipoTramite
             },
-             
-              "panelTramite combobox[name=nombret]": {
+            "panelTramite combobox[name=nombret]": {
                 change: this.cambiar
-            }, 
-              "panelTramite combobox[name=tipot]": {
+            },
+            "panelTramite combobox[name=tipot]": {
                 change: this.cambiarTipoTramite
             },
-
-              "panelTramite combobox[name=ayudat]": {
+            "panelTramite combobox[name=ayudat]": {
                 change: this.cambiarTipoAyuda
+            },
+            "panelTramite button[name=agregarAyuda]": {
+                click: this.ventanaaagregarTipoAyuda
             },
             "panelTramite button[name=buscarTramites]": {
                 click: this.listaTramites
@@ -118,11 +121,12 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
             "winMaestroTramite button[name=btnGuardar]": {
                 click: this.guardarnombre
             },
-              "winMaestroTipoTramite button[name=btnGuardar]": {
+            "winMaestroTipoTramite button[name=btnGuardar]": {
                 click: this.guardarTipoTramite
             },
-           
-           
+            "winMaestroTipoAyuda button[name=btnGuardar]": {
+                click: this.guardarTipoAyuda
+            },
         });
     },
     listaTramites: function (win, options) {
@@ -130,21 +134,28 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
         win.show();
     },
     cambiar: function (button, combobox, e, options) {
-       formPanel = this.getPanelTramite();
+        formPanel = this.getPanelTramite();
         tramite = formPanel.down("combobox[name=nombret]").getValue();
         formPanel.down("textfield[name=idtramite]").setValue(tramite);
         formPanel.down("button[name=editar]").setVisible(true);
         formPanel.down("button[name=nuevo]").setVisible(false);
     },
-      cambiarTipoTramite: function (button, combobox, e, options) {
-       formPanel = this.getPanelTramite();
+    cambiarTipoTramite: function (button, combobox, e, options) {
+        formPanel = this.getPanelTramite();
         tramite = formPanel.down("combobox[name=tipot]").getValue();
         formPanel.down("textfield[name=idtipotramite]").setValue(tramite);
         formPanel.down("button[name=agregarTipoTramite]").setVisible(false);
         formPanel.down("button[name=editarTipoTramite]").setVisible(true);
-        
+
     },
-    
+    cambiarTipoAyuda: function (button, combobox, e, options) {
+        formPanel = this.getPanelTramite();
+        tramite = formPanel.down("combobox[name=ayudat]").getValue();
+        formPanel.down("textfield[name=idtipotramite]").setValue(tramite);
+        formPanel.down("button[name=agregarAyuda]").setVisible(false);
+        formPanel.down("button[name=editarAyuda]").setVisible(true);
+
+    },
     guardarActividad: function (field, e, option) {
         // Ext.MessageBox.show({title: 'Alerta', msg: 'Wiii, Ingrso', buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
 
@@ -171,35 +182,45 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
 
         }
 
-        if (store.data.items[num-1].data.cmbprocedimiento == '' || store.data.items[num-1].data.cmbprocedimiento == null) {
 
-            actividaddependiente = null;
+        storeT = formPanel.down('combobox[name=nombret]').getStore();
+        valorT = formPanel.down('combobox[name=nombret]').getValue();
 
-        } else
-        {
-            if (store.data.items[num-1].data['estatus'] === 'INICIO') {
-
-                Ext.MessageBox.show({title: 'Alerta', msg: 'Este tipo de procedimiento no puede depender de una actividad previa', buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
-                 
+        for (i = 0; i < storeT.data.items.length; ++i) {
+            if (storeT.data.items[i].data['id'] == valorT || storeT.data.items[i].data['descripcion'] == valorT) {
+                trami = storeT.data.items[i].data['id'];
+                i = storeT.data.items.length + 1;
             }
-             else {
-                storeP = grid.down('combobox[name=cmbprocedimiento]').getStore();
-                valor = grid.down('combobox[name=cmbprocedimiento]').getValue();
-                for (i = 0; i < storeP.data.items.length; ++i) {
-                    if (storeP.data.items[i].data['descripcion'] == valor) {
+            console.log(valorT);
+        }
+
+
+
+
+
+        if (store.data.items[num - 1].data.cmbprocedimiento == '' || store.data.items[num - 1].data.cmbprocedimiento == null)
+        {
+            actividaddependiente = null;
+        }
+
+        else
+        {
+
+            storeP = grid.down('combobox[name=cmbprocedimiento1]').getStore();
+            valor = grid.down('combobox[name=cmbprocedimiento1]').getValue();
+            for (i = 0; i < storeP.data.items.length; ++i) {
+                if (storeP.data.items[i].data['descripcion'] == valor) {
+                    actividaddependiente = storeP.data.items[i].data['idprocedimiento'];
+                    i = storeP.data.items.length + 1;
+                } else {
+                    if (storeP.data.items[i].data['id'] == valor) {
                         actividaddependiente = storeP.data.items[i].data['idprocedimiento'];
                         i = storeP.data.items.length + 1;
-                    } else {
-                        if (storeP.data.items[i].data['id'] == valor) {
-                            actividaddependiente = storeP.data.items[i].data['idprocedimiento'];
-                            i = storeP.data.items.length + 1;
-                        }
-
                     }
 
                 }
-            }
 
+            }
         }
         console.log("valor depende " + actividaddependiente);
 
@@ -209,7 +230,7 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
             url: BASE_URL + 'tramite/tramite/guardarActividad',
             method: 'POST',
             params: {
-                tramite: formPanel.down('textfield[name=idtramite]').getValue(),
+                tramite: trami,
                 descripcion: store.data.items[num - 1].data['descripcion'],
                 unidadresponsable: store.data.items[num - 1].data['unidad'],
                 tiempo: store.data.items[num - 1].data['tiempo'],
@@ -238,80 +259,79 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
 
     },
     ventanaaagregarTipoTramite: function (win, options) {
-       var win = Ext.create('MyApp.view.tramite.WinMaestroTipoTramite');
+        var win = Ext.create('MyApp.view.tramite.WinMaestroTipoTramite');
         win.show();
     },
-    
     /*eliminarTipoTramite: function (win, options) {
      
-      formPanel= this.getPanelTramite();
-             Ext.Msg.show({
-                    title: 'Confirmar',
-                    msg: 'Esta seguro que desea Eliminar el Tipo de Evento Seleccionado?',
-                    buttons: Ext.Msg.YESNO,
-                    icon: Ext.Msg.QUESTION,
-                    fn: function (buttonId) {
-                        if (buttonId == 'yes') {
-                           
-          idtram=formPanel.down('textfield[name=idtipotramite]').getValue();
-          
-               Ext.Ajax.request({//AQUI ENVIO LA DATA 
-            url: BASE_URL + 'tramite/tramite/eliminarTipoTramite',
-            method: 'POST',
-            params: {
-                idtipotramite: idtram,
-               
-            },
-            success: function (result, request) {
-                result = Ext.JSON.decode(result.responseText);
-                if (result.success) {
-                    Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
-                     formPanel.down('textfield[name=tipot]').getStore().clearData();
-
-                     
-                }
-
-
-                
-                else {
-
-                    Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
-                }
-            },
-            failure: function (form, action) {
-                var result = action.result;
-                loadingMask.hide();
-                Ext.MessageBox.show({title: 'Alerta', msg: "Ha ocurrido un error. Por vuelva a intentarlo, si el problema persiste comuniquese con el administrador", buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
-            }
-        });
-
-
-                        }
-                    }
-                }); 
+     formPanel= this.getPanelTramite();
+     Ext.Msg.show({
+     title: 'Confirmar',
+     msg: 'Esta seguro que desea Eliminar el Tipo de Evento Seleccionado?',
+     buttons: Ext.Msg.YESNO,
+     icon: Ext.Msg.QUESTION,
+     fn: function (buttonId) {
+     if (buttonId == 'yes') {
      
-    },*/
-    
+     idtram=formPanel.down('textfield[name=idtipotramite]').getValue();
+     
+     Ext.Ajax.request({//AQUI ENVIO LA DATA 
+     url: BASE_URL + 'tramite/tramite/eliminarTipoTramite',
+     method: 'POST',
+     params: {
+     idtipotramite: idtram,
+     
+     },
+     success: function (result, request) {
+     result = Ext.JSON.decode(result.responseText);
+     if (result.success) {
+     Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+     formPanel.down('textfield[name=tipot]').getStore().clearData();
+     
+     
+     }
+     
+     
+     
+     else {
+     
+     Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+     }
+     },
+     failure: function (form, action) {
+     var result = action.result;
+     loadingMask.hide();
+     Ext.MessageBox.show({title: 'Alerta', msg: "Ha ocurrido un error. Por vuelva a intentarlo, si el problema persiste comuniquese con el administrador", buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+     }
+     });
+     
+     
+     }
+     }
+     }); 
+     
+     },*/
+
     ventanaaagregarNombreTramite: function (button, e, options) {
         var win = Ext.create('MyApp.view.tramite.WinMaestroTramite');
         win.down('textfield[name=idtramite]').setValue(0);
         win.setTitle('Nuevo Tramite');
         win.show();
     },
+    ventanaeditarNombreTramite: function (button, e, options) {
 
-     ventanaeditarNombreTramite: function (button, e, options) {
 
+        formPanel = this.getPanelTramite();
+        idtram = formPanel.down('textfield[name=idtramite]').getValue();
+        store = formPanel.down('combobox[name=nombret]').getStore();
+        console.log('tramite' + idtram);
+        for (i = 0; i < store.data.items.length; ++i) {
+            if (store.data.items[i].data['id'] == idtram || store.data.items[i].data['descripcion'] == idtram) {
+                nomb = store.data.items[i].data['descripcion'];
+                i = store.data.items.length + 1;
+            }
 
-         formPanel= this.getPanelTramite();
-         idtram=formPanel.down('textfield[name=idtramite]').getValue();
-         store=formPanel.down('combobox[name=nombret]').getStore();
-          for (i = 0; i < store.data.items.length; ++i) {
-              if (store.data.items[i].data['id']== idtram){
-                  nomb=store.data.items[i].data['descripcion'];
-                     i=store.data.items.length+1;
-              }
-               
-          }
+        }
 
         var win = Ext.create('MyApp.view.tramite.WinMaestroTramite');
         win.down('textfield[name=idtramite]').setValue(idtram);
@@ -319,31 +339,60 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
         win.setTitle('Editar Tramite');
         win.show();
     },
-
-    
-     ventanaeditarTipoTramite: function (button, e, options) {
+    ventanaeditarTipoTramite: function (button, e, options) {
 
 
-         formPanel= this.getPanelTramite();
-         idtram=formPanel.down('textfield[name=idtipotramite]').getValue();
-         store=formPanel.down('combobox[name=tipot]').getStore();
-          for (i = 0; i < store.data.items.length; ++i) {
-              if (store.data.items[i].data['id']== idtram){
-                  nomb=store.data.items[i].data['nombre'];
-                     i=store.data.items.length+1;
-              }
-               
-          }
+        formPanel = this.getPanelTramite();
+        idttrami = formPanel.down('textfield[name=tipot]').getValue();
+        store1 = formPanel.down('combobox[name=tipot]').getStore();
+        console.log('Tipo tramite' + idttrami);
+        console.log(store1);
+        for (i = 0; i < store1.data.items.length; ++i) {
+            if (store1.data.items[i].data['id'] == idttrami || store1.data.items[i].data['nombre'] == idttrami) {
+                nombtt = store1.data.items[i].data['nombre'];
+                idtt = store1.data.items[i].data['id'];
+                i = store1.data.items.length + 1;
+            }
+
+        }
 
         var win = Ext.create('MyApp.view.tramite.WinMaestroTipoTramite');
-        win.down('textfield[name=idtipotramite]').setValue(idtram);
-        win.down('textfield[name=nombre]').setValue(nomb);
+        win.down('textfield[name=idtipotramite]').setValue(idtt);
+        win.down('textfield[name=nombre]').setValue(nombtt);
         win.setTitle('Editar Tipo Tramite');
         win.show();
     },
+    ventanaaagregarTipoAyuda: function (button, e, options) {
+        formPanel = this.getPanelTramite();
+        idsect = formPanel.down('combobox[name=sector]').getValue();
+        var win = Ext.create('MyApp.view.tramite.WinMaestroTipoAyuda');
+        win.down('textfield[name=idtipoayuda]').setValue(0);
+        win.down('textfield[name=idsector]').setValue(idsect);
+        win.setTitle('Nuevo Tipo de Ayuda');
+        win.show();
+    },
+    ventanaeditarTipoAyuda: function (button, e, options) {
+        formPanel = this.getPanelTramite();
+        idtram = formPanel.down('textfield[name=ayudat]').getValue();
+        store2 = formPanel.down('combobox[name=ayudat]').getStore();
+        console.log(store2);
+        for (i = 0; i < store2.data.items.length; ++i) {
+            console.log(store2.data.items[i].data['idAyuda']);
+            if (store2.data.items[i].data['idAyuda'] == idtram || store2.data.items[i].data['ayuda'] == idtram) {
+                nombta = store2.data.items[i].data['ayuda'];
+                idta = store2.data.items[i].data['idAyuda'];
+                i = store2.data.items.length + 1;
+                console.log(nombta);
+            }
 
+        }
 
-
+        var win = Ext.create('MyApp.view.tramite.WinMaestroTipoAyuda');
+        win.down('textfield[name=idtipoayuda]').setValue(idta);
+        win.down('textfield[name=nombre]').setValue(nombta);
+        win.setTitle('Editar Tipo Ayuda');
+        win.show();
+    },
     ventanaagregarAyuda: function (win, options) {
         var win = Ext.create('MyApp.view.tramite.ventanasagregar.GridbuscartipoA');
         win.show();
@@ -351,25 +400,53 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
     buscarActividad: function () {
         formPanel = this.getPanelTramite();
         grid = this.getRecaudosLista();
-        tramite = formPanel.down("combobox[name=nombret]").getValue();
+
+        storeT = formPanel.down('combobox[name=nombret]').getStore();
+        valorT = formPanel.down('combobox[name=nombret]').getValue();
+
+        console.log(storeT);
+        for (i = 0; i < storeT.data.items.length; ++i) {
+            if (storeT.data.items[i].data['id'] == valorT || storeT.data.items[i].data['descripcion'] == valorT) {
+                tramite = storeT.data.items[i].data['id'];
+                i = storeT.data.items.length + 1;
+            }
+
+        }
         formPanel.down("textfield[name=idtramite]").setValue(tramite);
+
+        console.log(formPanel.down("textfield[name=idtramite]").getValue());
         store1 = grid.getStore();
         store1.clearData();
         store1.proxy.extraParams.tramite = tramite;
         grid.getView().refresh(true);
         store1.load();
     },
-    buscarActividaddepende: function () {
-        console.log('paso');
+    buscarActividaddepende: function (a, newValue, oldValue, eOpts) {
+
         formPanel = this.getPanelTramite();
         grid = this.getGridActividad();
-        tramite = formPanel.down("textfield[name=idtramite]").getValue();
+        valorT = formPanel.down("textfield[name=idtramite]").getValue();
+        storeT = formPanel.down("textfield[name=nombret]").getStore();
+        estatus = grid.down("textfield[name=cmbestatus1]").getValue();
 
-        store1 = grid.down("combobox[name=cmbprocedimiento]").getStore();
-        store1.clearData();
-        store1.proxy.extraParams.tramite = tramite;
-        grid.getView().refresh(true);
-        store1.load();
+        for (i = 0; i < storeT.data.items.length; ++i) {
+            if (storeT.data.items[i].data['id'] == valorT || storeT.data.items[i].data['descripcion'] == valorT) {
+                tramite = storeT.data.items[i].data['id'];
+                i = storeT.data.items.length + 1;
+            }
+
+        }
+
+        if (estatus == 'INICIO') {
+            //Ext.MessageBox.show({title: 'Alerta', msg: 'Este tipo de procedimiento no puede depender de una actividad previa', buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+        } else {
+
+            store1 = grid.down("combobox[name=cmbprocedimiento1]").getStore();
+            store1.clearData();
+            store1.proxy.extraParams.tramite = tramite;
+            grid.getView().refresh(true);
+            store1.load();
+        }
     },
     verDetalles: function (win, button, e, options) {
         win = this.getListaTramites();
@@ -380,9 +457,9 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
         grid3 = this.getGridActividad();
         tramiteid = record[0].get('idtramite');
 
-        console.log(tramiteid);
 
-        formPanel.down('textfield[name=idtramite]').setValue(record[0].get('idtramite'));
+
+        formPanel.down('textfield[name=idtramite]').setValue(tramiteid);
         formPanel.down('textfield[name=nombret]').setValue(record[0].get('nombret'));
         formPanel.down('textfield[name=codigotr]').setValue(record[0].get('codigotr'));
         formPanel.down('textfield[name=tiempot]').setValue(record[0].get('tiempot'));
@@ -403,18 +480,18 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
         } else {
             formPanel.down('radiofield[name=seleccionar]').setValue(2);
         }
-        
+
         store2 = grid3.getStore();
         store2.clearData();
         store2.proxy.extraParams.tramite = tramiteid;
         grid3.getView().refresh(true);
         store2.load();
         /* grid5 = Ext.ComponentQuery.query('gridActividad')[0];
-        store3 = grid5.columns[5].editor.getStore();
-        store3.clearData();
-        store3.proxy.extraParams.tramite = tramite;
-        grid3.getView().refresh(true);
-        store3.load();*/
+         store3 = grid5.columns[5].editor.getStore();
+         store3.clearData();
+         store3.proxy.extraParams.tramite = tramite;
+         grid3.getView().refresh(true);
+         store3.load();*/
         win.close();
     },
     recaudos: function (grupo, cmp) {
@@ -422,18 +499,17 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
             Ext.ComponentQuery.query('recaudosLista')[0].setVisible(true);
             Ext.ComponentQuery.query('#mitabpanel')[0].setActiveTab(0);
             Ext.ComponentQuery.query('recaudosLista')[0].setDisabled(false);
-            // Ext.ComponentQuery.query('recaudosLista')[0].setActiveTab(1); 
-            // Ext.ComponentQuery.query('panelTramite mitabpanel')[0].setVisible(true);
+
             grid9 = this.getRecaudosLista();
             gridStore9 = grid9.getStore();
             gridStore9.clearData();
             grid9.getView().refresh(true);
         } else {
-            // Ext.ComponentQuery.query('#mitabpanel')[0].setVisible(); 
+
             Ext.ComponentQuery.query('#mitabpanel')[0].setActiveTab(1);
             Ext.ComponentQuery.query('recaudosLista')[0].setVisible(false);
             Ext.ComponentQuery.query('recaudosLista')[0].setDisabled(true);
-            // Ext.ComponentQuery.query('gridActividad')[0].setActiveTab(1);
+
             grid9 = this.getRecaudosLista();
             gridStore9 = grid9.getStore();
             gridStore9.clearData();
@@ -469,7 +545,7 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
         store = formulari.down('combobox[name=nombret]').getStore();
         formulario = formular.down('form[name=formTramite]').getForm();
         if (formulario.isValid()) {
-           
+
             var loadingMask = new Ext.LoadMask(Ext.getBody(), {msg: "Guardando por Favor espere..."});
             loadingMask.show();
             formulario.submit({
@@ -511,49 +587,55 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
 
 
 
-        /* if (nobj > 0) {
-         var arregloGrid = [];
-         Ext.each(modified, function (record) {
-         arregloGrid.push(Ext.apply(record.data));
-         });
-         arregloItems = Ext.encode(arregloGrid);
-         
-         var loadingMask = new Ext.LoadMask(Ext.getBody(), {msg: "Guardando por Favor espere..."});
-         loadingMask.show();
-         
-         Ext.Ajax.request({//AQUI ENVIO LA DATA 
-         url: BASE_URL + 'tramite/tramite/guardarNombre',
-         method: 'POST',
-         params: {
-         recordsGrid: arregloItems,
-         },
-         success: function (result, request) {
-         result = Ext.JSON.decode(result.responseText);
-         if (result.success) {
-         
-         Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
-         }
-         else {
-         
-         
-         }
-         },
-         failure: function (form, action) {
-         var result = action.result;
-         loadingMask.hide();
-         Ext.MessageBox.show({title: 'Alerta', msg: "Ha ocurrido un error. Por vuelva a intentarlo, si el problema persiste comuniquese con el administrador", buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
-         
-         }
-         });
-         
-         
-         
-         
-         
-         
-         } else {
-         Ext.MessageBox.show({title: 'Informaci&oacute;n', msg: 'Ingresar los datos de la grid Descripcion,Responsable y Division', buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.INFO});
-         }*/
+
+    },
+    guardarTipoAyuda: function () {
+
+        me = this;
+        formular = this.getWinMaestroTipoAyuda();
+        formulari = this.getPanelTramite();
+        store = formulari.down('combobox[name=ayudat]').getStore();
+        formulario = formular.down('form[name=formTramite]').getForm();
+        if (formulario.isValid()) {
+
+            var loadingMask = new Ext.LoadMask(Ext.getBody(), {msg: "Guardando por Favor espere..."});
+            loadingMask.show();
+            formulario.submit({
+                url: BASE_URL + 'tramite/tramite/guardarTipoAyuda',
+                method: 'POST',
+                success: function (form, action) {
+
+                    loadingMask.hide();
+                    var data = Ext.JSON.decode(action.response.responseText);
+                    Ext.Msg.show({
+                        title: 'Informaci&oacute;n',
+                        msg: data.msg,
+                        icon: Ext.Msg.INFO,
+                        buttons: Ext.Msg.OK
+                    });
+                    formular.close();
+                    store.load();
+                },
+                failure: function (form, action) {
+                    loadingMask.hide();
+                    switch (action.failureType) {
+                        case Ext.form.Action.CLIENT_INVALID:
+                            Ext.MessageBox.show({title: 'Verifique los datos', msg: 'Algunos campos no fueron introducidos correctamente', buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.ERROR});
+                            break;
+                        case Ext.form.Action.CONNECT_FAILURE:
+                            Ext.MessageBox.show({title: 'Error', msg: 'Error en comunicaci&oacute;n Ajax', buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.ERROR});
+                            break;
+                        case Ext.form.Action.SERVER_INVALID:
+                            Ext.MessageBox.show({title: 'Error---Verifique!', msg: 'Informacion ingresada es invalida/Servidor invalido', buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.ERROR});
+                            break;
+                        default:
+                            Ext.MessageBox.show({title: 'Alerta', msg: 'Se ha detectado algun error', buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+                    }
+                },
+            });
+        } else {
+            Ext.MessageBox.show({title: 'Informaci&oacute;n', msg: 'Debe ingresar todos los datos solicitados.', buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.INFO});
+        }
 
     },
     guardarTipoTramite: function () {
@@ -564,7 +646,7 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
         store = formulari.down('combobox[name=tipot]').getStore();
         formulario = formular.down('form[name=formTramite]').getForm();
         if (formulario.isValid()) {
-           
+
             var loadingMask = new Ext.LoadMask(Ext.getBody(), {msg: "Guardando por Favor espere..."});
             loadingMask.show();
             formulario.submit({
@@ -603,7 +685,6 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
         } else {
             Ext.MessageBox.show({title: 'Informaci&oacute;n', msg: 'Debe ingresar todos los datos solicitados.', buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.INFO});
         }
-
     },
     guardarTramite: function () {
         me = this;
@@ -635,8 +716,8 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
             }
 
         }
-        
-          storeS = formulario.down('combobox[name=sector]').getStore();
+
+        storeS = formulario.down('combobox[name=sector]').getStore();
         valorS = formulario.down('combobox[name=sector]').getValue();
         for (k = 0; k < storeS.data.items.length; ++k) {
 
@@ -651,8 +732,8 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
             }
 
         }
-           
-               storeTT = formulario.down('combobox[name=tipot]').getStore();
+
+        storeTT = formulario.down('combobox[name=tipot]').getStore();
         valorTT = formulario.down('combobox[name=tipot]').getValue();
         for (j = 0; j < storeTT.data.items.length; ++j) {
 
@@ -667,8 +748,25 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
             }
 
         }
-           
-           
+
+
+        storeT = formulario.down('combobox[name=nombret]').getStore();
+        valorT = formulario.down('combobox[name=nombret]').getValue();
+        for (l = 0; l < storeT.data.items.length; ++l) {
+
+            if (storeT.data.items[l].data['descripcion'] == valorT) {
+                t = storeT.data.items[l].data['id'];
+                l = storeT.data.items.length + 1;
+            } else {
+                if (storeT.data.items[l].data['id'] == valorT) {
+                    t = storeT.data.items[l].data['id'];
+                    l = storeT.data.items.length + 1;
+                }
+            }
+
+        }
+
+
 
         if (formulario.getForm().isValid()) {
             if (nobj > 0) {
@@ -690,8 +788,9 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
                     params: {
                         //recordsGrid: arregloItems,
                         recordsGridRecaudos: arregloItemsrecaudos,
-                        cedula: cedula1, 
-                        tipo: tipot, 
+                        cedula: cedula1,
+                        idtramit: t,
+                        tipo: tipot,
                         sectorr: sectorr
                     },
                     success: function (form, action) {
@@ -732,11 +831,22 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
     seleccionartipoayuda: function (a, e, eOpts) {
         me = this;
         var formulario = this.getPanelTramite();
-        sector = formulario.down('combobox[name=sector]').getValue();
+        sectorn = formulario.down('combobox[name=sector]').getValue();
+        stores = formulario.down('combobox[name=sector]').getStore();
+        for (i = 0; i < stores.data.items.length; ++i) {
+            if (stores.data.items[i].data['id'] == sectorn || stores.data.items[i].data['nombre'] == sectorn) {
+                sector = stores.data.items[i].data['id'];
+                i = stores.data.items.length + 1;
+            }
+
+        }
+
+
         formulario.down("combobox[name=ayudat]").reset();
         ResponsableStore = formulario.down('combobox[name=ayudat]').getStore();
         ResponsableStore.proxy.extraParams.sector = sector;
         ResponsableStore.load();
+        formulario.down("button[name=agregarAyuda]").setVisible(true);
     },
     cambio: function (a, newValue, oldValue, eOpts) {
         me = this;
@@ -803,6 +913,12 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
         me = this;
         var formulario = this.getPanelTramite();
         formulario.getForm().reset();
+        formulario.down('button[name=nuevo]').setVisible(true);
+        formulario.down('button[name=agregarTipoTramite]').setVisible(true);
+        formulario.down('button[name=editar]').setVisible(false);
+        formulario.down('button[name=editarTipoTramite]').setVisible(false);
+        formulario.down('button[name=agregarAyuda]').setVisible(false);
+        formulario.down('button[name=editarAyuda]').setVisible(false);
         grid9 = this.getRecaudosLista();
         gridStore9 = grid9.getStore();
         gridStore9.clearData();
@@ -811,6 +927,7 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
         gridStore10 = grid10.getStore();
         gridStore10.clearData();
         grid10.getView().refresh(true);
+        
     },
     imprimirReporteEstatus: function () {
         window.open(BASE_URL + 'pdfs/reportepdf/reporteEstatusPdf');

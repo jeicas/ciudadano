@@ -46,7 +46,7 @@ Ext.define('MyApp.view.tramite.TramitePanel', {
                 {
                     xtype       : 'textfield',                        
                     margins     : '5 0 5 0',
-                    name        : 'idayudatramite',
+                    name        : 'idtipoayuda',
                     width       : '100%',
                     hidden  : true,
                 },{
@@ -68,6 +68,7 @@ Ext.define('MyApp.view.tramite.TramitePanel', {
                         iconCls : 'buscar',
                         tooltip : 'Buscar',
                         margins : '5 0 0 7',
+                        cls: 'icon-clave',
                         name    : 'buscarTramites',
                     },]
                 },{
@@ -94,6 +95,7 @@ Ext.define('MyApp.view.tramite.TramitePanel', {
                         itemId: 'nuevo',
                         name: 'nuevo',
                         tooltip : 'Agregar',
+                        cls: 'icon-clave',
                         iconCls: 'add' 
                   },
               { 
@@ -104,6 +106,7 @@ Ext.define('MyApp.view.tramite.TramitePanel', {
                         name: 'editar',
                         hidden: true,
                         tooltip : 'Editar',
+                         cls: 'icon-clave',
                         iconCls: 'edit' 
                   },]
                 },{
@@ -129,11 +132,13 @@ Ext.define('MyApp.view.tramite.TramitePanel', {
                         iconCls : 'add',
                         tooltip : 'Agregar',
                         margins : '5 0 0 7',
+                         cls: 'icon-clave',
                         name    : 'agregarTipoTramite',
                     },{
                         xtype   : 'button',
                         iconCls : 'edit',
                         tooltip : 'Editar',
+                         cls: 'icon-clave',
                         margins : '5 0 0 7',
                         hidden: true,
                         name    : 'editarTipoTramite',
@@ -183,19 +188,17 @@ Ext.define('MyApp.view.tramite.TramitePanel', {
                         iconCls : 'add',
                         tooltip : 'Agregar',
                         margins : '0 0 0 5',
+                        hidden  : true,
+                         cls: 'icon-clave',
                         name    : 'agregarAyuda'
                     }, {
                         xtype   : 'button',
                         iconCls : 'edit',
                         tooltip : 'Editar',
                         margins : '0 0 0 5',
+                        hidden  : true,
+                         cls: 'icon-clave',
                         name    : 'editarAyuda'
-                    },{
-                        xtype   : 'button',
-                        iconCls : 'eliminar',
-                        tooltip : 'Eliminar',
-                        margins : '0 0 0 5',
-                        name    : 'eliminarAyuda'
                     }]
                 }] 
             },{

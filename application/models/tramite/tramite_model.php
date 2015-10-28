@@ -231,6 +231,19 @@ class Tramite_model extends CI_Model {
         $this->db->where('id', $ticket['id']);
         return $this->db->delete('tipotramite');
     }
-   
+    
+    
+    public function insertTipoAyuda($arreglo) {
+        $this->db->insert('tipoayuda', $arreglo);
+        return mysql_insert_id();
+    }
+    
+    public function insertSectorTipoAyuda($arreglo) {
+        return $this->db->insert('sector_tipoayuda', $arreglo);
+    }
+     public function updateTipoAyuda($ticket) {
+        $this->db->where('id', $ticket['id']);
+        return $this->db->update('tipoayuda', $ticket);
+    }
 
 }

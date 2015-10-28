@@ -114,6 +114,7 @@ Ext.define('MyApp.view.tramite.GridActividad', {
             },
             editor: new Ext.form.field.ComboBox({
             id:'cmbestatus',
+            name:'cmbestatus1',
             store : Ext.create('MyApp.store.tramite.EstadoTramite'),
             triggerAction: 'all',
             valueField: 'nombre',
@@ -149,7 +150,8 @@ Ext.define('MyApp.view.tramite.GridActividad', {
                 },
             },
             editor: new Ext.form.field.ComboBox({
-             name:'cmbprocedimiento',
+            
+             name:'cmbprocedimiento1',
             store : Ext.create('MyApp.store.tramite.Actividades'),
             triggerAction: 'all',
             valueField: 'descripcion',
