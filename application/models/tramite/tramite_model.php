@@ -245,5 +245,106 @@ class Tramite_model extends CI_Model {
         $this->db->where('id', $ticket['id']);
         return $this->db->update('tipoayuda', $ticket);
     }
+    
+       public function obtenerSolicitudes($ente) {
+            $sql = "SELECT t.id idticket,
+                            t.codigo codigoTicket,
+                            tt.nombre tipoTicket,
+                            tta.descripcion solicitud,
+                            IF(sol.persona<>'NULL',CONCAT(p.nombre,' ',p.apellido),com.razonsocial) as solicitante,
+                            e.nombre ente, s.nombre sector, 
+                            ta.nombre tipoayuda, 
+                            tta.cantidad cantidad,
+                            DATE_FORMAT(t.fecha,'%d-%m-%Y') as fechaRegistro, 
+                            CASE t.estatus
+                                  WHEN 0 THEN 'ELIMINADO'
+                                  WHEN 1 THEN 'PENDIENTE'
+                                  WHEN 2 THEN 'RECIBIDO'
+                                  WHEN 3 THEN 'RECHAZADO' END as estatusTicket 
+                        FROM  ente e 
+                        INNER JOIN ente_sector es ON es.ente=e.id 
+                        INNER JOIN sector s on es.sector=s.id 
+                        INNER JOIN sector_tipoayuda sta on sta.sector=s.id
+                        INNER JOIN tipoayuda ta on ta.id=sta.tipoayuda 
+                        INNER JOIN ticket t on s.id=t.sector 
+                        INNER JOIN ticket_tipoayuda tta on t.id=tta.ticket and tta.tipoayuda=ta.id 
+                        INNER JOIN solicitante sol on sol.id=t.solicitante
+                        LEFT JOIN persona p on sol.persona=p.id
+                        LEFT JOIN comunidad com on com.id=sol.comunidad
+                        INNER JOIN tipoticket tt on t.tipoticket=tt.id  
+                        WHERE e.id=$ente";
+        $query = $this->db->query($sql);
+         if ($query->num_rows() > 0) {
+              foreach ($query->result() as $row){
+                    $resultado[] = $row;
+                }
+                return $resultado;
+                $query->free-result();
+        } 
+    }
 
+       public function obtenerSolicitudesSectorTipoU($ente, $sector, $tipoa) {
+            $sql = "SELECT t.id idticket,
+                            t.codigo codigoTicket,
+                            tt.nombre tipoTicket,
+                            tta.descripcion solicitud,
+                            IF(sol.persona<>'NULL',CONCAT(p.nombre,' ',p.apellido),com.razonsocial) as solicitante,
+                            e.nombre ente, s.nombre sector, 
+                            ta.nombre tipoayuda, 
+                            tta.cantidad cantidad,
+                            DATE_FORMAT(t.fecha,'%d-%m-%Y') as fechaRegistro, 
+                            CASE t.estatus
+                                  WHEN 0 THEN 'ELIMINADO'
+                                  WHEN 1 THEN 'PENDIENTE'
+                                  WHEN 2 THEN 'RECIBIDO'
+                                  WHEN 3 THEN 'RECHAZADO' END as estatusTicket 
+                        FROM  ente e 
+                        INNER JOIN ente_sector es ON es.ente=e.id 
+                        INNER JOIN sector s on es.sector=s.id 
+                        INNER JOIN sector_tipoayuda sta on sta.sector=s.id and s.id=$sector 
+                        INNER JOIN tipoayuda ta on ta.id=sta.tipoayuda and ta.id=$tipoa 
+                        INNER JOIN ticket t on s.id=t.sector 
+                        INNER JOIN ticket_tipoayuda tta on t.id=tta.ticket and tta.tipoayuda=ta.id 
+                        INNER JOIN solicitante sol on sol.id=t.solicitante
+                        LEFT JOIN persona p on sol.persona=p.id
+                        LEFT JOIN comunidad com on com.id=sol.comunidad
+                        INNER JOIN tipoticket tt on t.tipoticket=tt.id  
+                        WHERE e.id=$ente";
+        $query = $this->db->query($sql);
+          if ($query->num_rows() > 0) {
+              foreach ($query->result() as $row){
+                    $resultado[] = $row;
+                }
+                return $resultado;
+                $query->free-result();
+        } 
+    }
+    
+      public function obtenerSectorTipoAyudaResponsable($ente, $usuario) {
+           $sql="SELECT  distinct p.nombre, 
+                                 s.nombre sector,s.id id_sector, 
+                                 ta.nombre tipoayuda,
+                                 ta.id id_tipoayuda,
+                                 t.descripcion tramite
+                    FROM  ticket_tipoayuda tta 
+                        INNER JOIN sector_tipoayuda sta on sta.tipoayuda=tta.tipoayuda
+                        INNER JOIN tramite t on t.sector_tipoayuda=sta.id
+                        INNER JOIN tramite_funcionario tf on tf.tramite=t.id
+                        INNER JOIN funcionario f on tf.funcionario=f.id
+                        INNER JOIN persona p on f.persona=p.id
+                        INNER JOIN usuario u on u.id=f.usuario and f.usuario=$usuario
+                        INNER JOIN tipoayuda ta on ta.id=sta.tipoayuda 
+                        INNER JOIN sector s on s.id=sta.sector
+                        INNER JOIN ente_sector es on s.id=es.sector and es.ente=$ente";
+           
+        $query = $this->db->query($sql);
+           if ($query->num_rows() > 0) {
+              foreach ($query->result() as $row1){
+                    $resultado[] = $row1;  
+                }
+                return $resultado;
+                $query->free-result();
+                
+              }    
+    }
 }

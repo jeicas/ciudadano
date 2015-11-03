@@ -278,7 +278,6 @@ class Tramite extends CI_Controller {
             echo json_encode(array(
                 "success" => true,
                 "actualizo" => $recaudos,
-               
                 "msg" => 'Registrado con exito.'
             ));
         } else {
@@ -405,7 +404,7 @@ class Tramite extends CI_Controller {
 
     public function guardarTipoAyuda() {
 
-        
+
         $id = $this->input->post("idtipoayuda");
         $descripcion = $this->input->post("nombre");
         $sector = $this->input->post("idsector");
@@ -413,25 +412,22 @@ class Tramite extends CI_Controller {
         if ($id == 0) {
             $arreglo = array(
                 "nombre" => $descripcion,
-                
             );
             $tatramite = $this->tramite_model->insertTipoAyuda($arreglo);
             $arreglota = array(
                 "sector" => $sector,
-                "tipoayuda" =>$tatramite
+                "tipoayuda" => $tatramite
             );
             $tastramite = $this->tramite_model->insertSectorTipoAyuda($arreglota);
-            $tramiteUp=$tastramite;
+            $tramiteUp = $tastramite;
         } else {
 
-                $arreglo = array(
-                  "id"=>$id,
-                  "nombre" => $descripcion,
-                
+            $arreglo = array(
+                "id" => $id,
+                "nombre" => $descripcion,
             );
             $tramiteUp = $this->tramite_model->updateTipoAyuda($arreglo);
-           $tastramite =  $tramiteUp;
-            
+            $tastramite = $tramiteUp;
         }
 
 
@@ -545,6 +541,32 @@ class Tramite extends CI_Controller {
                 'success' => true,
             );
             echo json_encode($output);
+        }
+    }
+
+    function buscarSolicitudesEnteSectorTipoAyuda() {
+        $username = $this->session->userdata('data');
+        if ($username['tipousuario'] == 2) {
+            $solicitudes = $this->tramite_model->obtenerSolicitudes($username['ente']);
+            $this->output->set_content_type('application/json');
+            $this->output->set_output(json_encode(array(
+                'success' => true,
+                'total' => count($solicitudes),
+                'data' => $solicitudes
+            )));
+        } else {
+            if ($username['tipousuario'] == 3) {
+                $responsable = $this->tramite_model->obtenerSectorTipoAyudaResponsable($username['ente'], $username['id']);
+                 foreach ($responsable as $row) {
+                  $solicitudes = $this->tramite_model->obtenerSolicitudesSectorTipoU($username['ente'], $row->id_sector,$row->id_tipoayuda);
+                  $this->output->set_content_type('application/json');
+                  $this->output->set_output(json_encode(array(
+                  'success' => true,
+                  'total' => count($solicitudes),
+                  'data' => $solicitudes
+                  ))); 
+                 }
+            }
         }
     }
 

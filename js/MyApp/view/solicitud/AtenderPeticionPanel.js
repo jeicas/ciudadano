@@ -4,7 +4,7 @@ Ext.define('MyApp.view.solicitud.AtenderPeticionPanel', {
   itemId: 'atenderPeticionPanel',
   autoScroll:  true,
   requires: [
-   'MyApp.view.historico.ListaPeticion'
+   'MyApp.view.solicitud.ListaPeticion'
   ],
   layout: {
     type: 'fit'

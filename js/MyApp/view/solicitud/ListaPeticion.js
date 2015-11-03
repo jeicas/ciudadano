@@ -87,32 +87,6 @@ Ext.define('MyApp.view.solicitud.ListaPeticion', {
                 }
             }               
         },{
-            dataIndex   : 'solicitante',
-            text        : 'Solicitante',
-            renderer    : function(v){ return ('<SPAN class="ajustar-texto-grid">'+v+'</SPAN>')},
-            flex        : 1,
-            items    : {
-                xtype: 'textfield',
-                flex : 1,
-                margin: 2,
-                enableKeyEvents: true,
-                listeners: {
-                    keyup: function() {
-                        var store = this.up('grid').store;
-                        store.clearFilter();
-                        if (this.value) {
-                            store.filter({
-                                property     : 'solicitante',
-                                value         : this.value,
-                                anyMatch      : true,
-                                caseSensitive : false
-                            });
-                        }
-                    },
-                    buffer: 500
-                }
-            }
-        },{
             dataIndex   : 'tipoTicket',
             text        : 'Tipo de Ticket',
             renderer    : function(v){ return ('<SPAN class="ajustar-texto-grid">'+v+'</SPAN>')},
@@ -139,8 +113,112 @@ Ext.define('MyApp.view.solicitud.ListaPeticion', {
                 }
             }
         },{
-            dataIndex   : 'descripcion',
+            dataIndex   : 'sector',
+            text        : 'Sector',
+            renderer    : function(v){ return ('<SPAN class="ajustar-texto-grid">'+v+'</SPAN>')},
+            flex        : 0.7,
+            items    : {
+                xtype: 'textfield',
+                flex : 1,
+                margin: 2,
+                enableKeyEvents: true,
+                listeners: {
+                    keyup: function() {
+                        var store = this.up('grid').store;
+                        store.clearFilter();
+                        if (this.value) {
+                            store.filter({
+                                property     : 'tipoTicket',
+                                value         : this.value,
+                                anyMatch      : true,
+                                caseSensitive : false
+                            });
+                        }
+                    },
+                    buffer: 500
+                }
+            }
+        }, {
+            dataIndex   : 'tipoayuda',
+            text        : 'Tipo de Ayuda',
+            renderer    : function(v){ return ('<SPAN class="ajustar-texto-grid">'+v+'</SPAN>')},
+            flex        : 0.7,
+            items    : {
+                xtype: 'textfield',
+                flex : 1,
+                margin: 2,
+                enableKeyEvents: true,
+                listeners: {
+                    keyup: function() {
+                        var store = this.up('grid').store;
+                        store.clearFilter();
+                        if (this.value) {
+                            store.filter({
+                                property     : 'tipoTicket',
+                                value         : this.value,
+                                anyMatch      : true,
+                                caseSensitive : false
+                            });
+                        }
+                    },
+                    buffer: 500
+                }
+            }
+        },{
+            dataIndex   : 'solicitante',
+            text        : 'Solicitante',
+            renderer    : function(v){ return ('<SPAN class="ajustar-texto-grid">'+v+'</SPAN>')},
+            flex        : 1,
+            items    : {
+                xtype: 'textfield',
+                flex : 1,
+                margin: 2,
+                enableKeyEvents: true,
+                listeners: {
+                    keyup: function() {
+                        var store = this.up('grid').store;
+                        store.clearFilter();
+                        if (this.value) {
+                            store.filter({
+                                property     : 'solicitante',
+                                value         : this.value,
+                                anyMatch      : true,
+                                caseSensitive : false
+                            });
+                        }
+                    },
+                    buffer: 500
+                }
+            }
+        },{
+            dataIndex   : 'solicitud',
             text        : 'Descripción',
+            renderer    : function(v){ return ('<SPAN class="ajustar-texto-grid">'+v+'</SPAN>')},
+            flex        : 0.7,
+            items    : {
+                xtype: 'textfield',
+                flex : 1,
+                margin: 2,
+                enableKeyEvents: true,
+                listeners: {
+                    keyup: function() {
+                        var store = this.up('grid').store;
+                        store.clearFilter();
+                        if (this.value) {
+                            store.filter({
+                                property     : 'descripcion',
+                                value         : this.value,
+                                anyMatch      : true,
+                                caseSensitive : false
+                            });
+                        }
+                    },
+                    buffer: 500
+                }
+            }
+        },{
+            dataIndex   : 'cantidad',
+            text        : 'Cantidad',
             renderer    : function(v){ return ('<SPAN class="ajustar-texto-grid">'+v+'</SPAN>')},
             flex        : 0.7,
             items    : {
