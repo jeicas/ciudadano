@@ -28,4 +28,19 @@ class Solicitud extends CI_Controller{
         'data'      => $ticket
       )));
     }
+    
+       public function buscarProcedimientoTicket(){
+        $tipolimi = array();
+        $ticket = $this->input->get('ticket');
+     
+        $tipolimi= $this->atenderticket_model->obtenerProcedimientoTicket($ticket);
+         
+        if ($tipolimi) {
+             
+            $this->output->set_content_type('application/json');
+            $this->output->set_output(json_encode(array(
+                "success" => True,
+                'data' => $tipolimi)));
+        }
+    }
 }

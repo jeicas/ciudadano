@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://localhost/ciudadano/';
+$config['base_url']	= 'http://localhost/ciudadanoRepo/ciudadanoRepo';
 
 /*'http://localhost/curso_ci/index.php/';
 

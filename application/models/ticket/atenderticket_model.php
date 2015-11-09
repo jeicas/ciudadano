@@ -60,4 +60,35 @@ class Atenderticket_model extends CI_Model{
         $this->db->where('ticket',$ticket);
         $this->db->update('historicoticket', $data);    
     }
+    
+    
+    
+    
+       public function obtenerProcedimientoTicket($ticket) {
+           
+            $sql = "SELECT act.id actividadid, act.descripcion actividad, CASE tact.estatus
+                                  WHEN 0 THEN 'ELIMINADO'
+                                  WHEN 1 THEN 'PENDIENTE'
+                                  WHEN 3 THEN 'RECIBIDO'
+				  WHEN 4 THEN 'APROBADO'
+                                  WHEN 5 THEN 'RECHAZADO' END as estatus, 
+                    tact.observacionresponsable observacionfuncionario, tact.observacionrespuesta respuestafuncionario, 
+                    CONCAT(p.nombre, ' ', p.apellido) encargado
+                    FROM ticket_actividad tact 
+                    INNER JOIN actividad act ON tact.actividad=act.id     
+                    INNER JOIN actividad_funcionario actf ON act.id=actf.actividad 
+                    INNER JOIN funcionario f ON f.id=actf.funcionario
+                    INNER JOIN persona p ON p.id=f.persona
+                    WHERE tact.ticket=$ticket";
+           
+        $query = $this->db->query($sql);
+         if ($query->num_rows() > 0) {
+              foreach ($query->result() as $row){
+                    $resultado[] = $row;
+                }
+                return $resultado;
+                $query->free-result();
+        } 
+    }
+    
 }

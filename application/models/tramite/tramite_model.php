@@ -247,7 +247,7 @@ class Tramite_model extends CI_Model {
     }
     
        public function obtenerSolicitudes($ente) {
-            $sql = "SELECT t.id idticket,
+            $sql = "SELECT t.id idTicket,
                             t.codigo codigoTicket,
                             tt.nombre tipoTicket,
                             tta.descripcion solicitud,
@@ -284,7 +284,7 @@ class Tramite_model extends CI_Model {
     }
 
        public function obtenerSolicitudesSectorTipoU($ente, $sector, $tipoa) {
-            $sql = "SELECT t.id idticket,
+            $sql = "SELECT t.id idTicket,
                             t.codigo codigoTicket,
                             tt.nombre tipoTicket,
                             tta.descripcion solicitud,
