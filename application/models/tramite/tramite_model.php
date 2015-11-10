@@ -289,8 +289,11 @@ class Tramite_model extends CI_Model {
                             tt.nombre tipoTicket,
                             tta.descripcion solicitud,
                             IF(sol.persona<>'NULL',CONCAT(p.nombre,' ',p.apellido),com.razonsocial) as solicitante,
-                            e.nombre ente, s.nombre sector, 
+                            e.nombre ente, 
+                            s.id idSector,
+                            s.nombre sector, 
                             ta.nombre tipoayuda, 
+                            ta.id idTipoAyuda, 
                             tta.cantidad cantidad,
                             DATE_FORMAT(t.fecha,'%d-%m-%Y') as fechaRegistro, 
                             CASE t.estatus

@@ -33,6 +33,12 @@ Ext.define('MyApp.view.solicitud.ListaPeticion', {
         return [{
                 dataIndex: 'idTicket',
                 hidden: true
+            },{
+                dataIndex: 'idTipoAyuda',
+                hidden: true
+            },{
+                dataIndex: 'idSector',
+                hidden: true
             }, {
                 xtype: 'rownumberer'
             }, {

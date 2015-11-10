@@ -12,6 +12,8 @@ Ext.define('MyApp.model.store.solicitud.TicketStore', {
         {name: 'fechaRegistro'},
         {name: 'estatusTicket'},
         {name: 'cantidad'},
+        {name: 'idTipoAyuda'},
+        {name: 'idSector'},
 
     ]
 });
