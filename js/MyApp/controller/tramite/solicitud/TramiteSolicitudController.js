@@ -85,11 +85,12 @@ Ext.define('MyApp.controller.tramite.solicitud.TramiteSolicitudController', {
                                     icon: Ext.Msg.INFO,
                                     buttons: Ext.Msg.OK
                                 });
-                                grid = this.getListaPeticion();
-                                store = grid.getStore();
-                                console.log(store);
                                 formulario.close();
-                                store.load();
+                                formw.close(); 
+                               /* grid = this.getAtenderPeticionPanel();
+                                store = grid.getStore();
+                                store.load();*/
+                                
                             },
                             failure: function (form, action) {
                                 loadingMask.hide();
@@ -141,6 +142,7 @@ Ext.define('MyApp.controller.tramite.solicitud.TramiteSolicitudController', {
 
           formw = this.getWinObservacionSolicitud();
           me = this;
+         
                     formulario = formw.down('form[name=formulario]').getForm();
                     if (formulario.isValid()) {
 
@@ -159,11 +161,14 @@ Ext.define('MyApp.controller.tramite.solicitud.TramiteSolicitudController', {
                                     icon: Ext.Msg.INFO,
                                     buttons: Ext.Msg.OK
                                 });
-                                grid = this.getListaPeticion();
+                                 formulario.close();
+                                formw.close(); 
+                                /*grid = me.getListaPeticion();
                                 store = grid.getStore();
-                                console.log(store);
-                                formulario.close();
                                 store.load();
+                                console.log(store);*/
+                               
+                               
                             },
                             failure: function (form, action) {
                                 loadingMask.hide();

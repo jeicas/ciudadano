@@ -59,7 +59,7 @@ class Solicitud extends CI_Controller {
             'id' => $ticket,
             'estatus' => 1
         );
-        echo json_encode($sol);
+        
 
         $tipolimi = $this->ticket_model->updateEstatusTicket($sol);
         if ($tipolimi) {
@@ -73,29 +73,32 @@ class Solicitud extends CI_Controller {
     }
 
     public function rechazarSolicitudTicket(){
-         
+         $ticket = $this->input->post('idticket'); 
+         $tipoayuda = $this->input->post('idtipoayuda'); 
+        $observacion =$this->input->post('observacion'); 
         //$tipolimi = array();
-        $ticket = $this->input->post('idticket'); 
-        $tipoayuda = $this->input->post('idtipoayuda'); 
-        $observacion =$this->input-post('observacion');      
+       /* 
+        */     
         
-       echo json_encode($ticket);
+      
         $sol = array(
             'id' => $ticket,
             'estatus' => 4
         );  
 
+       
+       
         $soli = array(
             'ticket' => $ticket,
             'tipoayuda' => $tipoayuda,
             'observacion' => $observacion
         );
         
-        echo json_encode('paso3');
        
-        $tipolimit = $this->ticket_model->updateObservacionTicket($soli);
+       
+       $tipolimit = $this->ticket_model->updateObservacionTicket($soli);
       $tipolimi = $this->ticket_model->updateEstatusTicket($sol);
-        if ($tipolimi && $tipolimit) {
+        if ($tipolimi) {
             $this->output->set_content_type('application/json');
             $this->output->set_output(json_encode(array(
                 'msg' => 'Solicitud Rechazada satisfactoriamente',
@@ -103,7 +106,7 @@ class Solicitud extends CI_Controller {
                 'data' => $tipolimi)));
         }
         
-      echo json_encode('paso4');
+     
     }
 
     public function enviarMensajeFuncionarioProcedimientoTicket() {
