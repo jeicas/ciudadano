@@ -115,6 +115,17 @@ class Tramite_model extends CI_Model {
             return false;
         }
     }
+    
+    
+       function obteneridSector_tipoAyuda($sector, $tipoayuda) {
+        $sql = "SELECT id from sector_tipoayuda where sector=$sector and tipoayuda=$tipoayuda";
+        $query = $this->db->query($sql);
+        if ($query->num_rows() > 0) {
+            return $query;
+        } else {
+            return false;
+        }
+    }
 
     function ObtenerTramiteResponsable($ente) {
         $query1 = $this->db->query("SELECT persona.cedula as id,funcionario.id as idfuncionario,concat(persona.nacionalidad,'-',persona.cedula,' ',persona.nombre,'  ',persona.apellido) as nombre,persona.tlf1,persona.correo 
@@ -349,5 +360,85 @@ class Tramite_model extends CI_Model {
                 $query->free-result();
                 
               }    
+    }
+    
+    
+    
+       public function obtenerSolicitudesProcedimientoEncargado($condicion) {
+           $sql="SELECT DISTINCT ti.codigo codigoTicket,  
+             ti.id idTicket, 
+                        e.nombre ente,
+                        a.id idActividad,
+                        a.descripcion actividad,  
+                        tita.descripcion peticion,
+                        tita.cantidad cantidad,
+                        s.nombre sector,
+                        s.id idSector,
+                        ta.id idTipoAyuda,
+                        ta.nombre tipoayuda,
+                        f.id as idEncargado,
+                        p.nombre encargado,
+                        tita.observacion observacion,
+                        tta.observacionresponsable observacionFuncionario, 
+                        tta.observacionrespuesta respuesta, 
+                        concat(pp.nombre,' ',pp.apellido) solicitante,
+                        DATE_FORMAT(ti.fecha,'%d-%m-%Y') as fechaRegistro, 
+                        CASE tta.estatus
+                                  WHEN 0 THEN 'ELIMINADO'
+                                  WHEN 1 THEN 'PENDIENTE'
+                                  WHEN 2 THEN 'RECIBIDO'
+                                  WHEN 3 THEN 'APROBADO'
+                                  WHEN 4 THEN 'RECHAZADO'END as estatus
+
+                    FROM  ticket_actividad tta 
+                      INNER JOIN ticket ti ON ti.id=tta.ticket 
+                      INNER JOIN actividad a ON a.id=tta.actividad
+                      INNER JOIN actividad_funcionario af ON af.actividad=tta.actividad
+                      INNER JOIN funcionario f ON f.id=af.funcionario
+                      INNER JOIN persona p on p.id=f.persona
+                      INNER JOIN ticket_tipoayuda tita ON tita.ticket=ti.id  
+		              INNER JOIN sector_tipoayuda sta ON sta.sector=ti.sector
+                      INNER JOIN sector s ON s.id=sta.sector 
+                      INNER JOIN ente_sector es ON es.sector=s.id
+                      INNER JOIN ente e ON e.id=es.ente 
+                      INNER JOIN tipoayuda ta ON ta.id=sta.tipoayuda
+                      INNER JOIN solicitante sol on sol.id=ti.solicitante
+                      INNER JOIN persona pp on pp.id=sol.persona
+                       
+                       
+           where  $condicion";
+           //echo json_encode($sql);
+           
+        $query = $this->db->query($sql);
+           if ($query->num_rows() > 0) {
+              foreach ($query->result() as $row1){
+                    $resultado[] = $row1;  
+                }
+                return $resultado;
+                $query->free-result();
+                
+              }   
+    }
+    
+    
+        public function obtenerActividadTramite($sector, $tipoayuda) {
+           $sql="SELECT a.id actividad
+                    FROM actividad a
+                        INNER JOIN tramite t ON t.id = a.tramite
+                        INNER JOIN sector_tipoayuda sta ON sta.id = t.sector_tipoayuda
+                        AND sta.sector =$sector
+                        AND sta.tipoayuda =$tipoayuda";
+           
+        $query = $this->db->query($sql);
+        return $query;
+       // echo json_encode($sql);
+          /* if ($query->num_rows() > 0) {
+              foreach ($query->result() as $row1){
+                    $resultado[] = $row1;  
+                }
+                return $resultado;
+                $query->free-result();
+                
+              }  */  
     }
 }

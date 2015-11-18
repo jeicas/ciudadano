@@ -414,7 +414,7 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
         }
         formPanel.down("textfield[name=idtramite]").setValue(tramite);
 
-        console.log(formPanel.down("textfield[name=idtramite]").getValue());
+       
         store1 = grid.getStore();
         store1.clearData();
         store1.proxy.extraParams.tramite = tramite;

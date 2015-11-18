@@ -20,7 +20,7 @@ Ext.define('MyApp.view.respuesta.ListaRespuesta', {
             }
         }
     },
-    store       : Ext.create('MyApp.store.respuesta.TicketStore'),
+    store       : Ext.create('MyApp.store.historico.TicketStore'),
     emptyText   : 'No hay datos registrados',
     columnLines: true,
     initComponent : function(){

@@ -16,8 +16,11 @@ class Respuesta extends CI_Controller{
       if($username['tipousuario']==1){        
         $sector=($this->input->get("sectorTicket")!='')?'='.$this->input->get("sectorTicket"):'LIKE "%"';
         $ticket = $this->respuestaticket_model->obtenerTicket($sector,$tipo,$desde,$hasta);
-      }else if($username['tipousuario']==2){        
+        echo json_encode($username['id'].' tipo '.$tipo.' Desde '.$desde.' Hasta'.$hasta);
+      }else if($username['tipousuario']==2){ 
+          
         $ticket = $this->respuestaticket_model->obtenerTicket2($username['id'],$tipo,$desde,$hasta);
+        echo json_encode($username['id'].' tipo '.$tipo.' Desde '.$desde.' Hasta'.$hasta);
       }      
       $this->output->set_content_type('application/json');
       $this->output->set_output(json_encode(array(

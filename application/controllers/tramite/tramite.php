@@ -201,14 +201,22 @@ class Tramite extends CI_Controller {
                 'id' => $row['idfuncionario'],
             );
         }
-
+        
+        
+         $buscarsector_tipoayuda = $this->tramite_model->obteneridSector_tipoAyuda($this->input->post("sectorr"), $this->input->post("ayudat"));
+        foreach ($buscarsector_tipoayuda->result_array() as $rows) {
+            $datos[] = array(
+                'id' => $rows['id'],
+            );
+        }
+       
         $arreglotramite = array(
             "id" => $this->input->post("idtramit"),
             "codigo" => $codigo,
             "tiempo" => $this->input->post("tiempot"),
             "tipotramite" => $this->input->post("tipo"),
             "usuario" => $username['id'],
-            "sector_tipoayuda" => $this->input->post("sectorr"),
+            "sector_tipoayuda" => $rows['id'],
             "estatus" => 1,
         );
         $funcionariotramite = array(
@@ -343,6 +351,8 @@ class Tramite extends CI_Controller {
                 "nombre" => $descripcion,
                 "ente" => $username['ente'],
             );
+           
+            
             $ttramite = $this->tramite_model->insertTipoTramite($arreglotramite);
             $tramiteUp = true;
         } else {
@@ -568,6 +578,22 @@ class Tramite extends CI_Controller {
                  }
             }
         }
+    }
+    
+    
+       function buscarSolicitudesEncargadoProcedimiento() {
+        $username = $this->session->userdata('data');
+        
+        $condicion=' f.usuario='.$username['id'].' and e.id='.$username['ente'];
+        echo json_encode($username);
+            $solicitudes = $this->tramite_model->obtenerSolicitudesProcedimientoEncargado($condicion);
+            $this->output->set_content_type('application/json');
+            $this->output->set_output(json_encode(array(
+                'success' => true,
+                'total' => count($solicitudes),
+                'data' => $solicitudes
+            )));
+         
     }
 
 }

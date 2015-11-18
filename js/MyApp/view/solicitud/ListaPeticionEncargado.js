@@ -20,7 +20,7 @@ Ext.define('MyApp.view.solicitud.ListaPeticionEncargado', {
             }
         }
     },
-    store: Ext.create('MyApp.store.solicitud.TicketStore'),
+    store: Ext.create('MyApp.store.solicitud.TicketEncargadoStore'),
     emptyText: 'No hay datos registrados',
     columnLines: true,
     initComponent: function () {
@@ -44,7 +44,7 @@ Ext.define('MyApp.view.solicitud.ListaPeticionEncargado', {
                 hidden: true
             }, 
             {
-                dataIndex: 'idProcedimiento',
+                dataIndex: 'idActividad',
                 hidden: true
             },{
                 xtype: 'rownumberer'
@@ -98,35 +98,7 @@ Ext.define('MyApp.view.solicitud.ListaPeticionEncargado', {
                         buffer: 500
                     }
                 }
-            }, {
-                dataIndex: 'tipoTicket',
-                text: 'Tipo de Ticket',
-                renderer: function (v) {
-                    return ('<SPAN class="ajustar-texto-grid">' + v + '</SPAN>')
-                },
-                flex: 0.7,
-                items: {
-                    xtype: 'textfield',
-                    flex: 1,
-                    margin: 2,
-                    enableKeyEvents: true,
-                    listeners: {
-                        keyup: function () {
-                            var store = this.up('grid').store;
-                            store.clearFilter();
-                            if (this.value) {
-                                store.filter({
-                                    property: 'tipoTicket',
-                                    value: this.value,
-                                    anyMatch: true,
-                                    caseSensitive: false
-                                });
-                            }
-                        },
-                        buffer: 500
-                    }
-                }
-            }, {
+            },  {
                 dataIndex: 'sector',
                 text: 'Sector',
                 renderer: function (v) {
@@ -211,7 +183,7 @@ Ext.define('MyApp.view.solicitud.ListaPeticionEncargado', {
                     }
                 }
             }, {
-                dataIndex: 'solicitud',
+                dataIndex: 'peticion',
                 text: 'Descripción',
                 renderer: function (v) {
                     return ('<SPAN class="ajustar-texto-grid">' + v + '</SPAN>')
@@ -228,7 +200,7 @@ Ext.define('MyApp.view.solicitud.ListaPeticionEncargado', {
                             store.clearFilter();
                             if (this.value) {
                                 store.filter({
-                                    property: 'descripcion',
+                                    property: 'peticion',
                                     value: this.value,
                                     anyMatch: true,
                                     caseSensitive: false
@@ -256,7 +228,7 @@ Ext.define('MyApp.view.solicitud.ListaPeticionEncargado', {
                             store.clearFilter();
                             if (this.value) {
                                 store.filter({
-                                    property: 'descripcion',
+                                    property: 'cantidad',
                                     value: this.value,
                                     anyMatch: true,
                                     caseSensitive: false
@@ -267,7 +239,7 @@ Ext.define('MyApp.view.solicitud.ListaPeticionEncargado', {
                     }
                 }
             }, {
-                dataIndex: 'estatusTicket',
+                dataIndex: 'estatus',
                 text: 'Estatus',
                 tdCls: 'x-change-cell',
                 flex: 0.6,
@@ -285,7 +257,7 @@ Ext.define('MyApp.view.solicitud.ListaPeticionEncargado', {
                             store.clearFilter();
                             if (this.value) {
                                 store.filter({
-                                    property: 'estatusTicket',
+                                    property: 'estatus',
                                     value: this.value,
                                     anyMatch: true,
                                     caseSensitive: false
@@ -376,18 +348,6 @@ Ext.define('MyApp.view.solicitud.ListaPeticionEncargado', {
                 menuDisabled: true,
                 items: [{
                         tooltip: 'Aprobar Peticion',
-                        icon: '../../imagen/pdf32.png'
-
-                    }]
-            }, 
-        {
-                xtype: 'actioncolumn',
-                width: 30,
-                sortable: false,
-                name: 'rechazar',
-                menuDisabled: true,
-                items: [{
-                        tooltip: 'Rechazar Peticion',
                         icon: '../../imagen/pdf32.png'
 
                     }]

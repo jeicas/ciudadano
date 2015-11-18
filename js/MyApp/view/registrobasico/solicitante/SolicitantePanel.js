@@ -479,7 +479,7 @@ Ext.define('MyApp.view.registrobasico.solicitante.SolicitantePanel', {
                             name        : 'municipioC',
                             itemId      : 'municipio',
                             fieldLabel  : 'Municipio',
-                            allowBlank  : false,
+                            //allowBlank  : false,
                             store       : Ext.create('MyApp.store.registrobasico.estado.MunicipioStore'),
                             displayField: "nombre",
                             emptyText   : 'Seleccionar',
@@ -500,7 +500,7 @@ Ext.define('MyApp.view.registrobasico.solicitante.SolicitantePanel', {
                             valueField  : "id",
                             queryMode   : 'local',
                             disabled    : true,
-                            allowBlank  : false,
+                           // allowBlank  : false,
                         },{
                             xtype       : 'textfield',
                             labelWidth  : 120,     
@@ -508,7 +508,7 @@ Ext.define('MyApp.view.registrobasico.solicitante.SolicitantePanel', {
                             name        : 'direccionC',
                             fieldLabel  : 'Dirección',
                             maxLength   : 255,
-                            allowBlank  : false,
+                           // allowBlank  : false,
                             disabled    : true,
                         }]
                     }]

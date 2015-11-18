@@ -33,6 +33,9 @@ Ext.define('MyApp.controller.registrobasico.ente.EnteController',{
              '#panelEnte button[name=guardar]':{
                 click: this.guardarEnte
             },
+             '#panelEnte combobox[name=municipio]':{
+                change: this.cargarParroquia
+            },
         });
     },    
     eliminarEnte: function(){
@@ -145,5 +148,25 @@ Ext.define('MyApp.controller.registrobasico.ente.EnteController',{
         }else{
             Ext.MessageBox.show({ title: 'Informaci&oacute;n', msg: 'Debe seleccionar un ente para realizar la acción.', buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.INFO });
         }
+    },
+    
+    
+    
+    cargarParroquia: function(){
+        formulario=this.getPanelEnte();
+        id=formulario.down('combobox[name=municipio]').getValue();
+       
+        if(id!=''){
+            parr=formulario.down('combobox[name=parroquia]').getStore();
+            parr.clearData();
+            parr.proxy.extraParams.municipio = id;
+            parr.load();
+
+           
+        }else{
+            Ext.MessageBox.show({ title: 'Informaci&oacute;n', msg: 'Debe seleccionar un municipio.', buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.INFO });
+        }
     }
+    
+    
 });

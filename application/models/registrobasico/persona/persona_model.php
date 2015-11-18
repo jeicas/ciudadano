@@ -41,6 +41,22 @@ class Persona_model extends CI_Model{
             $sql->free->result();
         }
     }
+    
+       public function obtenerPersona1($nacionalidad,$cedula){
+        $sql=$this->db->query("SELECT solicitante.id as idSolicitante, persona.nacionalidad as nacionalidad, persona.cedula as cedula, persona.nombre as nombreSolicitante, persona.apellido as apellidoSolicitante,
+        persona.fechanacimiento as fechanacimiento,persona.correo as correo,persona.sexo as sexo, persona.parroquia as parroquia, persona.direccion as direccion,
+        SUBSTRING(persona.tlf1,1,3) as codTlf1,SUBSTRING(persona.tlf2,1,3) as codTlf2,SUBSTRING(persona.tlf1,4) as movil,SUBSTRING(persona.tlf2,4) as local, persona.estatus as estatusPersona
+            FROM persona
+            INNER JOIN solicitante ON  persona.id=solicitante.persona
+            WHERE persona.nacionalidad='$nacionalidad' AND persona.cedula=$cedula AND persona.estatus=1");
+        if ($sql->num_rows() > 0){
+            foreach ($sql->result() as $persona){
+                $tipo[] = $persona;
+            }
+            return $tipo;
+            $sql->free->result();
+        }
+    }
     public function obtenerContacto($nacionalidad,$cedula){
         $sql=$this->db->query("SELECT persona.nacionalidad as nacionalidadC, persona.cedula as cedulaC, persona.nombre as nombreContacto, persona.apellido as apellidoContacto,
         persona.fechanacimiento as fechanacimientoC,persona.correo as correoC,persona.sexo as sexoC, persona.parroquia as parroquiaC, persona.direccion as direccionC,
