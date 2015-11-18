@@ -352,14 +352,15 @@ class Tramite_model extends CI_Model {
                         INNER JOIN ente_sector es on s.id=es.sector and es.ente=$ente";
            
         $query = $this->db->query($sql);
-           if ($query->num_rows() > 0) {
+        return $query;
+        /*if ($query->num_rows() > 0) {
               foreach ($query->result() as $row1){
                     $resultado[] = $row1;  
                 }
                 return $resultado;
                 $query->free-result();
                 
-              }    
+              }  */  
     }
     
     

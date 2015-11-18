@@ -567,8 +567,8 @@ class Tramite extends CI_Controller {
         } else {
             if ($username['tipousuario'] == 3) {
                 $responsable = $this->tramite_model->obtenerSectorTipoAyudaResponsable($username['ente'], $username['id']);
-                 foreach ($responsable as $row) {
-                  $solicitudes = $this->tramite_model->obtenerSolicitudesSectorTipoU($username['ente'], $row->id_sector,$row->id_tipoayuda);
+                 foreach ($responsable->result_array() as $row) {
+                  $solicitudes = $this->tramite_model->obtenerSolicitudesSectorTipoU($username['ente'], $row['id_sector'],$row['id_tipoayuda']);
                   $this->output->set_content_type('application/json');
                   $this->output->set_output(json_encode(array(
                   'success' => true,
