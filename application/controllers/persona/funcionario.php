@@ -129,6 +129,7 @@ class Funcionario extends CI_Controller
                 "usuario"      => $this->input->post("usuario"),
                 "clave"        => $this->input->post("pass"),
                 "tipousuario"  => $this->input->post("tipousuario"),
+                "ente"             => $this->input->post("ente"),
                 "estatus"      => '1'
             );
             $insertUsuario=$this->usuario_model->insertUsuario($arregloUsuario);

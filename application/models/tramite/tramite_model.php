@@ -258,7 +258,22 @@ class Tramite_model extends CI_Model {
     }
     
        public function obtenerSolicitudes($ente) {
-            $sql = "SELECT t.id idTicket,
+           /*select t.id as ticket, t.codigo as codigo, ta.descripcion as descripcion, tay.nombre as tipo_ayuda
+from ticket t 
+inner join ticket_tipoayuda ta on ta.ticket = t.id
+inner join tipoayuda tay on tay.id=ta.tipoayuda
+inner join sector_tipoayuda sta on sta.tipoayuda=tay.id
+inner join sector s on s.id=sta.sector
+inner join ente_sector es on es.sector=sta.sector
+
+
+*/ 
+           
+           
+           
+           
+           
+           $sql = "SELECT t.id idTicket,
                             t.codigo codigoTicket,
                             tt.nombre tipoTicket,
                             tta.descripcion solicitud,
@@ -295,35 +310,35 @@ class Tramite_model extends CI_Model {
     }
 
        public function obtenerSolicitudesSectorTipoU($ente, $sector, $tipoa) {
-            $sql = "SELECT t.id idTicket,
-                            t.codigo codigoTicket,
-                            tt.nombre tipoTicket,
-                            tta.descripcion solicitud,
-                            IF(sol.persona<>'NULL',CONCAT(p.nombre,' ',p.apellido),com.razonsocial) as solicitante,
-                            e.nombre ente, 
-                            s.id idSector,
-                            s.nombre sector, 
-                            ta.nombre tipoayuda, 
-                            ta.id idTipoAyuda, 
-                            tta.cantidad cantidad,
-                            DATE_FORMAT(t.fecha,'%d-%m-%Y') as fechaRegistro, 
-                            CASE t.estatus
-                                  WHEN 0 THEN 'ELIMINADO'
-                                  WHEN 1 THEN 'PENDIENTE'
-                                  WHEN 2 THEN 'RECIBIDO'
-                                  WHEN 3 THEN 'RECHAZADO' END as estatusTicket 
-                        FROM  ente e 
-                        INNER JOIN ente_sector es ON es.ente=e.id 
-                        INNER JOIN sector s on es.sector=s.id 
-                        INNER JOIN sector_tipoayuda sta on sta.sector=s.id and s.id=$sector 
-                        INNER JOIN tipoayuda ta on ta.id=sta.tipoayuda and ta.id=$tipoa 
-                        INNER JOIN ticket t on s.id=t.sector 
-                        INNER JOIN ticket_tipoayuda tta on t.id=tta.ticket and tta.tipoayuda=ta.id 
-                        INNER JOIN solicitante sol on sol.id=t.solicitante
-                        LEFT JOIN persona p on sol.persona=p.id
-                        LEFT JOIN comunidad com on com.id=sol.comunidad
-                        INNER JOIN tipoticket tt on t.tipoticket=tt.id  
-                        WHERE e.id=$ente";
+                $sql = "SELECT t.id idTicket,
+                                t.codigo codigoTicket,
+                                tt.nombre tipoTicket,
+                                tta.descripcion solicitud,
+                                IF(sol.persona<>'NULL',CONCAT(p.nombre,' ',p.apellido),com.razonsocial) as solicitante,
+                                e.nombre ente, 
+                                s.id idSector,
+                                s.nombre sector, 
+                                ta.nombre tipoayuda, 
+                                ta.id idTipoAyuda, 
+                                tta.cantidad cantidad,
+                                DATE_FORMAT(t.fecha,'%d-%m-%Y') as fechaRegistro, 
+                                CASE t.estatus
+                                      WHEN 0 THEN 'ELIMINADO'
+                                      WHEN 1 THEN 'PENDIENTE'
+                                      WHEN 2 THEN 'RECIBIDO'
+                                      WHEN 3 THEN 'RECHAZADO' END as estatusTicket 
+                            FROM  ente e 
+                            INNER JOIN ente_sector es ON es.ente=e.id 
+                            INNER JOIN sector s on es.sector=s.id 
+                            INNER JOIN sector_tipoayuda sta on sta.sector=s.id and s.id=$sector 
+                            INNER JOIN tipoayuda ta on ta.id=sta.tipoayuda and ta.id=$tipoa 
+                            INNER JOIN ticket t on s.id=t.sector 
+                            INNER JOIN ticket_tipoayuda tta on t.id=tta.ticket and tta.tipoayuda=ta.id 
+                            INNER JOIN solicitante sol on sol.id=t.solicitante
+                            LEFT JOIN persona p on sol.persona=p.id
+                            LEFT JOIN comunidad com on com.id=sol.comunidad
+                            INNER JOIN tipoticket tt on t.tipoticket=tt.id  
+                            WHERE e.id=$ente";
         $query = $this->db->query($sql);
           if ($query->num_rows() > 0) {
               foreach ($query->result() as $row){
@@ -382,7 +397,8 @@ class Tramite_model extends CI_Model {
                         tita.observacion observacion,
                         tta.observacionresponsable observacionFuncionario, 
                         tta.observacionrespuesta respuesta, 
-                        concat(pp.nombre,' ',pp.apellido) solicitante,
+                        tta.observacionrespuesta respuesta, 
+                        IF(sol.persona<>'NULL',concat(pp.nombre,' ',pp.apellido),com.razonsocial) as  solicitante,
                         DATE_FORMAT(ti.fecha,'%d-%m-%Y') as fechaRegistro, 
                         CASE tta.estatus
                                   WHEN 0 THEN 'ELIMINADO'
@@ -398,15 +414,14 @@ class Tramite_model extends CI_Model {
                       INNER JOIN funcionario f ON f.id=af.funcionario
                       INNER JOIN persona p on p.id=f.persona
                       INNER JOIN ticket_tipoayuda tita ON tita.ticket=ti.id  
-		              INNER JOIN sector_tipoayuda sta ON sta.sector=ti.sector
+		      INNER JOIN sector_tipoayuda sta ON sta.sector=ti.sector
                       INNER JOIN sector s ON s.id=sta.sector 
                       INNER JOIN ente_sector es ON es.sector=s.id
                       INNER JOIN ente e ON e.id=es.ente 
-                      INNER JOIN tipoayuda ta ON ta.id=sta.tipoayuda
+                      INNER JOIN tipoayuda ta ON ta.id=tita.tipoayuda
                       INNER JOIN solicitante sol on sol.id=ti.solicitante
-                      INNER JOIN persona pp on pp.id=sol.persona
-                       
-                       
+                      LEFT JOIN persona pp on pp.id=sol.persona
+                      LEFT JOIN comunidad com on com.id=sol.comunidad    
            where  $condicion";
            //echo json_encode($sql);
            

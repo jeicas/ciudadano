@@ -6,7 +6,9 @@ class Sector extends CI_Controller{
     $this->load->model("registrobasico/sector/sector_model");
   }
   public function obtenerSector(){
-    $sector = $this->sector_model->obtenerSector();
+      $username = $this->session->userdata('data');
+      
+    $sector = $this->sector_model->obtenerSector($username['ente']);
     $this->output->set_content_type('application/json');
     $this->output->set_output(json_encode(array(
       'success'   => true,

@@ -585,7 +585,7 @@ class Tramite extends CI_Controller {
         $username = $this->session->userdata('data');
         
         $condicion=' f.usuario='.$username['id'].' and e.id='.$username['ente'];
-        echo json_encode($username);
+      // echo json_encode($condicion);
             $solicitudes = $this->tramite_model->obtenerSolicitudesProcedimientoEncargado($condicion);
             $this->output->set_content_type('application/json');
             $this->output->set_output(json_encode(array(

@@ -96,7 +96,7 @@ Ext.define('MyApp.view.solicitud.actividad_ticket.GridActividadTicket', {
     buildDockedItems : function(){
         return [{
                 xtype: 'pagingtoolbar',
-                dock: 'bottom',
+                dock: 'top',
                 store: this.store,
                 displayInfo: true,
                 items: [{
