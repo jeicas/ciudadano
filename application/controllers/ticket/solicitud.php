@@ -53,13 +53,10 @@ class Solicitud extends CI_Controller {
     public function aprobarSolicitudTicket() {
         $tipolimi = array();
         $ticket = $this->input->post('idticket');
-        
-     
         $sol = array(
             'id' => $ticket,
-            'estatus' => 1
+            'estatus' => 4
         );
-        
 
         $tipolimi = $this->ticket_model->updateEstatusTicket($sol);
         if ($tipolimi) {
@@ -83,7 +80,7 @@ class Solicitud extends CI_Controller {
       
         $sol = array(
             'id' => $ticket,
-            'estatus' => 4
+            'estatus' => 5
         );  
 
        

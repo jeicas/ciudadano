@@ -258,21 +258,7 @@ class Tramite_model extends CI_Model {
     }
     
        public function obtenerSolicitudes($ente) {
-           /*select t.id as ticket, t.codigo as codigo, ta.descripcion as descripcion, tay.nombre as tipo_ayuda
-from ticket t 
-inner join ticket_tipoayuda ta on ta.ticket = t.id
-inner join tipoayuda tay on tay.id=ta.tipoayuda
-inner join sector_tipoayuda sta on sta.tipoayuda=tay.id
-inner join sector s on s.id=sta.sector
-inner join ente_sector es on es.sector=sta.sector
 
-
-*/ 
-           
-           
-           
-           
-           
            $sql = "SELECT t.id idTicket,
                             t.codigo codigoTicket,
                             tt.nombre tipoTicket,
@@ -286,7 +272,9 @@ inner join ente_sector es on es.sector=sta.sector
                                   WHEN 0 THEN 'ELIMINADO'
                                   WHEN 1 THEN 'PENDIENTE'
                                   WHEN 2 THEN 'RECIBIDO'
-                                  WHEN 3 THEN 'RECHAZADO' END as estatusTicket 
+                                  WHEN 3 THEN 'EN PROCESO' 
+                                  WHEN 4 THEN 'COMPLETADO' 
+                                  WHEN 5 THEN 'RECHAZADO' END as estatusTicket 
                         FROM  ente e 
                         INNER JOIN ente_sector es ON es.ente=e.id 
                         INNER JOIN sector s on es.sector=s.id 
@@ -324,9 +312,11 @@ inner join ente_sector es on es.sector=sta.sector
                                 DATE_FORMAT(t.fecha,'%d-%m-%Y') as fechaRegistro, 
                                 CASE t.estatus
                                       WHEN 0 THEN 'ELIMINADO'
-                                      WHEN 1 THEN 'PENDIENTE'
-                                      WHEN 2 THEN 'RECIBIDO'
-                                      WHEN 3 THEN 'RECHAZADO' END as estatusTicket 
+                                  WHEN 1 THEN 'PENDIENTE'
+                                  WHEN 2 THEN 'RECIBIDO'
+                                  WHEN 3 THEN 'EN PROCESO' 
+                                  WHEN 4 THEN 'COMPLETADO' 
+                                  WHEN 5 THEN 'RECHAZADO' END as estatusTicket 
                             FROM  ente e 
                             INNER JOIN ente_sector es ON es.ente=e.id 
                             INNER JOIN sector s on es.sector=s.id 
@@ -404,8 +394,9 @@ inner join ente_sector es on es.sector=sta.sector
                                   WHEN 0 THEN 'ELIMINADO'
                                   WHEN 1 THEN 'PENDIENTE'
                                   WHEN 2 THEN 'RECIBIDO'
-                                  WHEN 3 THEN 'APROBADO'
-                                  WHEN 4 THEN 'RECHAZADO'END as estatus
+                                  WHEN 3 THEN 'EN ESPERA'  
+                                  WHEN 4 THEN 'COMPLETADO' 
+                                  WHEN 5 THEN 'RECHAZADO' END as estatus
 
                     FROM  ticket_actividad tta 
                       INNER JOIN ticket ti ON ti.id=tta.ticket 

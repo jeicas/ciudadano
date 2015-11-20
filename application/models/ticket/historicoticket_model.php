@@ -9,7 +9,13 @@ class Historicoticket_model extends CI_Model{
     public function obtenerTicketSolicitante($id){
         $sql=$this->db->query("SELECT IF(historicoticket.funcionariorecibido<>'NULL',ente.nombre,'-') as atendido,ticket.codigo as codigoTicket, DATE_FORMAT(historicoticket.fecharegistro,'%d-%m-%Y') as fechaRegistro,
         ticket.id as idTicket, tipoticket.nombre as tipoTicket, sector.nombre as sectorTicket, 
-        CASE ticket.estatus WHEN 0 THEN 'ELIMINADO' WHEN 1 THEN 'PENDIENTE' WHEN 2 THEN 'RECIBIDO' WHEN 3 THEN 'RECHAZADO' END as estatusTicket,IF(solicitante.persona<>'NULL',concat(persona.nombre,' ',persona.apellido),comunidad.razonsocial) as solicitante
+        CASE ticket.estatus   WHEN 0 THEN 'ELIMINADO'
+                                  WHEN 1 THEN 'PENDIENTE'
+                                  WHEN 2 THEN 'RECIBIDO'
+                                  WHEN 3 THEN 'EN PROCESO'  
+                                  WHEN 4 THEN 'COMPLETADO' 
+                                  WHEN 5 THEN 'RECHAZADO' END as estatusTicket ,
+                  IF(solicitante.persona<>'NULL',concat(persona.nombre,' ',persona.apellido),comunidad.razonsocial) as solicitante
         FROM usuario
         INNER JOIN solicitante ON usuario.id=solicitante.usuario AND usuario.id=$id
         LEFT JOIN persona ON solicitante.persona=persona.id
@@ -34,7 +40,12 @@ class Historicoticket_model extends CI_Model{
     public function obtenerTicket($variable){
         $sql=$this->db->query("SELECT IF(historicoticket.funcionariorecibido<>'NULL',ente.nombre,'-') as atendido,ticket.codigo as codigoTicket, DATE_FORMAT(historicoticket.fecharegistro,'%d-%m-%Y') as fechaRegistro,
         ticket.id as idTicket, tipoticket.nombre as tipoTicket, sector.nombre as sectorTicket,
-        CASE ticket.estatus WHEN 0 THEN 'ELIMINADO' WHEN 1 THEN 'PENDIENTE' WHEN 2 THEN 'RECIBIDO' WHEN 3 THEN 'RECHAZADO' END as estatusTicket,IF(solicitante.persona<>'NULL',concat(persona.nombre,' ',persona.apellido),comunidad.razonsocial) as solicitante
+        CASE ticket.estatus  WHEN 0 THEN 'ELIMINADO'
+                                  WHEN 1 THEN 'PENDIENTE'
+                                  WHEN 2 THEN 'RECIBIDO'
+                                  WHEN 3 THEN 'EN PROCESO'  
+                                  WHEN 4 THEN 'COMPLETADO' 
+                                  WHEN 5 THEN 'RECHAZADO' END as estatusTicket,IF(solicitante.persona<>'NULL',concat(persona.nombre,' ',persona.apellido),comunidad.razonsocial) as solicitante
         FROM usuario
         INNER JOIN solicitante ON usuario.id=solicitante.usuario 
         LEFT JOIN persona ON solicitante.persona=persona.id 

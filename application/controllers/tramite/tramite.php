@@ -226,33 +226,6 @@ class Tramite extends CI_Controller {
             $tramite = $this->tramite_model->updateTramite($arreglotramite);
             $tramite_funcionario = $this->tramite_model->deleteTramiteFuncionario($arreglotramite['id'], $funcionariotramite['funcionario']);
             $tramitefuncionario = $this->tramite_model->insertTramiteFuncionario($funcionariotramite, $arreglotramite['id']);
-            /* if (isset($obj)) {
-              $records = json_decode($obj);
-              foreach ($records as $record) {
-              if ($record->estatus == 'INICIO' || $record->estatus == '') {
-              $estatus = 1;
-              } else if ($record->estatus == 'PROCESAMIENTO') {
-              $estatus = 2;
-              } else if ($record->estatus == 'VERIFICACION') {
-              $estatus = 3;
-              } else if ($record->estatus == 'FINAL') {
-              $estatus = 4;
-              }
-              $actividades = array(
-              "descripcion" => $record->descripcion,
-              "unidadresponsable" => $record->unidad,
-              "tiempo" => $record->tiempo,
-              "estatus" => $estatus,
-              );
-              $actividadesfuncionario = array(
-              "funcionario" => $row['idfuncionario'],
-              );
-              if ($actividades['unidadresponsable'] || $row['idfuncionario'] != '') {
-              $actividad = $this->tramite_model->insertActividades($actividades, $arreglotramite['id']);
-              $actividadfuncionario = $this->tramite_model->insertActividadesFuncionarios($actividadesfuncionario, $actividad);
-              }
-              }
-              } */
             if (isset($recaudos)) {
                 $records = json_decode($recaudos);
                 foreach ($records as $record1) {
