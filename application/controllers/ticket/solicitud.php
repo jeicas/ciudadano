@@ -69,30 +69,21 @@ class Solicitud extends CI_Controller {
         }
     }
 
-    public function rechazarSolicitudTicket(){
+ 
+     public function rechazarSolicitudTicket(){
          $ticket = $this->input->post('idticket'); 
          $tipoayuda = $this->input->post('idtipoayuda'); 
         $observacion =$this->input->post('observacion'); 
-        //$tipolimi = array();
-       /* 
-        */     
-        
       
         $sol = array(
             'id' => $ticket,
             'estatus' => 5
         );  
-
-       
-       
         $soli = array(
             'ticket' => $ticket,
             'tipoayuda' => $tipoayuda,
             'observacion' => $observacion
         );
-        
-       
-       
        $tipolimit = $this->ticket_model->updateObservacionTicket($soli);
       $tipolimi = $this->ticket_model->updateEstatusTicket($sol);
       
@@ -107,10 +98,96 @@ class Solicitud extends CI_Controller {
         
      
     }
+       
+      public function aprobarActividadTicket() {
+        $tipolimi = array();
+        $ticket = $this->input->post('idticket');
+        $actividad = $this->input->post('idProcedimiento');
+         $fecha =date('Y-m-d H:i:s');
+        
+        $sol = array(
+            'ticket' => $ticket,
+            'actividad' => $actividad,
+            'fechaaprobado' => $fecha,
+            'estatus' => 4
+        );
+
+        $tipolimi = $this->ticket_model->updateEstatusActividadTicket($sol);
+        if ($tipolimi) {
+
+            $this->output->set_content_type('application/json');
+            $this->output->set_output(json_encode(array(
+                'msg' => 'Procedimiento Completado',
+                "success" => True,
+                'data' => $tipolimi)));
+        }
+    }
+    
+    public function rechazarActividadTicket(){
+        $tipolimi = array();
+        $ticket = $this->input->post('idticket');
+        $actividad = $this->input->post('idProcedimiento');
+        $observacion = $this->input->post('observacion');
+        $fecha =date('Y-m-d H:i:s');
+        
+        $data= array(
+            'ticket' => $ticket,
+            'actividad' => $actividad,
+            'fechaaprobado' => $fecha,
+            'observacion' => $observacion,
+            'estatus' => 5
+        );
+     
+        $tipolimi = $this->ticket_model->updateEstatusActividadTicket($data);
+        if ($tipolimi) {
+
+            $this->output->set_content_type('application/json');
+            $this->output->set_output(json_encode(array(
+                'msg' => 'Procedimiento Rechazado',
+                "success" => True,
+                'data' => $tipolimi)));
+        }
+     
+    }
+    
+    
+    
+        
+    public function recibirActividadTicket(){
+        $tipolimi = array();
+         $username = $this->session->userdata('data');
+       
+         $ticket = $this->input->post('idticket');
+        $actividad = $this->input->post('idProcedimiento');
+        $usuario =  $username['id'];;
+       
+        $fecha = date('Y-m-d');
+        
+        $sol = array(
+            'ticket' => $ticket,
+            'actividad' => $actividad,
+            'usuario' => $usuario,
+            'fecharecibido' => $fecha,
+            'estatus' => 2
+        );
+
+        $tipolimi = $this->ticket_model->updateEstatusActividadTicket($sol);
+        if ($tipolimi) {
+
+            $this->output->set_content_type('application/json');
+            $this->output->set_output(json_encode(array(
+                'msg' => 'Petición Recibida',
+                "success" => True,
+                'data' => $tipolimi)));
+        }
+     
+    }
+    
 
     public function enviarMensajeFuncionarioProcedimientoTicket() {
         $tipolimi = array();
-        
+         $username = $this->session->userdata('data');
+        $username['tipousuario'];
         $ticket = $this->input->post('ticket');
         $observacion = $this->input->post('observacion');
         $actividad = $this->input->post('procedimiento');

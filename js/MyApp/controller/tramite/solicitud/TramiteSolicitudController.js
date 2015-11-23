@@ -21,6 +21,7 @@ Ext.define('MyApp.controller.tramite.solicitud.TramiteSolicitudController', {
             'listaPeticion actioncolumn[name=ver]': {
                 click: this.verSeleccionado
             },
+             
             'winActividadTicket button[name=btnAprobar]': {
                 click: this.aprobarSolicitud
             },

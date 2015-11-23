@@ -1,10 +1,10 @@
-Ext.define('MyApp.view.solicitud.actividad_ticket.WinObservacionFuncionario', {
+Ext.define('MyApp.view.solicitud.actividad_ticket.WinMensajeAlFuncionario', {
 extend: 'Ext.window.Window',
-  alias: 'widget.winObservacionFuncionario',
-  itemId: 'winObservacionFuncionario',
+  alias: 'widget.winMensajeAlFuncionario',
+  itemId: 'winMensajeAlFuncionario',
   title:'Observacion al Funcionario',
-  height: '35%',
-  width: '30%',
+  height: '40%',
+  width: '60%',
   modal:true,
   
   layout: {
@@ -55,10 +55,10 @@ extend: 'Ext.window.Window',
                                         xtype: 'textarea',
                                         margins: '5 5 5 0',
                                         name: 'observacion',
-                                        width: '95%',
+                                        width: '30%',
                                         labelWidth: 100,
-                                         maxLength: 420,
-                                        fieldLabel: 'Motivo:',
+                                        readOnly:true, 
+                                        fieldLabel: 'Mensaje:',
                                         
                                    },
                                ]
@@ -81,7 +81,7 @@ extend: 'Ext.window.Window',
             xtype   : 'button',
             iconCls :'save',
             name    :'btnAceptar',
-            text    : 'Aceptar',
+            text    : 'Enviar',
             disabled:false,
             scope   : this,
 

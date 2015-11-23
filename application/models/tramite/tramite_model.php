@@ -390,7 +390,7 @@ class Tramite_model extends CI_Model {
                         tita.observacion observacion,
                         tta.observacionresponsable observacionFuncionario, 
                         tta.observacionrespuesta respuesta, 
-                        tta.observacionrespuesta respuesta, 
+                        tta.observacion observacion, 
                         IF(sol.persona<>'NULL',concat(pp.nombre,' ',pp.apellido),com.razonsocial) as  solicitante,
                         DATE_FORMAT(ti.fecha,'%d-%m-%Y') as fechaRegistro, 
                         CASE tta.estatus
