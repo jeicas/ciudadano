@@ -4,6 +4,7 @@ Ext.define('MyApp.model.store.solicitud.TicketStore', {
     	{name: 'codigoTicket'},
         {name: 'idTicket'},
     	{name: 'tipoTicket'},
+        {name: 'observacion'},
     	{name: 'solicitud'},
     	{name: 'solicitante'},
         {name: 'ente'},

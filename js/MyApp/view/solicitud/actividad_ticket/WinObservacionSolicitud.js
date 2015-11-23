@@ -58,7 +58,7 @@ extend: 'Ext.window.Window',
                                         width: '98%',
                                         allowBlack: true, 
                                         labelWidth: 100,
-                                        maxLength: 5,
+                                        maxLength: 420,
                                        
                                         fieldLabel: 'Motivo:',
                                         

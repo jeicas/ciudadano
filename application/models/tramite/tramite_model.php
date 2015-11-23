@@ -266,7 +266,9 @@ class Tramite_model extends CI_Model {
                             IF(sol.persona<>'NULL',CONCAT(p.nombre,' ',p.apellido),com.razonsocial) as solicitante,
                             e.nombre ente, s.nombre sector, 
                             ta.nombre tipoayuda, 
+                            ta.id idTipoAyuda, 
                             tta.cantidad cantidad,
+                            tta.observacion observacion,
                             DATE_FORMAT(t.fecha,'%d-%m-%Y') as fechaRegistro, 
                             CASE t.estatus
                                   WHEN 0 THEN 'ELIMINADO'
@@ -309,6 +311,7 @@ class Tramite_model extends CI_Model {
                                 ta.nombre tipoayuda, 
                                 ta.id idTipoAyuda, 
                                 tta.cantidad cantidad,
+                                tta.observacion observacion,
                                 DATE_FORMAT(t.fecha,'%d-%m-%Y') as fechaRegistro, 
                                 CASE t.estatus
                                       WHEN 0 THEN 'ELIMINADO'

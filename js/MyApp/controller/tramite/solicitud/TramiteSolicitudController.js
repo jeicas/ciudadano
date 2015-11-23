@@ -46,6 +46,7 @@ Ext.define('MyApp.controller.tramite.solicitud.TramiteSolicitudController', {
          win.down('textfield[name=idTipoAyuda]').setValue(rec.get('idTipoAyuda'));
         win.down('textfield[name=cantidad]').setValue(rec.get('cantidad'));
         win.down('textfield[name=solicitud]').setValue(rec.get('solicitud'));
+        win.down('textarea[name=observacion]').setValue(rec.get('observacion'));
 
         storeProcedimiento = win.down('gridActividadTicket').getStore();
         storeProcedimiento.clearData();
@@ -120,7 +121,7 @@ Ext.define('MyApp.controller.tramite.solicitud.TramiteSolicitudController', {
       reprobarSolicitud: function () {
 
         formw = this.getWinActividadTicket();
-        solicitud = formw.down('textfield[name=cantidad]').getValue() + ' ' + formw.down('textfield[name=tipoayuda]').getValue();
+        solicitud = formw.down('textfield[name=cantidad]').getValue() + ' ' + formw.down('textfield[name=idTipoAyuda]').getValue();
 
         Ext.Msg.show({
             title: 'Confirmar',

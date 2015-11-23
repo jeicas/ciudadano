@@ -60,7 +60,7 @@ class Ticket_model extends CI_Model{
        $this->db->where('ticket', $ticket['ticket']);
        $this->db->where('tipoayuda', $ticket['tipoayuda']);      
        return $this->db->update('ticket_tipoayuda', $ticket);
-        echo json_encode($this->db->update('ticket_tipoayuda', $ticket));
+       
    }
     
     

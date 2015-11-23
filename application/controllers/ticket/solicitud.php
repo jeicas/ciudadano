@@ -95,7 +95,9 @@ class Solicitud extends CI_Controller {
        
        $tipolimit = $this->ticket_model->updateObservacionTicket($soli);
       $tipolimi = $this->ticket_model->updateEstatusTicket($sol);
-        if ($tipolimi) {
+      
+     
+        if ($tipolimi && $tipolimit) {
             $this->output->set_content_type('application/json');
             $this->output->set_output(json_encode(array(
                 'msg' => 'Solicitud Rechazada satisfactoriamente',
