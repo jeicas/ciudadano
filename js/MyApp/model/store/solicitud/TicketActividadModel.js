@@ -7,6 +7,7 @@ Ext.define('MyApp.model.store.solicitud.TicketActividadModel', {
     	{name: 'observacionfuncionario'},
     	{name: 'respuestafuncionario'},
         {name: 'encargado'}, 
-         {name: 'estatus'}
+        {name: 'idfuncionario'}, 
+        {name: 'estatus'}
     ]
 }); 

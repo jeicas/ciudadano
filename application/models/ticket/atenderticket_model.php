@@ -66,10 +66,10 @@ class Atenderticket_model extends CI_Model{
     
        public function obtenerProcedimientoTicket($ticket) {
            
-            $sql = "SELECT act.id actividadid, act.descripcion actividad, CASE tact.estatus
+            $sql = "SELECT act.id actividadid, act.descripcion actividad, actf.funcionario idfuncionario, CASE tact.estatus
                                   WHEN 0 THEN 'ELIMINADO'
                                   WHEN 1 THEN 'PENDIENTE'
-                                  WHEN 3 THEN 'RECIBIDO'
+                                  WHEN 2 THEN 'RECIBIDO'
 				  WHEN 4 THEN 'APROBADO'
                                   WHEN 5 THEN 'RECHAZADO' END as estatus, 
                     tact.observacionresponsable observacionfuncionario, tact.observacionrespuesta respuestafuncionario, 

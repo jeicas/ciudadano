@@ -4,7 +4,8 @@ Ext.define('MyApp.controller.tramite.solicitud.TramiteSolicitudEncargadoControll
         'solicitud.AtenderPeticionEncargadoPanel',
         'solicitud.ListaPeticionEncargado',
         'solicitud.actividad_ticket.WinProcedimientoTicket',
-        'solicitud.actividad_ticket.WinObservacionFuncionario'
+        'solicitud.actividad_ticket.WinObservacionFuncionario', 
+        'solicitud.actividad_ticket.WinMensajeAlFuncionario'
     ],
     refs: [
         {
@@ -15,11 +16,21 @@ Ext.define('MyApp.controller.tramite.solicitud.TramiteSolicitudEncargadoControll
             ref: 'WinObservacionFuncionario',
             selector: 'winObservacionFuncionario'
         },
+        {
+            ref: 'WinMensajeAlFuncionario',
+            selector: 'winMensajeAlFuncionario'
+        },
     ],
     init: function (application) {
         this.control({
             'atenderPeticionEncargadoPanel actioncolumn[name=aprobar]': {
                 click: this.verSeleccionado
+            },
+             'atenderPeticionEncargadoPanel actioncolumn[name=recibir]': {
+                click: this.firmarecibido
+            },
+             'atenderPeticionEncargadoPanel actioncolumn[name=mensaje]': {
+                click: this.enviarMensajeRespuesta
             },
              'winProcedimientoTicket button[name=btnAprobar]': {
                 click: this.aprobarProcedimiento
@@ -29,6 +40,9 @@ Ext.define('MyApp.controller.tramite.solicitud.TramiteSolicitudEncargadoControll
             },
               'winObservacionFuncionario button[name=btnAceptar]': {
                 click: this.aceptar
+            },
+            'winMensajeAlFuncionario button[name=btnEnviar]': {
+                click: this.enviarRespuesta
             },
         });
     },
@@ -195,5 +209,114 @@ Ext.define('MyApp.controller.tramite.solicitud.TramiteSolicitudEncargadoControll
                     }
     },
     
+        firmarecibido: function (grid, record, rowIndex) {
+
+        store = grid.getStore();
+        rec = store.getAt(rowIndex);
+
+          Ext.Ajax.request({
+                    url: BASE_URL+'ticket/solicitud/recibirActividadTicket',
+                    method: 'POST',
+                    params: {
+                        idticket:rec.get('idTicket'),
+                        idprocedimiento:rec.get('idActividad')
+                    },
+                    
+                     success: function(result, request){
+                       data=Ext.JSON.decode(result.responseText);
+                       
+                        if (data.success){
+                              
+                              Ext.MessageBox.show({ title: 'Mensaje', msg:  data.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING });
+                                grid.getView().refresh();
+                                grid.getStore().load();
+                            }
+                        else{
+                           Ext.MessageBox.show({ title: 'Alerta', msg:  data.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING });
+                           // myapp.util.Util.showErrorMsg(result.msg);
+                        }
+                    },
+                    failure: function(result, request){
+                    var result = Ext.JSON.decode(result.responseText);   
+                     loadingMask.hide();
+                            Ext.MessageBox.show({ title: 'Alerta', msg:data.msg , buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING });
+                        }
+
+
+                }); 
+    },
+    
+    
+        enviarMensajeRespuesta: function (grid, record, rowIndex) {
+        //formw = this.getListaPeticionEncargado();
+        
+        store = grid.getStore();
+        rec = store.getAt(rowIndex);
+     
+        win = Ext.create('MyApp.view.solicitud.actividad_ticket.WinMensajeAlFuncionario');
+        win.down('textfield[name=idticket]').setValue(rec.get('idTicket'));
+        win.down('textfield[name=idProcedimiento]').setValue(rec.get('idActividad'));
+        win.down('textfield[name=idFuncionario]').setValue(rec.get('idEncargado'));
+         win.down('textarea[name=observacion]').setValue(rec.get('observacionFuncionario'));
+        win.down('textfield[name=mensaje]').setValue(1);
+        win.down('label[name=lblFuncionario]').setText(rec.get('encargado'));
+        win.down('label[name=lblNombreProcedimiento]').setText(rec.get('actividad'));   
+        win.show();
+    },
+    
+       enviarRespuesta: function () {
+
+          formw = this.getWinMensajeAlFuncionario();
+          me = this;
+         
+                    formulario = formw.down('form[name=formulario]').getForm();
+                    if (formulario.isValid()) {
+
+                        var loadingMask = new Ext.LoadMask(Ext.getBody(), {msg: "Guardando por Favor espere..."});
+                        loadingMask.show();
+                        formulario.submit({
+                            url: BASE_URL + 'ticket/solicitud/enviarMensajeFuncionarioProcedimientoTicket',
+                            method: 'POST',
+                            success: function (form, action) {
+
+                                loadingMask.hide();
+                                var data = Ext.JSON.decode(action.response.responseText);
+                                Ext.Msg.show({
+                                    title: 'Informaci&oacute;n',
+                                    msg: data.msg,
+                                    icon: Ext.Msg.INFO,
+                                    buttons: Ext.Msg.OK
+                                });
+                                 formulario.close();
+                                formw.close(); 
+                                /*grid = me.getListaPeticion();
+                                store = grid.getStore();
+                                store.load();
+                                console.log(store);*/
+                               
+                               
+                            },
+                            failure: function (form, action) {
+                                loadingMask.hide();
+                                switch (action.failureType) {
+                                    case Ext.form.Action.CLIENT_INVALID:
+                                        Ext.MessageBox.show({title: 'Verifique los datos', msg: 'Algunos campos no fueron introducidos correctamente', buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.ERROR});
+                                        break;
+                                    case Ext.form.Action.CONNECT_FAILURE:
+                                        Ext.MessageBox.show({title: 'Error', msg: 'Error en comunicaci&oacute;n Ajax', buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.ERROR});
+                                        break;
+                                    case Ext.form.Action.SERVER_INVALID:
+                                        Ext.MessageBox.show({title: 'Error---Verifique!', msg: 'Informacion ingresada es invalida/Servidor invalido', buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.ERROR});
+                                        break;
+                                    default:
+                                        Ext.MessageBox.show({title: 'Alerta', msg: 'Se ha detectado algun error', buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+                                }
+                            },
+                        });
+                    } else {
+                        Ext.MessageBox.show({title: 'Informaci&oacute;n', msg: 'Debe ingresar todos los datos solicitados.', buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.INFO});
+                    }
+
+    },
 });
  

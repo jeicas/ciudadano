@@ -71,7 +71,7 @@ class Ticket_model extends CI_Model{
    }
     
      public function mensajeFuncionarioProdedimiento($ticket) {
-        $this->db->where('id', $ticket['id']);
+        $this->db->where('ticket', $ticket['ticket']);
        $this->db->where('actividad', $ticket['actividad']);
        return $this->db->update('ticket_actividad', $ticket);
    }
