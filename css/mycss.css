@@ -192,6 +192,22 @@
    border-color: #D8D8D8;  
      background:#F2F2F2;
 }
+.icon-mensaje{
+  background-image:url('../imagen/btn/sobre.png') !important;
+}
+.icon-firmarecibido{
+  background-image:url('../imagen/btn/useredit.png') !important;
+}
+.icon-atender{
+  background-image:url('../imagen/btn/registro.png') !important;
+}
+.icon-aprobar{
+  background-image:url('../imagen/btn/accept.png') !important;
+}
+.icon-rechazar{
+  background-image:url('../imagen/btn/cancel.png') !important;
+}
+
 
 
 .Three-Dee{

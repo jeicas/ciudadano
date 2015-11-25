@@ -166,7 +166,7 @@ Ext.define('MyApp.view.solicitud.actividad_ticket.WinMensajeAlFuncionario', {
                                                 margins: '0 0 0 0',
                                                 name: 'lblNombreTramite',
                                                 width: '100%',
-                                                text: 'Fuuuu',
+                                                text: '',
                                             },
                                         ]
                                     },
@@ -205,7 +205,7 @@ Ext.define('MyApp.view.solicitud.actividad_ticket.WinMensajeAlFuncionario', {
                     },
                     {
                         xtype: 'button',
-                        iconCls: 'save',
+                        iconCls: 'icon-mensaje',
                         name: 'btnEnviar',
                         text: 'Enviar',
                         disabled: false,

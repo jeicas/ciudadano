@@ -558,13 +558,29 @@ class Tramite extends CI_Controller {
         $username = $this->session->userdata('data');
         
         $condicion=' f.usuario='.$username['id'].' and e.id='.$username['ente'];
-      // echo json_encode($condicion);
+       // echo json_encode($condicion);
             $solicitudes = $this->tramite_model->obtenerSolicitudesProcedimientoEncargado($condicion);
             $this->output->set_content_type('application/json');
             $this->output->set_output(json_encode(array(
                 'success' => true,
                 'total' => count($solicitudes),
                 'data' => $solicitudes
+            )));
+         
+    }
+    
+    
+     function buscarEncargadoTramite() {
+       
+        
+        $condicion=' sta.sector='.$this->input->post('sector').' and sta.tipoayuda='.$this->input->post('tipoayuda');
+        
+            $datos = $this->tramite_model->obtenerDatosEncargadoTramite($condicion);
+            $this->output->set_content_type('application/json');
+            $this->output->set_output(json_encode(array(
+                'success' => true,
+                'total' => count($datos),
+                'data' => $datos
             )));
          
     }

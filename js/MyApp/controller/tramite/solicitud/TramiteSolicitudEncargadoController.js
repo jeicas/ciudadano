@@ -12,6 +12,10 @@ Ext.define('MyApp.controller.tramite.solicitud.TramiteSolicitudEncargadoControll
             ref: 'WinProcedimientoTicket',
             selector: 'winProcedimientoTicket'
         },
+        {
+            ref: 'ListaPeticionEncargado',
+            selector: 'listaPeticionEncargado'
+        },
           {
             ref: 'WinObservacionFuncionario',
             selector: 'winObservacionFuncionario'
@@ -54,18 +58,18 @@ Ext.define('MyApp.controller.tramite.solicitud.TramiteSolicitudEncargadoControll
         rec = store.getAt(rowIndex);
 
         win = Ext.create('MyApp.view.solicitud.actividad_ticket.WinProcedimientoTicket');
-        win.down('label[name=lblActividad]').setText(rec.get('actividad'));
-        win.down('textfield[name=idProcedimiento]').setValue(rec.get('idActividad'));
-        win.down('textfield[name=idticket]').setValue(rec.get('idTicket'));
-        win.down('textfield[name=codigoTicket]').setValue(rec.get('codigoTicket'));
-        win.down('textfield[name=solicitante]').setValue(rec.get('solicitante'));
-        win.down('textfield[name=sector]').setValue(rec.get('sector'));
-        win.down('textfield[name=tipoayuda]').setValue(rec.get('tipoayuda'));
-        win.down('textfield[name=idTipoAyuda]').setValue(rec.get('idTipoAyuda'));
-        win.down('textfield[name=cantidad]').setValue(rec.get('cantidad'));
-        win.down('textfield[name=solicitud]').setValue(rec.get('solicitud'));
-        win.down('textarea[name=observacion]').setValue(rec.get('observacion'));
-        win.down('textarea[name=solicitud]').setValue(rec.get('peticion'));
+            win.down('label[name=lblActividad]').setText(rec.get('actividad'));
+            win.down('textfield[name=idProcedimiento]').setValue(rec.get('idActividad'));
+            win.down('textfield[name=idticket]').setValue(rec.get('idTicket'));
+            win.down('textfield[name=codigoTicket]').setValue(rec.get('codigoTicket'));
+            win.down('textfield[name=solicitante]').setValue(rec.get('solicitante'));
+            win.down('textfield[name=sector]').setValue(rec.get('sector'));
+            win.down('textfield[name=tipoayuda]').setValue(rec.get('tipoayuda'));
+            win.down('textfield[name=idTipoAyuda]').setValue(rec.get('idTipoAyuda'));
+            win.down('textfield[name=cantidad]').setValue(rec.get('cantidad'));
+            win.down('textfield[name=solicitud]').setValue(rec.get('solicitud'));
+            win.down('textarea[name=observacion]').setValue(rec.get('observacion'));
+            win.down('textarea[name=solicitud]').setValue(rec.get('peticion'));
 
         win.show();
     },
@@ -103,7 +107,7 @@ Ext.define('MyApp.controller.tramite.solicitud.TramiteSolicitudEncargadoControll
                                     icon: Ext.Msg.INFO,
                                     buttons: Ext.Msg.OK
                                 });
-                                formulario.close();
+                               
                                 formw.close(); 
                                /* grid = this.getAtenderPeticionPanel();
                                 store = grid.getStore();
@@ -182,7 +186,7 @@ Ext.define('MyApp.controller.tramite.solicitud.TramiteSolicitudEncargadoControll
                                     icon: Ext.Msg.INFO,
                                     buttons: Ext.Msg.OK
                                 });
-                                formulario.close();
+                                
                                 formw.close(); 
                                
                                 
@@ -210,10 +214,10 @@ Ext.define('MyApp.controller.tramite.solicitud.TramiteSolicitudEncargadoControll
     },
     
         firmarecibido: function (grid, record, rowIndex) {
-
+         grid2=this.getListaPeticionEncargado();
         store = grid.getStore();
         rec = store.getAt(rowIndex);
-
+          //console.log(grid2.items.items[0].);
           Ext.Ajax.request({
                     url: BASE_URL+'ticket/solicitud/recibirActividadTicket',
                     method: 'POST',
@@ -228,7 +232,6 @@ Ext.define('MyApp.controller.tramite.solicitud.TramiteSolicitudEncargadoControll
                         if (data.success){
                               
                               Ext.MessageBox.show({ title: 'Mensaje', msg:  data.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING });
-                                grid.getView().refresh();
                                 grid.getStore().load();
                             }
                         else{
@@ -252,22 +255,51 @@ Ext.define('MyApp.controller.tramite.solicitud.TramiteSolicitudEncargadoControll
         
         store = grid.getStore();
         rec = store.getAt(rowIndex);
-     
-        win = Ext.create('MyApp.view.solicitud.actividad_ticket.WinMensajeAlFuncionario');
-        win.down('textfield[name=idticket]').setValue(rec.get('idTicket'));
-        win.down('textfield[name=idProcedimiento]').setValue(rec.get('idActividad'));
-        win.down('textfield[name=idFuncionario]').setValue(rec.get('idEncargado'));
-         win.down('textarea[name=observacion]').setValue(rec.get('observacionFuncionario'));
-        win.down('textfield[name=mensaje]').setValue(1);
-        win.down('label[name=lblFuncionario]').setText(rec.get('encargado'));
-        win.down('label[name=lblNombreProcedimiento]').setText(rec.get('actividad'));   
-        win.show();
+         Ext.Ajax.request({
+                    url: BASE_URL+'tramite/tramite/buscarEncargadoTramite',
+                    method: 'POST',
+                    params: {
+                        sector:rec.get('idSector'),
+                        tipoayuda:rec.get('idTipoAyuda')
+                    },
+                    
+                     success: function(result, request){
+                       data=Ext.JSON.decode(result.responseText);
+                       
+                        if (data.success){
+                                   win = Ext.create('MyApp.view.solicitud.actividad_ticket.WinMensajeAlFuncionario');
+                                    win.down('textfield[name=idticket]').setValue(rec.get('idTicket'));
+                                    win.down('textfield[name=idProcedimiento]').setValue(rec.get('idActividad'));
+                                    win.down('textfield[name=idFuncionario]').setValue(rec.get('idEncargado'));
+                                    win.down('textarea[name=observacion]').setValue(rec.get('observacionFuncionario'));
+                                    Ext.ComponentQuery.query('#winMensajeAlFuncionario  textarea[name=observacion]')[0].setReadOnly(true);
+                                    win.down('textarea[name=observacionRespuesta]').setValue(rec.get('respuesta'));
+                                    win.down('textfield[name=mensaje]').setValue(1);
+                                    win.down('label[name=lblFuncionario]').setText(rec.get('encargado'));
+                                    win.down('label[name=lblResponsable2]').setText(data.data[0].responsable);
+                                    win.down('label[name=lblNombreTramite]').setText(data.data[0].tramite);
+                                    win.down('label[name=lblNombreProcedimiento]').setText(rec.get('actividad'));   
+                                win.show();
+                            }
+                        else{
+                           Ext.MessageBox.show({ title: 'Alerta', msg:  data.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING });
+                           // myapp.util.Util.showErrorMsg(result.msg);
+                        }
+                    },
+                    failure: function(result, request){
+                    var result = Ext.JSON.decode(result.responseText);   
+                     loadingMask.hide();
+                            Ext.MessageBox.show({ title: 'Alerta', msg:data.msg , buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING });
+                        }
+
+
+                }); 
+   
     },
     
        enviarRespuesta: function () {
 
           formw = this.getWinMensajeAlFuncionario();
-          me = this;
          
                     formulario = formw.down('form[name=formulario]').getForm();
                     if (formulario.isValid()) {
@@ -287,12 +319,12 @@ Ext.define('MyApp.controller.tramite.solicitud.TramiteSolicitudEncargadoControll
                                     icon: Ext.Msg.INFO,
                                     buttons: Ext.Msg.OK
                                 });
-                                 formulario.close();
+                                
                                 formw.close(); 
-                                /*grid = me.getListaPeticion();
+                                grid = this.getListaPeticionEncargado();
                                 store = grid.getStore();
                                 store.load();
-                                console.log(store);*/
+                               // console.log(store);
                                
                                
                             },

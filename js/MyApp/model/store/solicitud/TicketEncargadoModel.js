@@ -7,7 +7,7 @@ Ext.define('MyApp.model.store.solicitud.TicketEncargadoModel', {
         {name: 'actividad'},
         {name: 'peticion'},
         {name: 'cantidad'},
-         {name: 'sector'},
+        {name: 'sector'},
         {name: 'idSector'},
         {name: 'idTipoAyuda'},
         {name: 'tipoayuda'},

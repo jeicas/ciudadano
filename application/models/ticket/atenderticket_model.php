@@ -64,7 +64,7 @@ class Atenderticket_model extends CI_Model{
     
     
     
-       public function obtenerProcedimientoTicket($ticket) {
+       public function obtenerProcedimientoTicket($ticket, $sector,$tipoayuda) {
            
             $sql = "SELECT act.id actividadid, act.descripcion actividad, actf.funcionario idfuncionario, CASE tact.estatus
                                   WHEN 0 THEN 'ELIMINADO'
@@ -79,7 +79,9 @@ class Atenderticket_model extends CI_Model{
                     INNER JOIN actividad_funcionario actf ON act.id=actf.actividad 
                     INNER JOIN funcionario f ON f.id=actf.funcionario
                     INNER JOIN persona p ON p.id=f.persona
-                    WHERE tact.ticket=$ticket";
+                    INNER JOIN tramite t ON t.id=act.tramite
+                    INNER JOIN sector_tipoayuda sta ON t.sector_tipoayuda=sta.id 
+                    WHERE tact.ticket=$ticket and sta.sector=$sector and sta.tipoayuda=$tipoayuda ";
            
         $query = $this->db->query($sql);
          if ($query->num_rows() > 0) {

@@ -38,8 +38,9 @@ class Solicitud extends CI_Controller {
     public function buscarProcedimientoTicket() {
         $tipolimi = array();
         $ticket = $this->input->get('ticket');
-
-        $tipolimi = $this->atenderticket_model->obtenerProcedimientoTicket($ticket);
+        $tipoayuda = $this->input->get('tipoayuda');
+        $sector = $this->input->get('sector');
+        $tipolimi = $this->atenderticket_model->obtenerProcedimientoTicket($ticket, $sector,$tipoayuda);
 
         if ($tipolimi) {
 
@@ -203,7 +204,7 @@ class Solicitud extends CI_Controller {
                 'observacionresponsable' => $observacion1,
                 'observacionrespuesta' => $observacion2,
             );
-             
+                
             $tipolimi = $this->ticket_model->mensajeFuncionarioProdedimiento($solic);
         }
 

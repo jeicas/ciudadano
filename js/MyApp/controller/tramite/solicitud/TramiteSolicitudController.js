@@ -63,6 +63,8 @@ Ext.define('MyApp.controller.tramite.solicitud.TramiteSolicitudController', {
         storeProcedimiento = win.down('gridActividadTicket').getStore();
         storeProcedimiento.clearData();
         storeProcedimiento.proxy.extraParams.ticket = rec.get('idTicket');
+        storeProcedimiento.proxy.extraParams.tipoayuda = rec.get('idTipoAyuda');
+        storeProcedimiento.proxy.extraParams.sector = rec.get('idSector');
         storeProcedimiento.load();
         win.show();
     },

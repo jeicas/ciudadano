@@ -264,7 +264,9 @@ class Tramite_model extends CI_Model {
                             tt.nombre tipoTicket,
                             tta.descripcion solicitud,
                             IF(sol.persona<>'NULL',CONCAT(p.nombre,' ',p.apellido),com.razonsocial) as solicitante,
-                            e.nombre ente, s.nombre sector, 
+                            e.nombre ente,
+                            s.id idSector, 
+                            s.nombre sector, 
                             ta.nombre tipoayuda, 
                             ta.id idTipoAyuda, 
                             tta.cantidad cantidad,
@@ -386,7 +388,7 @@ class Tramite_model extends CI_Model {
                         ta.id idTipoAyuda,
                         ta.nombre tipoayuda,
                         f.id as idEncargado,
-                        p.nombre encargado,
+                        concat(p.nombre, ' ', p.apellido) encargado,
                         tita.observacion observacion,
                         tta.observacionresponsable observacionFuncionario, 
                         tta.observacionrespuesta respuesta, 
@@ -450,5 +452,29 @@ class Tramite_model extends CI_Model {
                 $query->free-result();
                 
               }  */  
+    }
+    
+    
+    public function obtenerDatosEncargadoTramite($condicion) {
+           $sql="Select concat(p.nombre, ' ', p.apellido) responsable, t.descripcion tramite, e.nombre ente
+                        from tramite t 
+                        inner join tramite_funcionario tf on t.id=tf.tramite 
+                        inner join funcionario f on f.id=tf.funcionario 
+                        inner join persona p on p.id=f.persona
+                        inner join sector_tipoayuda sta on t.sector_tipoayuda=sta.id
+                        inner join ente_sector es on es.sector=sta.sector
+                        inner join ente e on e.id=es.ente  
+                  where  $condicion";
+           //echo json_encode($sql);
+           
+        $query = $this->db->query($sql);
+           if ($query->num_rows() > 0) {
+              foreach ($query->result() as $row1){
+                    $resultado[] = $row1;  
+                }
+                return $resultado;
+                $query->free-result();
+                
+              }   
     }
 }

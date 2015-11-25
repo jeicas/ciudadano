@@ -335,8 +335,8 @@ Ext.define('MyApp.view.solicitud.ListaPeticionEncargado', {
                 name: 'recibir',
                 menuDisabled: true,
                 items: [{
-                        tooltip: 'Atender la Peticion',
-                        icon: '../../imagen/pdf32.png'
+                        tooltip: 'Recibir la Petición',
+                        icon: '../../imagen/btn/useredit.png'
 
                     }]
             }, 
@@ -345,10 +345,11 @@ Ext.define('MyApp.view.solicitud.ListaPeticionEncargado', {
                 width: 30,
                 sortable: false,
                 name: 'aprobar',
+                hidden: false,
                 menuDisabled: true,
                 items: [{
-                        tooltip: 'Aprobar Peticion',
-                        icon: '../../imagen/pdf32.png'
+                        tooltip: 'Atender Peticion',
+                        icon: '../../imagen/btn/registro.png'
 
                     }]
             }, 
@@ -357,10 +358,11 @@ Ext.define('MyApp.view.solicitud.ListaPeticionEncargado', {
                 width: 30,
                 sortable: false,
                 name: 'mensaje',
+               
                 menuDisabled: true,
                 items: [{
                         tooltip: 'Enviar Mensaje',
-                        icon: '../../imagen/pdf32.png'
+                        icon: '../../imagen/btn/sobre.png'
 
                     }]
             }]
