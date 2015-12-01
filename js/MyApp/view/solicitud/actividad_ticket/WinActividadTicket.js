@@ -171,7 +171,7 @@ extend: 'Ext.window.Window',
           },
           {
             xtype   : 'button',
-            iconCls :'save',
+            iconCls :'icon-aprobar',
             name    :'btnAprobar',
             text    : 'Aprobar',
             disabled:false,
@@ -180,7 +180,7 @@ extend: 'Ext.window.Window',
 
           },{
             xtype   : 'button',
-            iconCls :'icon-limpiar',
+            iconCls :'icon-rechazar',
             name      :'btnRechazar',
             text    : 'Rechazar'
           }]

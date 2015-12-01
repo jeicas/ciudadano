@@ -13,6 +13,10 @@ Ext.define('MyApp.controller.tramite.solicitud.TramiteSolicitudEncargadoControll
             selector: 'winProcedimientoTicket'
         },
         {
+            ref: 'AtenderPeticionEncargadoPanel',
+            selector: 'atenderPeticionEncargadoPanel'
+        },
+        {
             ref: 'ListaPeticionEncargado',
             selector: 'listaPeticionEncargado'
         },
@@ -109,9 +113,9 @@ Ext.define('MyApp.controller.tramite.solicitud.TramiteSolicitudEncargadoControll
                                 });
                                
                                 formw.close(); 
-                               /* grid = this.getAtenderPeticionPanel();
+                               grid = this.getAtenderPeticionEncargadoPanel();
                                 store = grid.getStore();
-                                store.load();*/
+                                store.load();
                                 
                             },
                             failure: function (form, action) {
@@ -122,7 +126,7 @@ Ext.define('MyApp.controller.tramite.solicitud.TramiteSolicitudEncargadoControll
                                         break;
                                     case Ext.form.Action.CONNECT_FAILURE:
                                         Ext.MessageBox.show({title: 'Error', msg: 'Error en comunicaci&oacute;n Ajax', buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.ERROR});
-                                        break;
+                                            break;
                                     case Ext.form.Action.SERVER_INVALID:
                                         Ext.MessageBox.show({title: 'Error---Verifique!', msg: 'Informacion ingresada es invalida/Servidor invalido', buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.ERROR});
                                         break;

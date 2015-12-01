@@ -56,6 +56,15 @@ class Ente extends CI_Controller
       "direccion"        => mb_strtoupper($this->input->post("direccion"),'utf-8'),
       "tlf1"             => $this->input->post('codTlf').$this->input->post('local')
     );
+    
+    
+      $arregloEnte_sector = array(                
+      "ente"           => $ente,          
+      "sector"             => $this->input->post("sector"),          
+    );
+      
+       $this->ente_model->insertEnteSector($arregloEnte_sector);    
+      
     $this->ente_model->updateEnte($ente,$arregloEnte);    
     if(mysql_affected_rows()>0){
         return true;           
@@ -65,6 +74,7 @@ class Ente extends CI_Controller
   }
     public function guardarEnte(){
       $ente=$this->input->post("id");
+      
       if($ente!=''){
         $actualizar=$this->actualizarEnte($ente);
         if($actualizar){

@@ -191,7 +191,7 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
                 trami = storeT.data.items[i].data['id'];
                 i = storeT.data.items.length + 1;
             }
-            console.log(valorT);
+            
         }
 
 

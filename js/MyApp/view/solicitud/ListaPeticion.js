@@ -297,7 +297,7 @@ Ext.define('MyApp.view.solicitud.ListaPeticion', {
                 menuDisabled: true,
                 items: [{
                         tooltip: 'Ver Detalles',
-                        icon: '../../imagen/pdf32.png'
+                        icon: '../../imagen/btn/registro.png'
 
                     }]
             }]

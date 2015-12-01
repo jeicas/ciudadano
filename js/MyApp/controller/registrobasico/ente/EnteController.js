@@ -77,6 +77,7 @@ Ext.define('MyApp.controller.registrobasico.ente.EnteController',{
         me=this;
         formulario=this.getPanelEnte();
         lista=this.getPanelListaEnte();
+        
         if(formulario.getForm().isValid()){            
             Ext.get(formulario.getEl()).mask("Guardando... Por favor espere...",'loading');
             formulario.getForm().submit({

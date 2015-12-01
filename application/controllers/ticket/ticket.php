@@ -150,7 +150,7 @@ class Ticket extends CI_Controller {
                   $dataTicketProcedimiento=array ( 
                       "ticket"=>$insertTicket,
                       "actividad"=> $proc['actividad'],
-                      "estatus"=>1,
+                      "estatus"=>$proc['estatus'],
                   );
                   $ticketAct=$this->ticket_model->insertTicketActividad($dataTicketProcedimiento);
               }

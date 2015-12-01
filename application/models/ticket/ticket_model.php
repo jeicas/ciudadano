@@ -102,4 +102,18 @@ class Ticket_model extends CI_Model{
      }
     }
    }
+   
+   
+     public function buscarActividadDependiente($id){
+        $sql=$this->db->query("SELECT id  from actividad where actividad_id=$id   ");
+        if ($sql->num_rows() > 0){
+            foreach ($sql->result() as $usuario){
+                $tipo[] = $usuario;
+            }
+            return $tipo;
+            $sql->free->result();
+        }else{
+            return false;
+        }
+    }
 }

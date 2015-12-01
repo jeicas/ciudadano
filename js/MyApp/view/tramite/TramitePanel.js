@@ -169,7 +169,7 @@ Ext.define('MyApp.view.tramite.TramitePanel', {
                         labelWidth  : 132,
                         name        : 'sector',
                         queryMode   : 'local',
-                        store       : Ext.create('MyApp.store.registrobasico.sector.SectorStore'),
+                        store       : Ext.create('MyApp.store.registrobasico.sector.SectorEnteStore'),
                         valueField  : 'id',
                         displayField: 'nombre',
                         emptyText   :'Seleccionar',

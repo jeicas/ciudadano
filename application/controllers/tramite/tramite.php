@@ -454,14 +454,17 @@ class Tramite extends CI_Controller {
 
         if ($depende == '') {
             $depende = null;
+            $estatus2=1;
         } else {
             $depende = $this->input->post("actividadDepende");
+            $estatus2=0;
         }
         $actividades = array(
             "descripcion" => $this->input->post('descripcion'),
             "unidadresponsable" => $this->input->post("unidadresponsable"),
             "tiempo" => $this->input->post("tiempo"),
             "estatus" => $estatus,
+            "estatus2" => $estatus2,
             "actividad_id" => $depende,
             "tramite" => $this->input->post("tramite"),
         );
@@ -557,7 +560,7 @@ class Tramite extends CI_Controller {
        function buscarSolicitudesEncargadoProcedimiento() {
         $username = $this->session->userdata('data');
         
-        $condicion=' f.usuario='.$username['id'].' and e.id='.$username['ente'];
+        $condicion='f.usuario='.$username['id'].' and e.id='.$username['ente'];
        // echo json_encode($condicion);
             $solicitudes = $this->tramite_model->obtenerSolicitudesProcedimientoEncargado($condicion);
             $this->output->set_content_type('application/json');

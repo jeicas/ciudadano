@@ -377,7 +377,7 @@ class Tramite_model extends CI_Model {
     
        public function obtenerSolicitudesProcedimientoEncargado($condicion) {
            $sql="SELECT DISTINCT ti.codigo codigoTicket,  
-             ti.id idTicket, 
+                        ti.id idTicket, 
                         e.nombre ente,
                         a.id idActividad,
                         a.descripcion actividad,  
@@ -405,7 +405,7 @@ class Tramite_model extends CI_Model {
 
                     FROM  ticket_actividad tta 
                       INNER JOIN ticket ti ON ti.id=tta.ticket 
-                      INNER JOIN actividad a ON a.id=tta.actividad
+                      INNER JOIN actividad a ON a.id=tta.actividad AND tta.estatus!=3
                       INNER JOIN actividad_funcionario af ON af.actividad=tta.actividad
                       INNER JOIN funcionario f ON f.id=af.funcionario
                       INNER JOIN persona p on p.id=f.persona
@@ -415,12 +415,63 @@ class Tramite_model extends CI_Model {
                       INNER JOIN ente_sector es ON es.sector=s.id
                       INNER JOIN ente e ON e.id=es.ente 
                       INNER JOIN tipoayuda ta ON ta.id=tita.tipoayuda
+                      INNER JOIN solicitante sol ON sol.id=ti.solicitante
+                      LEFT JOIN persona pp ON pp.id=sol.persona
+                      LEFT JOIN comunidad com ON com.id=sol.comunidad
+                      left join ticket_actividad ttac on a.id=ttac.actividad 
+                      LEFT JOIN actividad act ON act.id=a.actividad_id
+                      LEFT JOIN ticket_actividad ttta ON ttta.actividad=act.id
+           where  $condicion ";
+          // echo json_encode($sql);
+          /* $sql="SELECT  DISTINCT ti.codigo codigoTicket,  
+                        ti.id idTicket, 
+                        e.nombre ente,
+                        a.id idActividad,
+                        a.descripcion actividad,
+                        a.estatus,
+                        act.id, 
+                        act.descripcion, 
+                        act.estatus, 
+                        tita.descripcion peticion,
+                        tita.cantidad cantidad,
+                        s.nombre sector,
+                        s.id idSector,
+                        ta.id idTipoAyuda,
+                        ta.nombre tipoayuda,
+                        f.id as idEncargado,
+                        concat(p.nombre, ' ', p.apellido) encargado,
+                        tita.observacion observacion,
+                        tta.observacionresponsable observacionFuncionario, 
+                        tta.observacionrespuesta respuesta, 
+                        tta.observacion observacion, 
+                        IF(sol.persona<>'NULL',concat(pp.nombre,' ',pp.apellido),com.razonsocial) as  solicitante,
+                        DATE_FORMAT(ti.fecha,'%d-%m-%Y') as fechaRegistro, 
+                        CASE tta.estatus
+                                  WHEN 0 THEN 'ELIMINADO'
+                                  WHEN 1 THEN 'PENDIENTE'
+                                  WHEN 2 THEN 'RECIBIDO'
+                                  WHEN 3 THEN 'EN ESPERA'  
+                                  WHEN 4 THEN 'COMPLETADO' 
+                                  WHEN 5 THEN 'RECHAZADO' END as estatus
+                   FROM actividad a 
+                      LEFT JOIN actividad act ON a.actividad_id=act.id 
+                      INNER JOIN  ticket_actividad tta ON tta.actividad=a.id
+                      INNER JOIN ticket ti ON ti.id=tta.ticket 
+                      INNER JOIN actividad_funcionario af ON af.actividad=tta.actividad
+                      INNER JOIN funcionario f ON f.id=af.funcionario
+                      INNER JOIN persona p on p.id=f.persona
+                      INNER JOIN ticket_tipoayuda tita ON tita.ticket=ti.id  
+		              INNER JOIN sector_tipoayuda sta ON sta.sector=ti.sector
+                      INNER JOIN sector s ON s.id=sta.sector 
+                      INNER JOIN ente_sector es ON es.sector=s.id
+                      INNER JOIN ente e ON e.id=es.ente 
+                      INNER JOIN tipoayuda ta ON ta.id=tita.tipoayuda
                       INNER JOIN solicitante sol on sol.id=ti.solicitante
                       LEFT JOIN persona pp on pp.id=sol.persona
-                      LEFT JOIN comunidad com on com.id=sol.comunidad    
-           where  $condicion";
-           //echo json_encode($sql);
+                      LEFT JOIN comunidad com on com.id=sol.comunidad  
+              WHERE a.estatus=4 AND act.estatus in (1,2) and $condicion";*/
            
+           //echo json_encode($sql);
         $query = $this->db->query($sql);
            if ($query->num_rows() > 0) {
               foreach ($query->result() as $row1){
@@ -434,7 +485,7 @@ class Tramite_model extends CI_Model {
     
     
         public function obtenerActividadTramite($sector, $tipoayuda) {
-           $sql="SELECT a.id actividad
+           $sql="SELECT a.id actividad, a.estatus2 estatus
                     FROM actividad a
                         INNER JOIN tramite t ON t.id = a.tramite
                         INNER JOIN sector_tipoayuda sta ON sta.id = t.sector_tipoayuda

@@ -221,7 +221,14 @@ Ext.define('MyApp.controller.tramite.solicitud.TramiteSolicitudController', {
         win.down('textfield[name=idFuncionario]').setValue(rec.get('idfuncionario'));
         win.down('textfield[name=mensaje]').setValue(0);
         win.down('label[name=lblFuncionario]').setText(rec.get('encargado'));
-        win.down('label[name=lblNombreProcedimiento]').setText(rec.get('actividad'));   
+        win.down('label[name=lblNombreProcedimiento]').setText(rec.get('actividad'));
+        win.down('textarea[name=observacion]').setValue(rec.get('observacionfuncionario'));
+        win.down('textarea[name=observacionRespuesta]').setValue(rec.get('respuestafuncionario'));
+        Ext.ComponentQuery.query('#winMensajeAlFuncionario  textarea[name=observacionRespuesta]')[0].setReadOnly(true);
+         win.down('label[name=lblPara2]').setVisible(false);
+         win.down('label[name=lblResponsable2]').setVisible(false);
+         win.down('label[name=lblProc]').setVisible(false);
+        win.down('label[name=lblNombreTramite]').setVisible(false);
         win.show();
     },
     

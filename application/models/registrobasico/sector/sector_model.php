@@ -6,10 +6,22 @@ class Sector_model extends CI_Model{
         parent::__construct();
     }
 
-    public function obtenerSector($ente){
+    public function obtenerSectorEnte($ente){
         $sql=$this->db->query("SELECT s.id as id, s.nombre as nombre
             FROM sector as s
             INNER JOIN ente_sector as es ON es.sector=s.id and es.ente=$ente
+            ORDER BY s.nombre asc");
+        if ($sql->num_rows() > 0){
+            foreach ($sql->result() as $sector){
+                $tipo[] = $sector;
+            }
+            return $tipo;
+            $sql->free->result();
+        }
+    }
+     public function obtenerSector(){
+        $sql=$this->db->query("SELECT s.id as id, s.nombre as nombre
+            FROM sector as s
             ORDER BY s.nombre asc");
         if ($sql->num_rows() > 0){
             foreach ($sql->result() as $sector){

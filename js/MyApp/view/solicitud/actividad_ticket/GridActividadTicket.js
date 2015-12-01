@@ -87,8 +87,8 @@ Ext.define('MyApp.view.solicitud.actividad_ticket.GridActividadTicket', {
             menuDisabled: true,
             name        : 'mensaje',
             items: [{
-                iconCls : 'eliminar',
-                tooltip : 'Escribir Observacion al Funcionario',
+                iconCls : 'icon-mensaje',
+                tooltip : 'Enviar Observacion al Funcionario',
                 scope   : this
             }]
         }]

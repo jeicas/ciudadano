@@ -208,7 +208,9 @@
   background-image:url('../imagen/btn/cancel.png') !important;
 }
 
-
+.icon-guardar{
+  background-image:url('../imagen/btn/disk.png') !important;
+}
 
 .Three-Dee{
   font-family: 'Helvetica Neue',Helvetica, sans-serif;

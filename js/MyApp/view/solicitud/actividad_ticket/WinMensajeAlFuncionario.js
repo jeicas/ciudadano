@@ -93,7 +93,7 @@ Ext.define('MyApp.view.solicitud.actividad_ticket.WinMensajeAlFuncionario', {
                                         items: [{
                                                 xtype: 'label',
                                                 margins: '0 0 0 0',
-                                                name: 'lblProc',
+                                                name: 'lblProc1',
                                                 width: '25%',
                                                 text: 'Responsable del Procedimiento: ',
                                             },
@@ -102,7 +102,7 @@ Ext.define('MyApp.view.solicitud.actividad_ticket.WinMensajeAlFuncionario', {
                                                 margins: '0 0 0 0',
                                                 name: 'lblNombreProcedimiento',
                                                 width: '100%',
-                                                text: 'Recepcion',
+                                                text: '',
                                             },
                                         ]
                                     },
@@ -145,7 +145,7 @@ Ext.define('MyApp.view.solicitud.actividad_ticket.WinMensajeAlFuncionario', {
                                                 margins: '0 0 0 0',
                                                 name: 'lblResponsable2',
                                                 width: '100%',
-                                                text: 'Carolkis Linares',
+                                                text: '',
                                             },
                                         ]
                                     },
@@ -177,12 +177,12 @@ Ext.define('MyApp.view.solicitud.actividad_ticket.WinMensajeAlFuncionario', {
                                         margins: '5 0 2 0',
                                         items: [{
                                                 xtype: 'textarea',
-                                                margins: '5 5 5 0',
+                                                margins: '5 5 5 5',
                                                 name: 'observacionRespuesta',
                                                 width: '60%',
-                                                labelWidth: 50,
+                                                labelWidth: 62,
                                                 maxLength: 420,
-                                                fieldLabel: 'respuesta:',
+                                                fieldLabel: 'Respuesta:',
                                             },
                                         ]
                                     }

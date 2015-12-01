@@ -40,7 +40,7 @@ class Solicitud extends CI_Controller {
         $ticket = $this->input->get('ticket');
         $tipoayuda = $this->input->get('tipoayuda');
         $sector = $this->input->get('sector');
-        $tipolimi = $this->atenderticket_model->obtenerProcedimientoTicket($ticket, $sector,$tipoayuda);
+        $tipolimi = $this->atenderticket_model->obtenerProcedimientoTicket($ticket, $sector, $tipoayuda);
 
         if ($tipolimi) {
 
@@ -111,7 +111,27 @@ class Solicitud extends CI_Controller {
         );
 
         $tipolimi = $this->ticket_model->updateEstatusActividadTicket($sol);
-        if ($tipolimi) {
+
+
+        $tipolimit = $this->ticket_model->buscarActividadDependiente($actividad);
+
+        if ($tipolimit) {
+            foreach ($tipolimit as $row) {
+                $act = $row->id;
+                if ($act != null) {
+                    $datos = array(
+                        'ticket' => $ticket,
+                        'actividad' => $act,
+                        'estatus' => 1
+                    );
+                    $data = $this->ticket_model->updateEstatusActividadTicket($datos);
+                }
+                else $data=true;
+            }
+        } else
+            $data = false;
+
+        if ($tipolimi && $data) {
 
             $this->output->set_content_type('application/json');
             $this->output->set_output(json_encode(array(
@@ -179,7 +199,7 @@ class Solicitud extends CI_Controller {
 
     public function enviarMensajeFuncionarioProcedimientoTicket() {
         $tipolimi = array();
-       
+
         $ticket = $this->input->post('idticket');
         $mensaje = $this->input->post('mensaje');
         $observacion1 = $this->input->post('observacion');
@@ -194,7 +214,7 @@ class Solicitud extends CI_Controller {
                 'usuario' => $funcionario,
                 'observacionresponsable' => $observacion1,
             );
-           
+
             $tipolimi = $this->ticket_model->mensajeFuncionarioProdedimiento($solic);
         } else {
             $solic = array(
@@ -204,7 +224,7 @@ class Solicitud extends CI_Controller {
                 'observacionresponsable' => $observacion1,
                 'observacionrespuesta' => $observacion2,
             );
-                
+
             $tipolimi = $this->ticket_model->mensajeFuncionarioProdedimiento($solic);
         }
 
