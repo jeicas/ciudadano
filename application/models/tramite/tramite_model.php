@@ -38,7 +38,7 @@ class Tramite_model extends CI_Model {
     }
 
     public function obtenerprocedimiento($idtramite) {
-        $sql = "SELECT a.id, a.descripcion,a.unidadresponsable, a.tiempo,
+       /* $sql = "SELECT a.id, a.descripcion,a.unidadresponsable, a.tiempo,
         IF(a.estatus='1','INICIO', IF(a.estatus='2','PROCEDIMIENTO', IF(a.estatus='3','VERIFICACION', IF(a.estatus='4','FINAL','')))) as estatus,
        concat(p.nacionalidad,'-',p.cedula,' ',p.nombre,'  ',p.apellido) as funcionario, actividad.descripcion as cmbprocedimiento
                FROM actividad as a
@@ -47,7 +47,17 @@ class Tramite_model extends CI_Model {
                inner JOIN persona as p on p.id=f.persona
                left join actividad on actividad.actividad_id=a.id
            WHERE
-              a.tramite=$idtramite";
+              a.tramite=$idtramite";*/
+        $sql="select a.id, a.descripcion,a.unidadresponsable, a.tiempo, 
+                 IF(a.estatus='1','INICIO', IF(a.estatus='2','PROCEDIMIENTO', IF(a.estatus='3','VERIFICACION', IF(a.estatus='4','FINAL','')))) as estatus,
+                 concat(p.nacionalidad,'-',p.cedula,' ',p.nombre,'  ',p.apellido) as funcionario, 
+                 act.descripcion as cmbprocedimiento,act.id, 
+                 act.estatus as actestatus
+               FROM actividad as a
+               inner join actividad_funcionario as af on af.actividad= a.id
+               inner JOIN funcionario as f on af.funcionario=f.id
+               inner JOIN persona as p on p.id=f.persona
+               left join actividad act on a.actividad_id=act.id where a.tramite=$idtramite";
         $query = $this->db->query($sql, array($idtramite));
 
 

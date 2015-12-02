@@ -457,7 +457,7 @@ class Tramite extends CI_Controller {
             $estatus2=1;
         } else {
             $depende = $this->input->post("actividadDepende");
-            $estatus2=0;
+            $estatus2=3;
         }
         $actividades = array(
             "descripcion" => $this->input->post('descripcion'),

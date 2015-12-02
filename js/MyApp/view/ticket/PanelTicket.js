@@ -156,7 +156,7 @@ Ext.define('MyApp.view.ticket.PanelTicket', {
                     labelWidth  : 120,
                     name        : 'sector',
                     queryMode   : 'local',
-                    store       : Ext.create('MyApp.store.registrobasico.sector.SectorStore'),
+                    store       : Ext.create('MyApp.store.registrobasico.sector.SectorEnteStore'),
                     valueField  : 'id',
                     displayField: 'nombre',
                     emptyText   :'Seleccionar',

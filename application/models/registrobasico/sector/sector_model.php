@@ -19,6 +19,15 @@ class Sector_model extends CI_Model{
             $sql->free->result();
         }
     }
+    
+      public function obtenerEnteSector($ente){
+        $sql=$this->db->query("SELECT s.id as id, s.nombre as nombre
+            FROM sector as s
+            INNER JOIN ente_sector as es ON es.sector=s.id and es.ente=$ente
+            ORDER BY s.nombre asc");
+       return $sql;
+    }
+    
      public function obtenerSector(){
         $sql=$this->db->query("SELECT s.id as id, s.nombre as nombre
             FROM sector as s
