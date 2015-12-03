@@ -15,7 +15,8 @@ class Ente_model extends CI_Model{
         return $consulta = $this->db->get_where('ente',array('tipo' => $admon,'estatus' => 1));
     }
     public function insertEnte($arregloEnte){
-        return $this->db->insert('ente',$arregloEnte);
+        $this->db->insert('ente',$arregloEnte);
+        return $this->db->insert_id();
     }
     
       public function insertEnteSector($arregloEnte){
@@ -40,10 +41,15 @@ class Ente_model extends CI_Model{
     public function eliminarEnte($id){
         $data = array('estatus' => '0');
         $this->db->where('id',$id);
-        $this->db->update('ente', $data);
+        return $this->db->update('ente', $data);
     }
     public function updateEnte($ente,$arregloEnte){
         $this->db->where('id',$ente);
-        $this->db->update('ente',$arregloEnte);
+       return $this->db->update('ente',$arregloEnte);
+    }
+    
+     public function deleteEnteSector($ente){
+        $this->db->where('ente',$ente);
+        return $this->db->delete('ente_sector');
     }
 }

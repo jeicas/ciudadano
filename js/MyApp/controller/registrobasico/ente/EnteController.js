@@ -77,13 +77,24 @@ Ext.define('MyApp.controller.registrobasico.ente.EnteController',{
         me=this;
         formulario=this.getPanelEnte();
         lista=this.getPanelListaEnte();
-        
+         
+        // Combo  multiselect 
+        var arregloCombo1 = [];
+            store= formulario.down('combobox[name=sector]').getModelData();
+            Ext.each(store, function(Array) {
+                for ( i=0; i<Array.sector.length; i++){
+                    arregloCombo1.push(Ext.apply(Array.sector[i]));}
+                });
+            arregloSector = Ext.encode(arregloCombo1);
+            
+            
         if(formulario.getForm().isValid()){            
             Ext.get(formulario.getEl()).mask("Guardando... Por favor espere...",'loading');
             formulario.getForm().submit({
                 url: BASE_URL+'ente/ente/guardarEnte',
                 method:'POST',
-                params: formulario.getForm().getValues(),
+                params: {
+                         arregloSector:arregloSector},
                 failure: function(form,action){
                     switch (action.failureType) {
                         case Ext.form.Action.CLIENT_INVALID:

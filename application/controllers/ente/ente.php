@@ -48,7 +48,9 @@ class Ente extends CI_Controller
     );
     echo json_encode($output);
   }
-  public function actualizarEnte($ente){   
+  public function actualizarEnte($ente){
+       $sector = $_POST['arregloSector'];
+      
     $arregloEnte = array(                
       "nombre"           => strtoupper($this->input->post("nombre")),          
       "tipo"             => $this->input->post("tipo"),          
@@ -58,25 +60,35 @@ class Ente extends CI_Controller
     );
     
     
-      $arregloEnte_sector = array(                
-      "ente"           => $ente,          
-      "sector"             => $this->input->post("sector"),          
-    );
-      
-       $this->ente_model->insertEnteSector($arregloEnte_sector);    
-      
-    $this->ente_model->updateEnte($ente,$arregloEnte);    
-    if(mysql_affected_rows()>0){
+      if (isset($sector)) {
+           $delete=$this->ente_model->deleteEnteSector($ente);
+                $records = json_decode($sector);
+                foreach ($records as $record1) {
+                        $arregloEnte_sector = array(                
+                        "ente"           => $ente,          
+                        "sector"         => $record1,          
+                      );
+                   $insert=$this->ente_model->insertEnteSector($arregloEnte_sector);    
+                }
+            }
+  
+   
+   
+   return  $this->ente_model->updateEnte($ente,$arregloEnte);
+    /*if(mysql_affected_rows()>0){
+         echo json_encode($this->ente_model->updateEnte($ente,$arregloEnte));
         return true;           
     }else{
         return false;
-    }
+    }*/
   }
     public function guardarEnte(){
       $ente=$this->input->post("id");
+      $sector = $_POST['arregloSector'];
       
       if($ente!=''){
         $actualizar=$this->actualizarEnte($ente);
+        //echo json_encode($actualizar);
         if($actualizar){
           echo json_encode(array(
             "success"   => true,
@@ -101,7 +113,25 @@ class Ente extends CI_Controller
           "tlf1"             => $this->input->post('codTlf').$this->input->post('local'),          
           "estatus"          => '1'
         );
-        $this->ente_model->insertEnte($arregloEnte);        
+        
+       
+        
+        
+        
+       $ente= $this->ente_model->insertEnte($arregloEnte); 
+        
+           if (isset($sector)) {
+           $this->ente_model->deleteEnteSector($ente);
+                $records = json_decode($sector);
+                foreach ($records as $record1) {
+                        $arregloEnte_sector = array(                
+                        "ente"           => $ente,          
+                        "sector"         => $record1,          
+                      );
+                     $this->ente_model->insertEnteSector($arregloEnte_sector);    
+                }
+            }
+        
         if(mysql_affected_rows()>0){
           echo json_encode(array(
             "success"   => true,
