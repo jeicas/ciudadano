@@ -538,4 +538,48 @@ class Tramite_model extends CI_Model {
                 
               }   
     }
+    
+      public function obtenerSolicitudesTramite($ente, $tramite) {
+           $sql="SELECT DISTINCT ti.codigo codigoticket,tr.id idtramite,tr.descripcion tramite,
+                        tta.descripcion solicitud, tta.cantidad, ta.nombre tipoayuda, 
+                        IF(sol.persona<>'NULL',concat(pp.nombre,' ',pp.apellido),com.razonsocial) as  solicitante, 
+                        CASE ti.estatus
+                                  WHEN 0 THEN 'ELIMINADO'
+                                  WHEN 1 THEN 'PENDIENTE'
+                                  WHEN 2 THEN 'RECIBIDO'
+                                  WHEN 3 THEN 'EN ESPERA'  
+                                  WHEN 4 THEN 'COMPLETADO' 
+                                  WHEN 5 THEN 'RECHAZADO' END as estatus
+ 
+                    FROM tramite tr
+                    INNER JOIN sector_tipoayuda sta on  sta.id=tr.sector_tipoayuda
+                    INNER JOIN ticket ti on ti.sector=sta.sector 
+                    INNER JOIN ticket_tipoayuda tta on tta.tipoayuda=sta.tipoayuda and ti.id=tta.ticket
+                    INNER JOIN tipoayuda ta on ta.id=tta.tipoayuda
+                    INNER JOIN ente_sector es on es.sector=ti.sector and es.ente=$ente
+                    INNER JOIN solicitante sol ON sol.id=ti.solicitante
+                    LEFT JOIN persona pp ON pp.id=sol.persona
+                    LEFT JOIN comunidad com ON com.id=sol.comunidad
+                   WHERE tr.id=$tramite";
+           
+        $query = $this->db->query($sql);
+         
+          if ($query->num_rows() > 0) {
+           
+              foreach ($query->result() as $row1){
+                    $resultado[] = $row1;  
+                }
+                return $resultado;
+                $query->free-result();
+                
+              } 
+        /*if ($query->num_rows() > 0) {
+              foreach ($query->result() as $row1){
+                    $resultado[] = $row1;  
+                }
+                return $resultado;
+                $query->free-result();
+                
+              }  */  
+    }
 }

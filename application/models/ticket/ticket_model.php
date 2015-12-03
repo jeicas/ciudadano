@@ -17,10 +17,14 @@ class Ticket_model extends CI_Model{
         return $this->db->insert('historicoticket',$arregloHistorico);
     }
     
+        public function insertTicketRecaudos($arreglo){
+        return $this->db->insert('recaudosticket',$arreglo);
+    }
+    
+    
         public function insertTicketActividad($arreglo){
         return $this->db->insert('ticket_actividad',$arreglo);
     }
-    
     
     public function getCodigo(){
         $sql=$this->db->query("SELECT codigo FROM ticket ORDER BY  codigo ASC");
@@ -76,7 +80,11 @@ class Ticket_model extends CI_Model{
        return $this->db->update('ticket_actividad', $ticket);
    }
 
-   
+      public function updateTicketRecaudos($arreglo){
+       $this->db->where('id', $arreglo['id']);
+       $this->db->where('recaudotramite', $arreglo['recaudotramite']);      
+       return $this->db->update('recaudosticket', $arreglo);
+      }
    
    
    public function buscarTicketSector($ticket) {

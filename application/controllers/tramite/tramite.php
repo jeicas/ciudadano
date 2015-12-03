@@ -201,15 +201,15 @@ class Tramite extends CI_Controller {
                 'id' => $row['idfuncionario'],
             );
         }
-        
-        
-         $buscarsector_tipoayuda = $this->tramite_model->obteneridSector_tipoAyuda($this->input->post("sectorr"), $this->input->post("ayudat"));
+
+
+        $buscarsector_tipoayuda = $this->tramite_model->obteneridSector_tipoAyuda($this->input->post("sectorr"), $this->input->post("ayudat"));
         foreach ($buscarsector_tipoayuda->result_array() as $rows) {
             $datos[] = array(
                 'id' => $rows['id'],
             );
         }
-       
+
         $arreglotramite = array(
             "id" => $this->input->post("idtramit"),
             "codigo" => $codigo,
@@ -324,8 +324,8 @@ class Tramite extends CI_Controller {
                 "nombre" => $descripcion,
                 "ente" => $username['ente'],
             );
-           
-            
+
+
             $ttramite = $this->tramite_model->insertTipoTramite($arreglotramite);
             $tramiteUp = true;
         } else {
@@ -454,10 +454,10 @@ class Tramite extends CI_Controller {
 
         if ($depende == '') {
             $depende = null;
-            $estatus2=1;
+            $estatus2 = 1;
         } else {
             $depende = $this->input->post("actividadDepende");
-            $estatus2=3;
+            $estatus2 = 3;
         }
         $actividades = array(
             "descripcion" => $this->input->post('descripcion'),
@@ -543,49 +543,61 @@ class Tramite extends CI_Controller {
         } else {
             if ($username['tipousuario'] == 3) {
                 $responsable = $this->tramite_model->obtenerSectorTipoAyudaResponsable($username['ente'], $username['id']);
-                 foreach ($responsable->result_array() as $row) {
-                  $solicitudes = $this->tramite_model->obtenerSolicitudesSectorTipoU($username['ente'], $row['id_sector'],$row['id_tipoayuda']);
-                  $this->output->set_content_type('application/json');
-                  $this->output->set_output(json_encode(array(
-                  'success' => true,
-                  'total' => count($solicitudes),
-                  'data' => $solicitudes
-                  ))); 
-                 }
+                foreach ($responsable->result_array() as $row) {
+                    $solicitudes = $this->tramite_model->obtenerSolicitudesSectorTipoU($username['ente'], $row['id_sector'], $row['id_tipoayuda']);
+                    $this->output->set_content_type('application/json');
+                    $this->output->set_output(json_encode(array(
+                        'success' => true,
+                        'total' => count($solicitudes),
+                        'data' => $solicitudes
+                    )));
+                }
             }
         }
     }
-    
-    
-       function buscarSolicitudesEncargadoProcedimiento() {
+
+    function buscarSolicitudesEncargadoProcedimiento() {
         $username = $this->session->userdata('data');
-        
-        $condicion='f.usuario='.$username['id'].' and e.id='.$username['ente'];
-       // echo json_encode($condicion);
-            $solicitudes = $this->tramite_model->obtenerSolicitudesProcedimientoEncargado($condicion);
-            $this->output->set_content_type('application/json');
-            $this->output->set_output(json_encode(array(
-                'success' => true,
-                'total' => count($solicitudes),
-                'data' => $solicitudes
-            )));
-         
+
+        $condicion = 'f.usuario=' . $username['id'] . ' and e.id=' .
+                // echo json_encode($condicion);
+                $solicitudes = $this->tramite_model->obtenerSolicitudesProcedimientoEncargado($condicion);
+        $this->output->set_content_type('application/json');
+        $this->output->set_output(json_encode(array(
+            'success' => true,
+            'total' => count($solicitudes),
+            'data' => $solicitudes
+        )));
     }
-    
-    
-     function buscarEncargadoTramite() {
-       
-        
-        $condicion=' sta.sector='.$this->input->post('sector').' and sta.tipoayuda='.$this->input->post('tipoayuda');
-        
-            $datos = $this->tramite_model->obtenerDatosEncargadoTramite($condicion);
-            $this->output->set_content_type('application/json');
-            $this->output->set_output(json_encode(array(
-                'success' => true,
-                'total' => count($datos),
-                'data' => $datos
-            )));
-         
+
+    function buscarEncargadoTramite() {
+
+
+        $condicion = ' sta.sector=' . $this->input->post('sector') . ' and sta.tipoayuda=' . $this->input->post('tipoayuda');
+
+        $datos = $this->tramite_model->obtenerDatosEncargadoTramite($condicion);
+        $this->output->set_content_type('application/json');
+        $this->output->set_output(json_encode(array(
+            'success' => true,
+            'total' => count($datos),
+            'data' => $datos
+        )));
+    }
+
+    function buscarTramiteSolicitudes() {
+
+        $tramite = $this->input->get('tramite');
+        $username = $this->session->userdata('data');
+        $ente = $username['ente'];
+
+        $datos = $this->tramite_model->obtenerSolicitudesTramite($ente, $tramite);
+        //echo json_encode($datos);
+        $this->output->set_content_type('application/json');
+        $this->output->set_output(json_encode(array(
+            'success' => true,
+            'total' => count($datos),
+            'data' => $datos
+        )));
     }
 
 }

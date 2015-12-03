@@ -157,6 +157,26 @@ class Ticket extends CI_Controller {
           
 
         /*******************************************/
+              
+                      /*****************************************/
+       // Guarda los recaudos que pertenecen a la solicitud creada
+         
+        //recaudos que tiene asocioado a la peticion
+                   
+        $procedimiento=$this->tramite_model->obtenerRecaudosTramite($this->input->post("sector"),$record->ayuda);
+       
+              foreach ($procedimiento->result_array() as $proc)
+              {
+                   
+                  $dataTicketProcedimiento=array ( 
+                      "recaudotramite"=>$insertTicket,
+                      "ticket"=> $proc['actividad'],
+                  );
+                  $ticketAct=$this->ticket_model->insertTicketRecaudos($dataTicketProcedimiento);
+              }
+          
+
+        /*******************************************/
 
                     
                     
