@@ -38,17 +38,17 @@ class Tramite_model extends CI_Model {
     }
 
     public function obtenerprocedimiento($idtramite) {
-       /* $sql = "SELECT a.id, a.descripcion,a.unidadresponsable, a.tiempo,
-        IF(a.estatus='1','INICIO', IF(a.estatus='2','PROCEDIMIENTO', IF(a.estatus='3','VERIFICACION', IF(a.estatus='4','FINAL','')))) as estatus,
-       concat(p.nacionalidad,'-',p.cedula,' ',p.nombre,'  ',p.apellido) as funcionario, actividad.descripcion as cmbprocedimiento
-               FROM actividad as a
-               inner join actividad_funcionario as af on af.actividad= a.id
-               inner JOIN funcionario as f on af.funcionario=f.id
-               inner JOIN persona as p on p.id=f.persona
-               left join actividad on actividad.actividad_id=a.id
-           WHERE
-              a.tramite=$idtramite";*/
-        $sql="select a.id, a.descripcion,a.unidadresponsable, a.tiempo, 
+        /* $sql = "SELECT a.id, a.descripcion,a.unidadresponsable, a.tiempo,
+          IF(a.estatus='1','INICIO', IF(a.estatus='2','PROCEDIMIENTO', IF(a.estatus='3','VERIFICACION', IF(a.estatus='4','FINAL','')))) as estatus,
+          concat(p.nacionalidad,'-',p.cedula,' ',p.nombre,'  ',p.apellido) as funcionario, actividad.descripcion as cmbprocedimiento
+          FROM actividad as a
+          inner join actividad_funcionario as af on af.actividad= a.id
+          inner JOIN funcionario as f on af.funcionario=f.id
+          inner JOIN persona as p on p.id=f.persona
+          left join actividad on actividad.actividad_id=a.id
+          WHERE
+          a.tramite=$idtramite"; */
+        $sql = "select a.id, a.descripcion,a.unidadresponsable, a.tiempo, 
                  IF(a.estatus='1','INICIO', IF(a.estatus='2','PROCEDIMIENTO', IF(a.estatus='3','VERIFICACION', IF(a.estatus='4','FINAL','')))) as estatus,
                  concat(p.nacionalidad,'-',p.cedula,' ',p.nombre,'  ',p.apellido) as funcionario, 
                  act.descripcion as cmbprocedimiento,act.id, 
@@ -62,7 +62,7 @@ class Tramite_model extends CI_Model {
 
 
 
-       if ($query->num_rows() > 0) {
+        if ($query->num_rows() > 0) {
             return $query;
         } else {
             return false;
@@ -125,9 +125,8 @@ class Tramite_model extends CI_Model {
             return false;
         }
     }
-    
-    
-       function obteneridSector_tipoAyuda($sector, $tipoayuda) {
+
+    function obteneridSector_tipoAyuda($sector, $tipoayuda) {
         $sql = "SELECT id from sector_tipoayuda where sector=$sector and tipoayuda=$tipoayuda";
         $query = $this->db->query($sql);
         if ($query->num_rows() > 0) {
@@ -189,11 +188,12 @@ class Tramite_model extends CI_Model {
         $this->db->insert('tramite', $arregloTicket);
         return mysql_insert_id();
     }
+
     public function insertTipoTramite($arregloTicket) {
-       
+
         return $this->db->insert('tipotramite', $arregloTicket);
     }
-    
+
     public function insertRecaudos($arregloTicket) {
         $this->db->insert('recaudos', $arregloTicket);
         return mysql_insert_id();
@@ -206,10 +206,10 @@ class Tramite_model extends CI_Model {
         $this->db->insert('recaudostramite', $agregar);
         return $query = mysql_insert_id();
     }
-    
-     function deleteTramiteRecaudos($agregar) {
-         $this->db->where('id', $agregar);
-        return $this->db->delete('recaudostramite'); 
+
+    function deleteTramiteRecaudos($agregar) {
+        $this->db->where('id', $agregar);
+        return $this->db->delete('recaudostramite');
     }
 
     function insertTramiteFuncionario($agregar, $datadiscapacitado) {
@@ -218,14 +218,12 @@ class Tramite_model extends CI_Model {
         $this->db->insert('tramite_funcionario', $agregar);
         return $query = mysql_insert_id();
     }
-    
+
     function deleteTramiteFuncionario($agregar, $datadiscapacitado) {
-         $this->db->where('tramite', $agregar);
-         $this->db->where('funcionario', $datadiscapacitado);
-        return $this->db->delete('tramite_funcionario'); 
+        $this->db->where('tramite', $agregar);
+        $this->db->where('funcionario', $datadiscapacitado);
+        return $this->db->delete('tramite_funcionario');
     }
-    
-    
 
     public function insertActividades($arregloTicket, $dataactividad) {
         $this->db->set('tramite', $dataactividad);
@@ -234,42 +232,41 @@ class Tramite_model extends CI_Model {
     }
 
     function insertActividadesFuncionarios($agregar) {
-       return $this->db->insert('actividad_funcionario', $agregar);
-        
+        return $this->db->insert('actividad_funcionario', $agregar);
     }
 
     public function updateTramite($ticket) {
         $this->db->where('id', $ticket['id']);
         return $this->db->update('tramite', $ticket);
     }
-    
+
     public function updateTipoTramite($ticket) {
         $this->db->where('id', $ticket['id']);
         return $this->db->update('tipotramite', $ticket);
     }
-    
-     public function deleteTipoTramite($ticket) {
+
+    public function deleteTipoTramite($ticket) {
         $this->db->where('id', $ticket['id']);
         return $this->db->delete('tipotramite');
     }
-    
-    
+
     public function insertTipoAyuda($arreglo) {
         $this->db->insert('tipoayuda', $arreglo);
         return mysql_insert_id();
     }
-    
+
     public function insertSectorTipoAyuda($arreglo) {
         return $this->db->insert('sector_tipoayuda', $arreglo);
     }
-     public function updateTipoAyuda($ticket) {
+
+    public function updateTipoAyuda($ticket) {
         $this->db->where('id', $ticket['id']);
         return $this->db->update('tipoayuda', $ticket);
     }
-    
-       public function obtenerSolicitudes($ente) {
 
-           $sql = "SELECT t.id idTicket,
+    public function obtenerSolicitudes($ente) {
+
+        $sql = "SELECT t.id idTicket,
                             t.codigo codigoTicket,
                             tt.nombre tipoTicket,
                             tta.descripcion solicitud,
@@ -302,17 +299,17 @@ class Tramite_model extends CI_Model {
                         INNER JOIN tipoticket tt on t.tipoticket=tt.id  
                         WHERE e.id=$ente";
         $query = $this->db->query($sql);
-         if ($query->num_rows() > 0) {
-              foreach ($query->result() as $row){
-                    $resultado[] = $row;
-                }
-                return $resultado;
-                $query->free-result();
-        } 
+        if ($query->num_rows() > 0) {
+            foreach ($query->result() as $row) {
+                $resultado[] = $row;
+            }
+            return $resultado;
+            $query->free - result();
+        }
     }
 
-       public function obtenerSolicitudesSectorTipoU($ente, $sector, $tipoa) {
-                $sql = "SELECT t.id idTicket,
+    public function obtenerSolicitudesSectorTipoU($ente, $sector, $tipoa) {
+        $sql = "SELECT t.id idTicket,
                                 t.codigo codigoTicket,
                                 tt.nombre tipoTicket,
                                 tta.descripcion solicitud,
@@ -345,17 +342,17 @@ class Tramite_model extends CI_Model {
                             INNER JOIN tipoticket tt on t.tipoticket=tt.id  
                             WHERE e.id=$ente";
         $query = $this->db->query($sql);
-          if ($query->num_rows() > 0) {
-              foreach ($query->result() as $row){
-                    $resultado[] = $row;
-                }
-                return $resultado;
-                $query->free-result();
-        } 
+        if ($query->num_rows() > 0) {
+            foreach ($query->result() as $row) {
+                $resultado[] = $row;
+            }
+            return $resultado;
+            $query->free - result();
+        }
     }
-    
-      public function obtenerSectorTipoAyudaResponsable($ente, $usuario) {
-           $sql="SELECT  distinct p.nombre, 
+
+    public function obtenerSectorTipoAyudaResponsable($ente, $usuario) {
+        $sql = "SELECT  distinct p.nombre, 
                                  s.nombre sector,s.id id_sector, 
                                  ta.nombre tipoayuda,
                                  ta.id id_tipoayuda,
@@ -370,23 +367,13 @@ class Tramite_model extends CI_Model {
                         INNER JOIN tipoayuda ta on ta.id=sta.tipoayuda 
                         INNER JOIN sector s on s.id=sta.sector
                         INNER JOIN ente_sector es on s.id=es.sector and es.ente=$ente";
-           
+
         $query = $this->db->query($sql);
         return $query;
-        /*if ($query->num_rows() > 0) {
-              foreach ($query->result() as $row1){
-                    $resultado[] = $row1;  
-                }
-                return $resultado;
-                $query->free-result();
-                
-              }  */  
     }
-    
-    
-    
-       public function obtenerSolicitudesProcedimientoEncargado($condicion) {
-           $sql="SELECT DISTINCT ti.codigo codigoTicket,  
+
+    public function obtenerSolicitudesProcedimientoEncargado($condicion) {
+        $sql = "SELECT DISTINCT ti.codigo codigoTicket,  
                         ti.id idTicket, 
                         e.nombre ente,
                         a.id idActividad,
@@ -432,92 +419,40 @@ class Tramite_model extends CI_Model {
                       LEFT JOIN actividad act ON act.id=a.actividad_id
                       LEFT JOIN ticket_actividad ttta ON ttta.actividad=act.id
            where  $condicion ";
-          // echo json_encode($sql);
-          /* $sql="SELECT  DISTINCT ti.codigo codigoTicket,  
-                        ti.id idTicket, 
-                        e.nombre ente,
-                        a.id idActividad,
-                        a.descripcion actividad,
-                        a.estatus,
-                        act.id, 
-                        act.descripcion, 
-                        act.estatus, 
-                        tita.descripcion peticion,
-                        tita.cantidad cantidad,
-                        s.nombre sector,
-                        s.id idSector,
-                        ta.id idTipoAyuda,
-                        ta.nombre tipoayuda,
-                        f.id as idEncargado,
-                        concat(p.nombre, ' ', p.apellido) encargado,
-                        tita.observacion observacion,
-                        tta.observacionresponsable observacionFuncionario, 
-                        tta.observacionrespuesta respuesta, 
-                        tta.observacion observacion, 
-                        IF(sol.persona<>'NULL',concat(pp.nombre,' ',pp.apellido),com.razonsocial) as  solicitante,
-                        DATE_FORMAT(ti.fecha,'%d-%m-%Y') as fechaRegistro, 
-                        CASE tta.estatus
-                                  WHEN 0 THEN 'ELIMINADO'
-                                  WHEN 1 THEN 'PENDIENTE'
-                                  WHEN 2 THEN 'RECIBIDO'
-                                  WHEN 3 THEN 'EN ESPERA'  
-                                  WHEN 4 THEN 'COMPLETADO' 
-                                  WHEN 5 THEN 'RECHAZADO' END as estatus
-                   FROM actividad a 
-                      LEFT JOIN actividad act ON a.actividad_id=act.id 
-                      INNER JOIN  ticket_actividad tta ON tta.actividad=a.id
-                      INNER JOIN ticket ti ON ti.id=tta.ticket 
-                      INNER JOIN actividad_funcionario af ON af.actividad=tta.actividad
-                      INNER JOIN funcionario f ON f.id=af.funcionario
-                      INNER JOIN persona p on p.id=f.persona
-                      INNER JOIN ticket_tipoayuda tita ON tita.ticket=ti.id  
-		              INNER JOIN sector_tipoayuda sta ON sta.sector=ti.sector
-                      INNER JOIN sector s ON s.id=sta.sector 
-                      INNER JOIN ente_sector es ON es.sector=s.id
-                      INNER JOIN ente e ON e.id=es.ente 
-                      INNER JOIN tipoayuda ta ON ta.id=tita.tipoayuda
-                      INNER JOIN solicitante sol on sol.id=ti.solicitante
-                      LEFT JOIN persona pp on pp.id=sol.persona
-                      LEFT JOIN comunidad com on com.id=sol.comunidad  
-              WHERE a.estatus=4 AND act.estatus in (1,2) and $condicion";*/
-           
-           //echo json_encode($sql);
+
         $query = $this->db->query($sql);
-           if ($query->num_rows() > 0) {
-              foreach ($query->result() as $row1){
-                    $resultado[] = $row1;  
-                }
-                return $resultado;
-                $query->free-result();
-                
-              }   
+        if ($query->num_rows() > 0) {
+            foreach ($query->result() as $row1) {
+                $resultado[] = $row1;
+            }
+            return $resultado;
+            $query->free - result();
+        }
     }
-    
-    
-        public function obtenerActividadTramite($sector, $tipoayuda) {
-           $sql="SELECT a.id actividad, a.estatus2 estatus
+
+    public function obtenerActividadTramite($sector, $tipoayuda) {
+        $sql = "SELECT a.id actividad, a.estatus2 estatus
                     FROM actividad a
                         INNER JOIN tramite t ON t.id = a.tramite
                         INNER JOIN sector_tipoayuda sta ON sta.id = t.sector_tipoayuda
                         AND sta.sector =$sector
                         AND sta.tipoayuda =$tipoayuda";
-           
+
         $query = $this->db->query($sql);
         return $query;
-       // echo json_encode($sql);
-          /* if ($query->num_rows() > 0) {
-              foreach ($query->result() as $row1){
-                    $resultado[] = $row1;  
-                }
-                return $resultado;
-                $query->free-result();
-                
-              }  */  
+        // echo json_encode($sql);
+        /* if ($query->num_rows() > 0) {
+          foreach ($query->result() as $row1){
+          $resultado[] = $row1;
+          }
+          return $resultado;
+          $query->free-result();
+
+          } */
     }
-    
-    
+
     public function obtenerDatosEncargadoTramite($condicion) {
-           $sql="Select concat(p.nombre, ' ', p.apellido) responsable, t.descripcion tramite, e.nombre ente
+        $sql = "Select concat(p.nombre, ' ', p.apellido) responsable, t.descripcion tramite, e.nombre ente
                         from tramite t 
                         inner join tramite_funcionario tf on t.id=tf.tramite 
                         inner join funcionario f on f.id=tf.funcionario 
@@ -526,21 +461,20 @@ class Tramite_model extends CI_Model {
                         inner join ente_sector es on es.sector=sta.sector
                         inner join ente e on e.id=es.ente  
                   where  $condicion";
-           //echo json_encode($sql);
-           
+        //echo json_encode($sql);
+
         $query = $this->db->query($sql);
-           if ($query->num_rows() > 0) {
-              foreach ($query->result() as $row1){
-                    $resultado[] = $row1;  
-                }
-                return $resultado;
-                $query->free-result();
-                
-              }   
+        if ($query->num_rows() > 0) {
+            foreach ($query->result() as $row1) {
+                $resultado[] = $row1;
+            }
+            return $resultado;
+            $query->free - result();
+        }
     }
-    
-      public function obtenerSolicitudesTramite($ente, $tramite) {
-           $sql="SELECT DISTINCT ti.codigo codigoticket,tr.id idtramite,tr.descripcion tramite,
+
+    public function obtenerSolicitudesTramite($ente, $tramite) {
+        $sql = "SELECT DISTINCT ti.codigo codigoticket,tr.id idtramite,tr.descripcion tramite,
                         tta.descripcion solicitud, tta.cantidad, ta.nombre tipoayuda, 
                         IF(sol.persona<>'NULL',concat(pp.nombre,' ',pp.apellido),com.razonsocial) as  solicitante, 
                         CASE ti.estatus
@@ -561,25 +495,35 @@ class Tramite_model extends CI_Model {
                     LEFT JOIN persona pp ON pp.id=sol.persona
                     LEFT JOIN comunidad com ON com.id=sol.comunidad
                    WHERE tr.id=$tramite";
-           
+
         $query = $this->db->query($sql);
-         
-          if ($query->num_rows() > 0) {
-           
-              foreach ($query->result() as $row1){
-                    $resultado[] = $row1;  
-                }
-                return $resultado;
-                $query->free-result();
-                
-              } 
-        /*if ($query->num_rows() > 0) {
-              foreach ($query->result() as $row1){
-                    $resultado[] = $row1;  
-                }
-                return $resultado;
-                $query->free-result();
-                
-              }  */  
+
+        if ($query->num_rows() > 0) {
+
+            foreach ($query->result() as $row1) {
+                $resultado[] = $row1;
+            }
+            return $resultado;
+            $query->free - result();
+        }
     }
+
+    public function obtenerRecaudosTramite($sector, $tipoayuda) {
+        $sql = "SELECT rt.id recaudotramite
+                    FROM recaudostramite rt 
+                    INNER JOIN tramite t ON rt.tramite=t.id
+                    INNER JOIN sector_tipoayuda sta ON t.sector_tipoayuda=sta.id AND sta.sector=$sector AND sta.tipoayuda $tipoayuda
+                    ";
+
+            $query = $this->db->query($sql);
+              if ($query->num_rows() > 0) {
+              foreach ($query->result() as $row1){
+              $resultado[] = $row1;
+              }
+              return $resultado;
+              $query->free-result();
+
+            } 
+    }
+
 }

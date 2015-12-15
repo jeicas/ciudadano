@@ -142,8 +142,8 @@ class Ticket extends CI_Controller {
          
         //tramite que tiene asocioado a la peticion
                     //echo json_encode($this->input->post("sector").$record->ayuda);
-        $procedimiento=$this->tramite_model->obtenerActividadTramite($this->input->post("sector"),$record->ayuda);
-       
+          $procedimiento=$this->tramite_model->obtenerActividadTramite($this->input->post("sector"),$record->ayuda);
+   
               foreach ($procedimiento->result_array() as $proc)
               {
                    
@@ -154,7 +154,7 @@ class Ticket extends CI_Controller {
                   );
                   $ticketAct=$this->ticket_model->insertTicketActividad($dataTicketProcedimiento);
               }
-          
+        
 
         /*******************************************/
               
@@ -163,24 +163,25 @@ class Ticket extends CI_Controller {
          
         //recaudos que tiene asocioado a la peticion
                    
-        $procedimiento=$this->tramite_model->obtenerRecaudosTramite($this->input->post("sector"),$record->ayuda);
+        $procedimiento2= $this->tramite_model->obtenerRecaudosTramite($this->input->post("sector"),$record->ayuda);
        
-              foreach ($procedimiento->result_array() as $proc)
-              {
-                   
-                  $dataTicketProcedimiento=array ( 
-                      "recaudotramite"=>$insertTicket,
-                      "ticket"=> $proc['actividad'],
+              foreach ($procedimiento2->result_array() as $proces)
+              { 
+                  
+                  $dataRecaudoTicket=array ( 
+                      "recaudotramite"=>proces['recaudotramite'],
+                      "ticket"=> $insertTicket,
                   );
-                  $ticketAct=$this->ticket_model->insertTicketRecaudos($dataTicketProcedimiento);
-              }
+                  $ticketActi=$this->ticket_model->insertTicketRecaudos($dataRecaudoTicket);
+                  
+              } 
           
 
         /*******************************************/
 
                     
                     
-                }
+               }
             }
         } else {
             $arregloTicket_Sector_Tipoayuda = array(
@@ -198,8 +199,8 @@ class Ticket extends CI_Controller {
         $this->ticket_model->insertHistorico($arregloHistorico);
 
       
-      
-        if (mysql_affected_rows() > 0) {
+     
+       if (mysql_affected_rows() > 0) {
             echo json_encode(array(
                 "success" => true,
                 "guardo" => true,
@@ -211,7 +212,7 @@ class Ticket extends CI_Controller {
                 "guardo" => false,
                 "msg" => 'No se pudo registrar.'
             ));
-        }
+        } 
     }
 
 //**************************************************************

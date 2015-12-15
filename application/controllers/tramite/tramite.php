@@ -481,9 +481,6 @@ class Tramite extends CI_Controller {
 
             $actividadfuncionario = $this->tramite_model->insertActividadesFuncionarios($actividadesfuncionario);
         }
-
-
-
         if ($actividadfuncionario) {
             echo json_encode(array(
                 "success" => true,
