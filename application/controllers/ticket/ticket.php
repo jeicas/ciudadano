@@ -15,7 +15,8 @@ class Ticket extends CI_Controller {
     }
 
     public function guardar() {
-        $username = $this->session->userdata('data');
+        
+      $username = $this->session->userdata('data');
         $codigo = $this->obtenerCodigo();
         if ($username['login_ok'] == false) {
             $funcionario = NULL;
@@ -161,27 +162,24 @@ class Ticket extends CI_Controller {
                       /*****************************************/
        // Guarda los recaudos que pertenecen a la solicitud creada
          
-        //recaudos que tiene asocioado a la peticion
-                   
+        //recaudos que tiene asocioado a la peticion  
+                       
         $procedimiento2= $this->tramite_model->obtenerRecaudosTramite($this->input->post("sector"),$record->ayuda);
-       
-              foreach ($procedimiento2->result_array() as $proces)
+      
+             foreach ($procedimiento2->result_array() as $proces)
               { 
-                  
+                 
                   $dataRecaudoTicket=array ( 
-                      "recaudotramite"=>proces['recaudotramite'],
+                      "recaudotramite"=>$proces['recaudotramite'],
                       "ticket"=> $insertTicket,
                   );
                   $ticketActi=$this->ticket_model->insertTicketRecaudos($dataRecaudoTicket);
-                  
-              } 
-          
+                 
+              }
 
-        /*******************************************/
-
+        /*******************************************/ 
                     
-                    
-               }
+              }
             }
         } else {
             $arregloTicket_Sector_Tipoayuda = array(

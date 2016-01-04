@@ -512,10 +512,12 @@ class Tramite_model extends CI_Model {
         $sql = "SELECT rt.id recaudotramite
                     FROM recaudostramite rt 
                     INNER JOIN tramite t ON rt.tramite=t.id
-                    INNER JOIN sector_tipoayuda sta ON t.sector_tipoayuda=sta.id AND sta.sector=$sector AND sta.tipoayuda $tipoayuda
+                    INNER JOIN sector_tipoayuda sta ON t.sector_tipoayuda=sta.id AND sta.sector=$sector AND sta.tipoayuda= $tipoayuda
                     ";
-
-            $query = $this->db->query($sql);
+          
+              $query = $this->db->query($sql);
+                    return $query;
+            /*$query = $this->db->query($sql);
               if ($query->num_rows() > 0) {
               foreach ($query->result() as $row1){
               $resultado[] = $row1;
@@ -523,7 +525,7 @@ class Tramite_model extends CI_Model {
               return $resultado;
               $query->free-result();
 
-            } 
+            } */
     }
 
 }
