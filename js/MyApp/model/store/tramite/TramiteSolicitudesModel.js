@@ -3,6 +3,7 @@ Ext.define('MyApp.model.store.tramite.TramiteSolicitudesModel', {
     fields: [
     	{name: 'codigoticket'},
         {name: 'idtramite'},
+         {name: 'idticket'},
     	{name: 'tramite'},
         {name: 'solicitud'},
     	{name: 'cantidad'},

@@ -124,4 +124,25 @@ class Ticket_model extends CI_Model{
             return false;
         }
     }
+    
+    
+         public function obtenerrecaudosticket($ticket){
+        $sql=$this->db->query("SELECT t.descripcion tramite, r.nombre as nombrerecaudo, r.id as idrecaudo,
+                               IF (r.requerido=1,'SI', 'NO') requerido, 
+                               IF (rt.estatus=0,'PENDIENTE', 'ENTREGADO')estatusrecaudo 
+                                FROM recaudosticket rt
+                                INNER JOIN recaudostramite rtr on rtr.id=rt.recaudotramite 
+                                INNER JOIN recaudos r on r.id=rtr.recaudos 
+                                INNER JOIN tramite t on rtr.tramite=t.id 
+                                where rt.ticket=$ticket");
+    
+        if ($sql->num_rows() > 0){
+            foreach ($sql->result() as $resultado){
+                $tipo[] = $resultado;
+            }
+            return $tipo;
+            $sql->free-result();
+        }
+    }
+    
 }

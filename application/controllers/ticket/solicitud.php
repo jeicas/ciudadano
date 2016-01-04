@@ -242,5 +242,19 @@ class Solicitud extends CI_Controller {
                 'data' => $tipolimi)));
         }
     }
+    
+    public function buscarRecuadosTicket() {
+        $tipolimi = array();
+        $ticket = $this->input->get('ticket');
+   
+        $tipolimi = $this->ticket_model->obtenerrecaudosticket($ticket);
+
+        if ($tipolimi) {
+           $this->output->set_content_type('application/json');
+            $this->output->set_output(json_encode(array(
+                "success" => True,
+                'data' => $tipolimi)));
+        }
+    }
 
 }

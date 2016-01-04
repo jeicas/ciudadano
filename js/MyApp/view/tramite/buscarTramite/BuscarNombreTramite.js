@@ -12,10 +12,6 @@ Ext.define('MyApp.view.tramite.buscarTramite.BuscarNombreTramite', {
             clicksToEdit: 1,
             pluginId: 'cellplugin'
         }],
-    
- 
-    
-    
     store: Ext.create('MyApp.store.tramite.TramiteStore'),
     emptyText: 'No hay datos registrados',
     selType: 'checkboxmodel',

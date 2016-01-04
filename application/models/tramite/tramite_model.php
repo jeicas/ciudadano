@@ -474,7 +474,7 @@ class Tramite_model extends CI_Model {
     }
 
     public function obtenerSolicitudesTramite($ente, $tramite) {
-        $sql = "SELECT DISTINCT ti.codigo codigoticket,tr.id idtramite,tr.descripcion tramite,
+        $sql = "SELECT DISTINCT ti.codigo codigoticket,ti.id idticket,tr.id idtramite,tr.descripcion tramite,
                         tta.descripcion solicitud, tta.cantidad, ta.nombre tipoayuda, 
                         IF(sol.persona<>'NULL',concat(pp.nombre,' ',pp.apellido),com.razonsocial) as  solicitante, 
                         CASE ti.estatus
