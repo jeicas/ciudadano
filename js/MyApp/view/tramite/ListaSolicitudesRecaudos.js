@@ -10,11 +10,17 @@ Ext.define('MyApp.view.tramite.ListaSolicitudesRecaudos', {
     ],
     actionColumns: false,
     viewConfig: {
-        getRowClass: function (record, index) {
-            var c = record.get('estatusrecaudo');
-            if (c == 'INACTIVO') {
+           getRowClass: function (record, index) {
+             if (record.get('estatus') === 'PENDIENTE') {
+                return 'price-gol';
+            } else if (record.get('estatus') === 'RECHAZADO') {
                 return 'price-fall';
-            } else if (c == 'ACTIVO') {
+            } else if (record.get('estatus') === 'RECIBIDO') {
+                return 'price-azul';
+            } else if (record.get('estatus') === 'ELIMINADO') {
+                return 'price-naranja';
+            }
+             else if (record.get('estatus') === 'COMPLETADO') {
                 return 'price-rise';
             }
         }
@@ -40,7 +46,7 @@ Ext.define('MyApp.view.tramite.ListaSolicitudesRecaudos', {
                 flex: 0.5,
                 text: 'Tipo de Ayuda',
                 dataIndex: 'tipoayuda',
-                tdCls: 'x-change-cell',
+               
                 queryMode: 'local',
                       items: {
                     xtype: 'textfield',
@@ -99,14 +105,14 @@ Ext.define('MyApp.view.tramite.ListaSolicitudesRecaudos', {
                 flex: 0.3,
                 text: 'Cantidad',
                 dataIndex: 'cantidad',
-                tdCls: 'x-change-cell',
+                
                 queryMode: 'local',
             },
             {
                 flex: 1,
                 text: 'Solicitante',
                 dataIndex: 'solicitante',
-                tdCls: 'x-change-cell',
+                
                 queryMode: 'local',
             }, {
                 flex: 0.5,

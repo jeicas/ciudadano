@@ -4,6 +4,8 @@ Ext.define('MyApp.model.store.solicitud.TicketRecaudosModel', {
     	{name: 'tramite'},
         {name: 'nombrerecaudo'},
     	{name: 'requerido'},
-        {name: 'estatusrecaudo'}
+        {name: 'estatusrecaudo'}, 
+        {name: 'idrecaudoticket'}, 
+         {name: 'idticket'}
     ]
 }); 

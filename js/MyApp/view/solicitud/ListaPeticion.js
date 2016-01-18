@@ -9,14 +9,17 @@ Ext.define('MyApp.view.solicitud.ListaPeticion', {
     ],
     viewConfig: {
         getRowClass: function (record, index) {
-            if (record.get('estatusTicket') === 'PENDIENTE') {
+             if (record.get('estatusTicket') === 'PENDIENTE') {
                 return 'price-gol';
             } else if (record.get('estatusTicket') === 'RECHAZADO') {
                 return 'price-fall';
             } else if (record.get('estatusTicket') === 'RECIBIDO') {
-                return 'price-rise';
+                return 'price-azul';
             } else if (record.get('estatusTicket') === 'ELIMINADO') {
                 return 'price-naranja';
+            }
+             else if (record.get('estatusTicket') === 'COMPLETADO') {
+                return 'price-rise';
             }
         }
     },

@@ -19,5 +19,7 @@ Ext.define('MyApp.model.store.solicitud.TicketEncargadoModel', {
         {name: 'solicitante'},
         {name: 'fechaRegistro'},
         {name: 'estatus'},
+         {name: 'estatusticket'},
+         {name: 'tipoactividad'},
     ]
 });

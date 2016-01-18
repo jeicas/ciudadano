@@ -9,6 +9,14 @@ Ext.define('MyApp.controller.tramite.solicitud.TramiteSolicitudController', {
     ],
     refs: [
         {
+            ref: 'AtenderPeticionPanel',
+            selector: 'atenderPeticionPanel'
+        },
+         {
+            ref: 'ListaPeticion',
+            selector: 'listaPeticion'
+        },
+         {
             ref: 'WinActividadTicket',
             selector: 'winActividadTicket'
         },
@@ -48,7 +56,7 @@ Ext.define('MyApp.controller.tramite.solicitud.TramiteSolicitudController', {
 
         store = grid.getStore();
         rec = store.getAt(rowIndex);
-
+ 
         win = Ext.create('MyApp.view.solicitud.actividad_ticket.WinActividadTicket');
         win.down('textfield[name=idticket]').setValue(rec.get('idTicket'));
         win.down('textfield[name=codigoTicket]').setValue(rec.get('codigoTicket'));
@@ -59,20 +67,53 @@ Ext.define('MyApp.controller.tramite.solicitud.TramiteSolicitudController', {
         win.down('textfield[name=cantidad]').setValue(rec.get('cantidad'));
         win.down('textfield[name=solicitud]').setValue(rec.get('solicitud'));
         win.down('textarea[name=observacion]').setValue(rec.get('observacion'));
-
+        
         storeProcedimiento = win.down('gridActividadTicket').getStore();
         storeProcedimiento.clearData();
         storeProcedimiento.proxy.extraParams.ticket = rec.get('idTicket');
         storeProcedimiento.proxy.extraParams.tipoayuda = rec.get('idTipoAyuda');
         storeProcedimiento.proxy.extraParams.sector = rec.get('idSector');
         storeProcedimiento.load();
+        
+        
+        Ext.Ajax.request({
+                    url: BASE_URL+'ticket/solicitud/buscarCuantosProcedimientoTicket',
+                    method: 'POST',
+                    params: {
+                        idticket:rec.get('idTicket'), 
+                    },
+                     success: function(result, request){
+                       var data=Ext.JSON.decode(result.responseText); 
+                        if (data.success){
+                            if (data.cuantos>0)
+                            {
+                                win.down('button[name=btnAprobar]').setVisible(false); 
+                            }
+                            
+                            }
+                        else{
+                           Ext.MessageBox.show({ title: 'Alerta', msg:  data.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING });
+                           // myapp.util.Util.showErrorMsg(result.msg);
+                        }
+                    },
+                    failure: function(result, request){
+                    var result = Ext.JSON.decode(result.responseText);   
+                     loadingMask.hide();
+                            Ext.MessageBox.show({ title: 'Alerta', msg:data.msg , buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING });
+                        }
+
+
+                }); 
+        
+        
         win.show();
     },
     aprobarSolicitud: function () {
-
+      me=this;
         formw = this.getWinActividadTicket();
         solicitud = formw.down('textfield[name=cantidad]').getValue() + ' ' + formw.down('textfield[name=tipoayuda]').getValue();
-
+        panel = me.getAtenderPeticionPanel();
+        grid = panel.down('listaPeticion');
         Ext.Msg.show({
             title: 'Confirmar',
             msg: 'Aprobar:  ' + solicitud + '?',
@@ -100,11 +141,11 @@ Ext.define('MyApp.controller.tramite.solicitud.TramiteSolicitudController', {
                                     icon: Ext.Msg.INFO,
                                     buttons: Ext.Msg.OK
                                 });
-                                formulario.close();
+                                
                                 formw.close(); 
-                               /* grid = this.getAtenderPeticionPanel();
-                                store = grid.getStore();
-                                store.load();*/
+                                 store = grid.getStore();
+                                store.load()
+                              
                                 
                             },
                             failure: function (form, action) {
@@ -148,6 +189,7 @@ Ext.define('MyApp.controller.tramite.solicitud.TramiteSolicitudController', {
                     win.down('textfield[name=idticket]').setValue(formw.down('textfield[name=idticket]').getValue());
                     win.down('textfield[name=idtipoayuda]').setValue(formw.down('textfield[name=idTipoAyuda]').getValue());
                     win.show();
+                    formw.close();
                 }
             }
         });
@@ -157,6 +199,8 @@ Ext.define('MyApp.controller.tramite.solicitud.TramiteSolicitudController', {
 
           formw = this.getWinObservacionSolicitud();
           me = this;
+           panel = me.getAtenderPeticionPanel();
+        grid = panel.down('listaPeticion');
          
                     formulario = formw.down('form[name=formulario]').getForm();
                     if (formulario.isValid()) {
@@ -176,14 +220,10 @@ Ext.define('MyApp.controller.tramite.solicitud.TramiteSolicitudController', {
                                     icon: Ext.Msg.INFO,
                                     buttons: Ext.Msg.OK
                                 });
-                                 formulario.close();
+                                 
                                 formw.close(); 
-                                /*grid = me.getListaPeticion();
                                 store = grid.getStore();
                                 store.load();
-                                console.log(store);*/
-                               
-                               
                             },
                             failure: function (form, action) {
                                 loadingMask.hide();

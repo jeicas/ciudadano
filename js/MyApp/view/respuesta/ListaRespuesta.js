@@ -8,15 +8,18 @@ Ext.define('MyApp.view.respuesta.ListaRespuesta', {
         'Ext.grid.column.Column'
     ],
     viewConfig: {
-        getRowClass: function(record, index) {
-            if(record.get('estatusTicket')==='PENDIENTE'){
+       getRowClass: function (record, index) {
+             if (record.get('estatusTicket') === 'PENDIENTE') {
                 return 'price-gol';
-            }else if(record.get('estatusTicket')==='RECHAZADO'){
+            } else if (record.get('estatusTicket') === 'RECHAZADO') {
                 return 'price-fall';
-            }else if(record.get('estatusTicket')==='RECIBIDO'){
-                return 'price-rise';
-            }else if(record.get('estatusTicket')==='ELIMINADO'){
+            } else if (record.get('estatusTicket') === 'RECIBIDO') {
+                return 'price-azul';
+            } else if (record.get('estatusTicket') === 'ELIMINADO') {
                 return 'price-naranja';
+            }
+             else if (record.get('estatusTicket') === 'COMPLETADO') {
+                return 'price-rise';
             }
         }
     },

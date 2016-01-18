@@ -33,6 +33,10 @@ Ext.define('MyApp.view.respuesta.EditarRespuesta', {
 				items: [{					
 			        hidden: true,
 			        name: 'idTicket',
+			    },
+                            {					
+			        hidden: true,
+			        name: 'sector',
 			    },{
 		            fieldLabel: 'Solicitante',
 			        labelWidth: 90,

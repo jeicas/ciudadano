@@ -19,7 +19,26 @@ Ext.define('MyApp.view.solicitud.actividad_ticket.GridActividadTicket', {
         me.columns= me.buildColumns();
         me.dockedItems = me.buildDockedItems();
         me.callParent();
-    },     
+    }, 
+    viewConfig: {
+           getRowClass: function (record, index) {
+             if (record.get('estatus') === 'PENDIENTE') {
+                return 'price-gol';
+            } else if (record.get('estatus') === 'RECHAZADO') {
+                return 'price-fall';
+            } else if (record.get('estatus') === 'RECIBIDO') {
+                return 'price-azul';
+            } else if (record.get('estatus') === 'ELIMINADO') {
+                return 'price-naranja';
+            }
+             else if (record.get('estatus') === 'APROBADO') {
+                return 'price-rise';
+            }
+             else if (record.get('estatus') === 'EN ESPERA') {
+                return 'price-';
+            }
+        }
+    },
     buildColumns: function(){
         return [{
             xtype: 'rownumberer'

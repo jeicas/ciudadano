@@ -136,49 +136,7 @@ class Ticket extends CI_Controller {
                         "descripcion" => strtoupper($record->descripcion)
                     );
                     $this->ticket_model->insertTicket_Sector_Tipoayuda($arregloTicket_Sector_Tipoayuda);
-                    
-                    
-                     /*****************************************/
-       // Guarda el procedimiento de la solicitud creada
-         
-        //tramite que tiene asocioado a la peticion
-                    //echo json_encode($this->input->post("sector").$record->ayuda);
-          $procedimiento=$this->tramite_model->obtenerActividadTramite($this->input->post("sector"),$record->ayuda);
-   
-              foreach ($procedimiento->result_array() as $proc)
-              {
-                   
-                  $dataTicketProcedimiento=array ( 
-                      "ticket"=>$insertTicket,
-                      "actividad"=> $proc['actividad'],
-                      "estatus"=>$proc['estatus'],
-                  );
-                  $ticketAct=$this->ticket_model->insertTicketActividad($dataTicketProcedimiento);
-              }
-        
-
-        /*******************************************/
-              
-                      /*****************************************/
-       // Guarda los recaudos que pertenecen a la solicitud creada
-         
-        //recaudos que tiene asocioado a la peticion  
-                       
-        $procedimiento2= $this->tramite_model->obtenerRecaudosTramite($this->input->post("sector"),$record->ayuda);
-      
-             foreach ($procedimiento2->result_array() as $proces)
-              { 
-                 
-                  $dataRecaudoTicket=array ( 
-                      "recaudotramite"=>$proces['recaudotramite'],
-                      "ticket"=> $insertTicket,
-                  );
-                  $ticketActi=$this->ticket_model->insertTicketRecaudos($dataRecaudoTicket);
-                 
-              }
-
-        /*******************************************/ 
-                    
+     
               }
             }
         } else {

@@ -25,10 +25,10 @@ Ext.define('MyApp.view.tramite.TicketRecaudosLista', {
     columnLines: true,
     viewConfig: {
         getRowClass: function (record, index) {
-            var c = record.get('estatus');
-            if (c == 'Inactivo') {
+            var c = record.get('estatusrecaudo');
+            if (c == 'PENDIENTE') {
                 return 'price-fall';
-            } else if (c == 'Activo') {
+            } else if (c == 'ENTREGADO') {
                 return 'price-rise';
             }
         }
@@ -76,7 +76,23 @@ Ext.define('MyApp.view.tramite.TicketRecaudosLista', {
                         text: 'Guardar',
                         disabled: false,
                         scope: this,
-                    }]
+                    },
+                    {
+                        xtype: 'button',
+                        iconCls: 'icon-aprobar',
+                        name: 'btnAprobar',
+                        text: 'Aprobar',
+                        disabled: false,
+                        scope: this,
+                    }, {
+                        xtype: 'button',
+                        iconCls: 'icon-rechazar',
+                        name: 'btnRechazar',
+                        text: 'Rechazar'
+                    }
+
+
+                ]
             }];
     }
 });

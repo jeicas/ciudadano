@@ -9,14 +9,17 @@ Ext.define('MyApp.view.solicitud.ListaPeticionEncargado', {
     ],
     viewConfig: {
         getRowClass: function (record, index) {
-            if (record.get('estatusTicket') === 'PENDIENTE') {
+            if (record.get('estatus') === 'PENDIENTE') {
                 return 'price-gol';
-            } else if (record.get('estatusTicket') === 'RECHAZADO') {
+            } else if (record.get('estatus') === 'RECHAZADO') {
                 return 'price-fall';
-            } else if (record.get('estatusTicket') === 'RECIBIDO') {
-                return 'price-rise';
-            } else if (record.get('estatusTicket') === 'ELIMINADO') {
+            } else if (record.get('estatus') === 'RECIBIDO') {
+                return 'price-azul';
+            } else if (record.get('estatus') === 'ELIMINADO') {
                 return 'price-naranja';
+            }
+             else if (record.get('estatus') === 'COMPLETADO') {
+                return 'price-rise';
             }
         }
     },
@@ -33,20 +36,20 @@ Ext.define('MyApp.view.solicitud.ListaPeticionEncargado', {
         return [{
                 dataIndex: 'idTicket',
                 hidden: true
-            },{
+            }, {
                 dataIndex: 'idTipoAyuda',
                 hidden: true
-            },{
+            }, {
                 dataIndex: 'idSector',
                 hidden: true
-            },{
+            }, {
                 dataIndex: 'idEncargado',
                 hidden: true
-            }, 
+            },
             {
                 dataIndex: 'idActividad',
                 hidden: true
-            },{
+            }, {
                 xtype: 'rownumberer'
             }, {
                 dataIndex: 'fechaRegistro',
@@ -98,7 +101,7 @@ Ext.define('MyApp.view.solicitud.ListaPeticionEncargado', {
                         buffer: 500
                     }
                 }
-            },  {
+            }, {
                 dataIndex: 'sector',
                 text: 'Sector',
                 renderer: function (v) {
@@ -336,11 +339,17 @@ Ext.define('MyApp.view.solicitud.ListaPeticionEncargado', {
                 menuDisabled: true,
                 items: [{
                         tooltip: 'Recibir la Petición',
-                        icon: '../../imagen/btn/useredit.png'
+                        //icon: '../../imagen/btn/useredit.png',
+                        scope: this,
+                        getClass: function (v, meta, rec) {
+                            if (rec.get('estatus') == 'PENDIENTE') {
+                               return 'recibir' 
+                            }
+                        }
 
                     }]
-            }, 
-        {
+            },
+            {
                 xtype: 'actioncolumn',
                 width: 30,
                 sortable: false,
@@ -349,16 +358,21 @@ Ext.define('MyApp.view.solicitud.ListaPeticionEncargado', {
                 menuDisabled: true,
                 items: [{
                         tooltip: 'Atender Peticion',
-                        icon: '../../imagen/btn/registro.png'
+                        //icon: '../../imagen/btn/registro.png',
+                        scope: this,
+                        getClass: function (v, meta, rec) {
+                            if (rec.get('estatus') != 'PENDIENTE') {
+                               return 'atender' 
+                            }
+                        }
 
                     }]
-            }, 
-        {
+            },
+            {
                 xtype: 'actioncolumn',
                 width: 30,
                 sortable: false,
                 name: 'mensaje',
-               
                 menuDisabled: true,
                 items: [{
                         tooltip: 'Enviar Mensaje',

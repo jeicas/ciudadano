@@ -63,7 +63,7 @@ Ext.define('MyApp.controller.ticket.TicketController',{
         if(formulario.down("combobox[name=sector]").getValue()!=null && formulario.down("combobox[name=sector]").getValue()!=""){
             var lista=this.getGridTicket();
             store= lista.getStore();
-            console.log(store);
+           
             gridPlugin= lista.getPlugin('rowediting');
             var obj = Ext.create('MyApp.store.ticket.TicketayudaStore');
             store.insert(store.getCount(), obj);

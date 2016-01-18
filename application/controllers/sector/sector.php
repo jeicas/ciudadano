@@ -7,14 +7,18 @@ class Sector extends CI_Controller{
   }
   public function obtenerSectorEnte(){
       $username = $this->session->userdata('data');
-      
-    $sector = $this->sector_model->obtenerSectorEnte($username['ente']);
+    if ($username['tipousuario']==1){
+           $this->obtenerSector();
+    }else {
+         $sector = $this->sector_model->obtenerSectorEnte($username['ente']);
     $this->output->set_content_type('application/json');
     $this->output->set_output(json_encode(array(
       'success'   => true,
       'total'     => count($sector),
       'data'      => $sector
     )));
+    }
+   
   }
     public function obtenerSector(){
       $username = $this->session->userdata('data');

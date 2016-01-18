@@ -180,6 +180,14 @@
     background-color: #98FB98;
     color:black;
 }
+.price-azul .x-change-cell {
+    background-color: #81DAF5;
+    color:black;
+}
+.price-gris .x-change-cell {
+    background-color: #D8D8D8;
+    color:black;
+}
 .price-gol .x-change-cell {
     background-color: #FAFF68;
     color:black;
@@ -210,6 +218,12 @@
 
 .icon-guardar{
   background-image:url('../imagen/btn/disk.png') !important;
+}
+.recibir{
+    background:transparent url('../imagen/btn/useredit.png') 0 0 no-repeat!important;
+}
+.atender{
+    background:transparent url('../imagen/btn/registro.png') 0 0 no-repeat!important;
 }
 
 .Three-Dee{

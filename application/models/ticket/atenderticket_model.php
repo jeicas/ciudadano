@@ -64,11 +64,12 @@ class Atenderticket_model extends CI_Model{
     
     
     
-       public function obtenerProcedimientoTicket($ticket, $sector,$tipoayuda) {
+       public function obtenerProcedimientoTicket($ticket, $sector,$ente) {
            
-            $sql = "SELECT act.id actividadid, act.descripcion actividad, actf.funcionario idfuncionario, CASE tact.estatus
+            $sql = "SELECT DISTINCT act.id actividadid, act.descripcion actividad, actf.funcionario idfuncionario, CASE tact.estatus
                                   WHEN 0 THEN 'ELIMINADO'
                                   WHEN 1 THEN 'PENDIENTE'
+                                  WHEN 3 THEN 'EN ESPERA'
                                   WHEN 2 THEN 'RECIBIDO'
 				  WHEN 4 THEN 'APROBADO'
                                   WHEN 5 THEN 'RECHAZADO' END as estatus, 
@@ -81,7 +82,10 @@ class Atenderticket_model extends CI_Model{
                     INNER JOIN persona p ON p.id=f.persona
                     INNER JOIN tramite t ON t.id=act.tramite
                     INNER JOIN sector_tipoayuda sta ON t.sector_tipoayuda=sta.id 
-                    WHERE tact.ticket=$ticket and sta.sector=$sector and sta.tipoayuda=$tipoayuda ";
+                    INNER JOIN ente_sector es on es.sector= sta.sector 
+                    INNER JOIN tramite_funcionario tfn on tfn.tramite=t.id
+                    INNER JOIN funcionario fn on tfn.funcionario=fn.id 
+                    WHERE tact.ticket=$ticket and sta.sector=$sector and fn.ente=$ente ";
            
         $query = $this->db->query($sql);
          if ($query->num_rows() > 0) {
@@ -92,5 +96,19 @@ class Atenderticket_model extends CI_Model{
                 $query->free-result();
         } 
     }
+    
+    
+    
+         public function cuantosProcedimientoTicket($ticket) {
+           
+            $sql = "SELECT COUNT(*) as cantidad
+                    FROM ticket_actividad tact 
+                    WHERE tact.ticket=$ticket and tact.estatus!=4";
+           
+        $query = $this->db->query($sql);
+       return $query;
+    }
+    
+    
     
 }

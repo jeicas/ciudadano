@@ -40,13 +40,32 @@ extend: 'Ext.window.Window',
                                 name: 'idticket',
                                 width: '100%',
                                 hidden: true,
+                            },
+                            {
+                                xtype: 'textfield',
+                                margins: '0 0 0 0',
+                                name: 'idactividad',
+                                width: '10%',
+                                hidden: true,
                             },{
                                 xtype: 'textfield',
                                 margins: '0 0 0 0',
                                 name: 'idsolicitante',
                                 width: '100%',
                                 hidden: true,
-                            },{
+                            },
+                          {
+                                        xtype: 'textfield',
+                                        margins: '5 5 5 0',
+                                        name: 'actividad',
+                                        width: '30%',
+                                        labelWidth: 100,
+                                        readOnly:true, 
+                                        fieldLabel: 'Procedimiento',
+                                        
+                                   },  
+                          
+                          {
                                         xtype: 'textfield',
                                         margins: '5 5 5 0',
                                         name: 'codigoTicket',

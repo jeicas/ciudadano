@@ -2,7 +2,9 @@ Ext.define('MyApp.view.historico.HistoricoPanel', {
   extend  : 'Ext.form.Panel',
   alias: 'widget.panelHistorico',
   itemId: 'panelHistorico',
-  autoScroll:  true,
+  autoScroll:  false,
+   width: '100%',
+    height: 300,
   requires: [
    'MyApp.view.historico.ListaHistorico'
   ],

@@ -36,7 +36,7 @@ class Historico extends CI_Controller {
                 //obtenemos el sector o sectores al que pertenece el ente loqueado
 
                 $sector = $this->sector_model->obtenerEnteSector($username['ente']);
-                 echo json_encode($sector);
+                 
                 foreach ($sector->result_array() as $rows) {
                     
                     if ($this->input->get("cedula") != '') {

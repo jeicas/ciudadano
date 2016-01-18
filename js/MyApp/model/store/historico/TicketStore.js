@@ -15,6 +15,7 @@ Ext.define('MyApp.model.store.historico.TicketStore', {
         {name: 'desde'},
         {name: 'hasta'},
         {name: 'solicitante'},
-        {name: 'atendido'}
+        {name: 'atendido'}, 
+        {name: 'sector'}
     ]
 });

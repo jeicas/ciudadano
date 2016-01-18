@@ -10,9 +10,19 @@ class Tramite_model extends CI_Model {
     }
 
     public function obtenerTramiteid($usuario) {
-        $this->db->order_by("descripcion", "asc");
-        $this->db->where("usuario", $usuario);
-        $consulta = $this->db->get('tramite');
+
+        $sql = "SELECT t. * 
+                     FROM tramite as t
+                                   LEFT JOIN tipotramite as tt on t.`tipotramite`=tt.`id`
+                                   LEFT JOIN sector_tipoayuda as sta on t.`sector_tipoayuda`=sta.id
+                                   LEFT JOIN sector as s on sta.sector=s.id
+                                   LEFT JOIN tipoayuda as ta on sta.tipoayuda = ta.id
+                                   LEFT JOIN tramite_funcionario as tf on tf.tramite= t.id
+                                   LEFT JOIN funcionario as f on tf.funcionario=f.id
+                                   LEFT JOIN persona as p on p.id=f.persona
+                                 where t.usuario=$usuario";
+        $consulta = $this->db->query($sql, array($usuario));
+
         $tipo = array();
         if ($consulta->num_rows() > 0) {
             foreach ($consulta->result() as $tipoticket) {
@@ -54,10 +64,10 @@ class Tramite_model extends CI_Model {
                  act.descripcion as cmbprocedimiento,act.id, 
                  act.estatus as actestatus
                FROM actividad as a
-               inner join actividad_funcionario as af on af.actividad= a.id
-               inner JOIN funcionario as f on af.funcionario=f.id
-               inner JOIN persona as p on p.id=f.persona
-               left join actividad act on a.actividad_id=act.id where a.tramite=$idtramite";
+                inner join actividad_funcionario as af on af.actividad= a.id
+                inner JOIN funcionario as f on af.funcionario=f.id
+                inner JOIN persona as p on p.id=f.persona
+                left join actividad act on a.actividad_id=act.id where a.tramite=$idtramite";
         $query = $this->db->query($sql, array($idtramite));
 
 
@@ -71,17 +81,16 @@ class Tramite_model extends CI_Model {
 
     function obtenerTramitetODO($idtramite) {
         $sql = "SELECT upper(recaudos.nombre) as nombrerecaudo,recaudos.id,
-        IF(recaudos.estatus='1','ACTIVO', IF(recaudos.estatus='2','INACTIVO','')) as estatusrecaudo,
-        IF(recaudos.requerido='1','SI',
-        IF(recaudos.requerido='2','NO','')) as requerido 
-       
-    FROM recaudos 
-    INNER JOIN recaudostramite ON recaudostramite.recaudos=recaudos.id
-    INNER JOIN tramite ON recaudostramite.tramite=tramite.id
-    INNER JOIN usuario ON tramite.usuario=usuario.id
-    INNER JOIN tipotramite ON tipotramite.id=tramite.tipotramite
-    INNER JOIN ente ON ente.id=tipotramite.ente AND 
-    tramite.id=$idtramite";
+                    IF(recaudos.estatus='1','ACTIVO', IF(recaudos.estatus='2','INACTIVO','')) as estatusrecaudo,
+                    IF(recaudos.requerido='1','SI',
+                    IF(recaudos.requerido='2','NO','')) as requerido    
+                FROM recaudos 
+                    INNER JOIN recaudostramite ON recaudostramite.recaudos=recaudos.id
+                    INNER JOIN tramite ON recaudostramite.tramite=tramite.id
+                    INNER JOIN usuario ON tramite.usuario=usuario.id
+                    INNER JOIN tipotramite ON tipotramite.id=tramite.tipotramite
+                    INNER JOIN ente ON ente.id=tipotramite.ente AND 
+                    tramite.id=$idtramite";
         $query = $this->db->query($sql, array($idtramite));
         if ($query->num_rows() > 0) {
             return $query;
@@ -92,17 +101,17 @@ class Tramite_model extends CI_Model {
 
     function obtenerTramiteListaR($idtramite) {
         $sql = "SELECT upper(recaudos.nombre) as nombre,recaudos.id,
-        IF(recaudos.estatus='1','ACTIVO',
-        IF(recaudos.estatus='2','INACTIVO','')) as estatus,
-        IF(recaudos.requerido='1','SI',
-        IF(recaudos.requerido='2','NO','')) as requerido 
-    FROM recaudos 
-    INNER JOIN recaudostramite ON recaudostramite.recaudos=recaudos.id
-    INNER JOIN tramite ON recaudostramite.tramite=tramite.id
-    INNER JOIN usuario ON tramite.usuario=usuario.id
-    INNER JOIN tipotramite ON tipotramite.id=tramite.tipotramite
-    INNER JOIN ente ON ente.id=tipotramite.ente AND 
-    tramite.id=$idtramite";
+                IF(recaudos.estatus='1','ACTIVO',
+                IF(recaudos.estatus='2','INACTIVO','')) as estatus,
+                IF(recaudos.requerido='1','SI',
+                IF(recaudos.requerido='2','NO','')) as requerido 
+            FROM recaudos 
+            INNER JOIN recaudostramite ON recaudostramite.recaudos=recaudos.id
+            INNER JOIN tramite ON recaudostramite.tramite=tramite.id
+            INNER JOIN usuario ON tramite.usuario=usuario.id
+            INNER JOIN tipotramite ON tipotramite.id=tramite.tipotramite
+            INNER JOIN ente ON ente.id=tipotramite.ente AND 
+            tramite.id=$idtramite";
         $query = $this->db->query($sql, array($idtramite));
         if ($query->num_rows() > 0) {
             return $query;
@@ -113,11 +122,11 @@ class Tramite_model extends CI_Model {
 
     function onteneridfuncionario($cedula) {
         $sql = "SELECT funcionario.id as idfuncionario
-        FROM funcionario
-        INNER JOIN persona  ON persona.id=funcionario.persona
-        INNER JOIN ente On funcionario.ente=ente.id
-        inner join usuario on usuario.ente=ente.id
-        WHERE persona.cedula=$cedula and funcionario.estatus=1";
+                    FROM funcionario
+                    INNER JOIN persona  ON persona.id=funcionario.persona
+                    INNER JOIN ente On funcionario.ente=ente.id
+                    inner join usuario on usuario.ente=ente.id
+                    WHERE persona.cedula=$cedula and funcionario.estatus=1";
         $query = $this->db->query($sql, array($cedula));
         if ($query->num_rows() > 0) {
             return $query;
@@ -137,12 +146,16 @@ class Tramite_model extends CI_Model {
     }
 
     function ObtenerTramiteResponsable($ente) {
-        $query1 = $this->db->query("SELECT persona.cedula as id,funcionario.id as idfuncionario,concat(persona.nacionalidad,'-',persona.cedula,' ',persona.nombre,'  ',persona.apellido) as nombre,persona.tlf1,persona.correo 
-        FROM funcionario
-        INNER JOIN persona ON persona.id=funcionario.persona
-        INNER JOIN ente On funcionario.ente=ente.id
-        inner join usuario on usuario.ente=ente.id
-        WHERE ente.id=$ente and funcionario.estatus=1");
+        $query1 = $this->db->query("SELECT persona.cedula as id,
+                                           funcionario.id as idfuncionario,
+                                           concat(persona.nacionalidad,'-',persona.cedula,' ',persona.nombre,'  ',persona.apellido) as nombre,
+                                           persona.tlf1,
+                                           persona.correo 
+                                    FROM funcionario
+                                    INNER JOIN persona ON persona.id=funcionario.persona
+                                    INNER JOIN ente On funcionario.ente=ente.id
+                                    inner join usuario on usuario.ente=ente.id
+                                    WHERE ente.id=$ente and funcionario.estatus=1");
         $tipo = array($ente);
         if ($query1->num_rows() > 0) {
             foreach ($query1->result() as $municipio) {
@@ -155,26 +168,21 @@ class Tramite_model extends CI_Model {
 
     function buscarListaTramites($id) {
         $query = $this->db->query("SELECT t.id, t.codigo, 
-       t.descripcion as nombre, 
-       t.tiempo, 
-       tt.nombre as tipot,
-       s.nombre as sector,
-       ta.nombre as tipoa,
-       concat(p.nacionalidad,'-',p.cedula,' ',p.nombre,'  ',p.apellido) as responsable
-      
-       
-     FROM tramite as t
-      LEFT JOIN tipotramite as tt on t.`tipotramite`=tt.`id`
-      
-     LEFT JOIN sector_tipoayuda as sta on t.`sector_tipoayuda`=sta.id
-      LEFT JOIN sector as s on sta.sector=s.id
-      LEFT JOIN tipoayuda as ta on sta.tipoayuda = ta.id
-      
-       LEFT JOIN tramite_funcionario as tf on tf.tramite= t.id
-       LEFT JOIN funcionario as f on tf.funcionario=f.id
-       LEFT JOIN persona as p on p.id=f.persona
-       
-    where t.usuario=$id
+                                    t.descripcion as nombre, 
+                                    t.tiempo, 
+                                    tt.nombre as tipot,
+                                    s.nombre as sector,
+                                    ta.nombre as tipoa,
+                                    concat(p.nacionalidad,'-',p.cedula,' ',p.nombre,'  ',p.apellido) as responsable
+                                  FROM tramite as t
+                                   LEFT JOIN tipotramite as tt on t.`tipotramite`=tt.`id`
+                                   LEFT JOIN sector_tipoayuda as sta on t.`sector_tipoayuda`=sta.id
+                                   LEFT JOIN sector as s on sta.sector=s.id
+                                   LEFT JOIN tipoayuda as ta on sta.tipoayuda = ta.id
+                                   LEFT JOIN tramite_funcionario as tf on tf.tramite= t.id
+                                   LEFT JOIN funcionario as f on tf.funcionario=f.id
+                                   LEFT JOIN persona as p on p.id=f.persona
+                                 where t.usuario=$id
      ");
 
         if ($query->num_rows() > 0) {
@@ -286,19 +294,21 @@ class Tramite_model extends CI_Model {
                                   WHEN 3 THEN 'EN PROCESO' 
                                   WHEN 4 THEN 'COMPLETADO' 
                                   WHEN 5 THEN 'RECHAZADO' END as estatusTicket 
-                        FROM  ente e 
-                        INNER JOIN ente_sector es ON es.ente=e.id 
-                        INNER JOIN sector s on es.sector=s.id 
-                        INNER JOIN sector_tipoayuda sta on sta.sector=s.id
-                        INNER JOIN tipoayuda ta on ta.id=sta.tipoayuda 
-                        INNER JOIN ticket t on s.id=t.sector 
-                        INNER JOIN ticket_tipoayuda tta on t.id=tta.ticket and tta.tipoayuda=ta.id 
-                        INNER JOIN solicitante sol on sol.id=t.solicitante
-                        LEFT JOIN persona p on sol.persona=p.id
-                        LEFT JOIN comunidad com on com.id=sol.comunidad
-                        INNER JOIN tipoticket tt on t.tipoticket=tt.id  
-                        WHERE e.id=$ente";
-        $query = $this->db->query($sql);
+                           FROM  ente e 
+                            INNER JOIN ente_sector es ON es.ente=e.id 
+                            INNER JOIN sector s on es.sector=s.id 
+                            INNER JOIN sector_tipoayuda sta on sta.sector=s.id
+                            INNER JOIN tipoayuda ta on ta.id=sta.tipoayuda 
+                            INNER JOIN ticket t on s.id=t.sector and t.estatus!=1
+                            INNER JOIN ticket_tipoayuda tta on t.id=tta.ticket and tta.tipoayuda=ta.id 
+                            INNER JOIN solicitante sol on sol.id=t.solicitante
+                            LEFT JOIN persona p on sol.persona=p.id
+                            LEFT JOIN comunidad com on com.id=sol.comunidad
+                            INNER JOIN tipoticket tt on t.tipoticket=tt.id 
+                            INNER JOIN historicoticket ht on ht.ticket=t.id
+                            INNER JOIN funcionario f on f.id=ht.funcionariorecibido 
+                            WHERE e.id=$ente and f.ente=$ente";
+            $query = $this->db->query($sql);
         if ($query->num_rows() > 0) {
             foreach ($query->result() as $row) {
                 $resultado[] = $row;
@@ -377,7 +387,8 @@ class Tramite_model extends CI_Model {
                         ti.id idTicket, 
                         e.nombre ente,
                         a.id idActividad,
-                        a.descripcion actividad,  
+                        a.descripcion actividad,
+                        a.estatus tipoactividad, 
                         tita.descripcion peticion,
                         tita.cantidad cantidad,
                         s.nombre sector,
@@ -392,6 +403,7 @@ class Tramite_model extends CI_Model {
                         tta.observacion observacion, 
                         IF(sol.persona<>'NULL',concat(pp.nombre,' ',pp.apellido),com.razonsocial) as  solicitante,
                         DATE_FORMAT(ti.fecha,'%d-%m-%Y') as fechaRegistro, 
+                       ti.estatus as estatusticket,
                         CASE tta.estatus
                                   WHEN 0 THEN 'ELIMINADO'
                                   WHEN 1 THEN 'PENDIENTE'
@@ -402,7 +414,7 @@ class Tramite_model extends CI_Model {
 
                     FROM  ticket_actividad tta 
                       INNER JOIN ticket ti ON ti.id=tta.ticket 
-                      INNER JOIN actividad a ON a.id=tta.actividad AND tta.estatus!=3
+                      INNER JOIN actividad a ON a.id=tta.actividad AND tta.estatus !=3
                       INNER JOIN actividad_funcionario af ON af.actividad=tta.actividad
                       INNER JOIN funcionario f ON f.id=af.funcionario
                       INNER JOIN persona p on p.id=f.persona
@@ -418,6 +430,8 @@ class Tramite_model extends CI_Model {
                       left join ticket_actividad ttac on a.id=ttac.actividad 
                       LEFT JOIN actividad act ON act.id=a.actividad_id
                       LEFT JOIN ticket_actividad ttta ON ttta.actividad=act.id
+                      INNER JOIN historicoticket ht on ht.ticket=ti.id
+                      INNER JOIN funcionario ft on ft.id=ht.funcionariorecibido 
            where  $condicion ";
 
         $query = $this->db->query($sql);
@@ -514,18 +528,39 @@ class Tramite_model extends CI_Model {
                     INNER JOIN tramite t ON rt.tramite=t.id
                     INNER JOIN sector_tipoayuda sta ON t.sector_tipoayuda=sta.id AND sta.sector=$sector AND sta.tipoayuda= $tipoayuda
                     ";
-          
-              $query = $this->db->query($sql);
-                    return $query;
-            /*$query = $this->db->query($sql);
-              if ($query->num_rows() > 0) {
-              foreach ($query->result() as $row1){
-              $resultado[] = $row1;
-              }
-              return $resultado;
-              $query->free-result();
 
-            } */
+        $query = $this->db->query($sql);
+        return $query;
+        /* $query = $this->db->query($sql);
+          if ($query->num_rows() > 0) {
+          foreach ($query->result() as $row1){
+          $resultado[] = $row1;
+          }
+          return $resultado;
+          $query->free-result();
+
+          } */
+    }
+    
+    
+    public function cuantosTramites($ente) {
+        $sql = "SELECT t . * 
+                    FROM tramite t
+                    INNER JOIN tramite_funcionario tf ON t.id = tf.tramite
+                    INNER JOIN funcionario f ON tf.funcionario = f.id
+                    AND f.ente =$ente";
+
+        $query = $this->db->query($sql);
+       
+          if ($query->num_rows() > 0){
+            foreach ($query->result() as $tramite){
+                $tipo[] = $tramite;
+            }
+            return $tipo;
+            $query->free->result();
+        }else{
+            return false;
+        }
     }
 
 }

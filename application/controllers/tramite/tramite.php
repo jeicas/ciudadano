@@ -441,6 +441,9 @@ class Tramite extends CI_Controller {
         } else if ($this->input->post('estatus') == 'FINAL') {
             $estatus = 4;
         }
+         else if ($this->input->post('estatus') == 'DOCUMENTOS') {
+            $estatus = 5;
+        }
 
 
         $buscarfuncionario = $this->tramite_model->onteneridfuncionario($this->input->post('funcionario'));
@@ -556,7 +559,7 @@ class Tramite extends CI_Controller {
     function buscarSolicitudesEncargadoProcedimiento() {
         $username = $this->session->userdata('data');
 
-        $condicion = 'f.usuario=' . $username['id'] . ' and e.id=' .$username['ente'];
+        $condicion = 'f.usuario=' . $username['id'] . ' and e.id=' .$username['ente'].' and ft.ente=' .$username['ente'];
                 // echo json_encode($condicion);
         $solicitudes = $this->tramite_model->obtenerSolicitudesProcedimientoEncargado($condicion);
         $this->output->set_content_type('application/json');
@@ -596,5 +599,7 @@ class Tramite extends CI_Controller {
             'data' => $datos
         )));
     }
+    
+     
 
 }

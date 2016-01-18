@@ -39,7 +39,7 @@ class Historicoticket_model extends CI_Model{
     }
     public function obtenerTicket($variable){
         $sql=$this->db->query("SELECT IF(historicoticket.funcionariorecibido<>'NULL',ente.nombre,'-') as atendido,ticket.codigo as codigoTicket, DATE_FORMAT(historicoticket.fecharegistro,'%d-%m-%Y') as fechaRegistro,
-        ticket.id as idTicket, tipoticket.nombre as tipoTicket, sector.nombre as sectorTicket,
+        ticket.id as idTicket, tipoticket.nombre as tipoTicket, sector.nombre as sectorTicket,sector.id as sector,
         CASE ticket.estatus  WHEN 0 THEN 'ELIMINADO'
                                   WHEN 1 THEN 'PENDIENTE'
                                   WHEN 2 THEN 'RECIBIDO'

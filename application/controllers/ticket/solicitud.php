@@ -38,10 +38,10 @@ class Solicitud extends CI_Controller {
     public function buscarProcedimientoTicket() {
         $tipolimi = array();
         $ticket = $this->input->get('ticket');
-        $tipoayuda = $this->input->get('tipoayuda');
+         $username = $this->session->userdata('data');
         $sector = $this->input->get('sector');
-        $tipolimi = $this->atenderticket_model->obtenerProcedimientoTicket($ticket, $sector, $tipoayuda);
-
+        $tipolimi = $this->atenderticket_model->obtenerProcedimientoTicket($ticket, $sector, $username['ente']);
+       
         if ($tipolimi) {
 
             $this->output->set_content_type('application/json');
@@ -51,6 +51,28 @@ class Solicitud extends CI_Controller {
         }
     }
 
+    
+      public function buscarCuantosProcedimientoTicket() {
+        
+        $ticket = $this->input->post('idticket');
+
+        $cuantos = $this->atenderticket_model->cuantosProcedimientoTicket($ticket);
+        
+        if ($cuantos) {
+            
+                foreach ($cuantos->result_array() as $row) {
+                    $valor= $row['cantidad'];
+            }
+            echo json_encode(array(
+                "success"   => true,
+                "cuantos" => $valor,
+               
+              ));
+        }
+    }
+    
+    
+    
     public function aprobarSolicitudTicket() {
         $tipolimi = array();
         $ticket = $this->input->post('idticket');
@@ -100,9 +122,16 @@ class Solicitud extends CI_Controller {
     public function aprobarActividadTicket() {
         $tipolimi = array();
         $ticket = $this->input->post('idticket');
-        $actividad = $this->input->post('idProcedimiento');
+       
         $fecha = date('Y-m-d H:i:s');
 
+        if ($this->input->post('idProcedimiento')==null || $this->input->post('idProcedimiento')==''){
+             $actividad = $this->input->post('idactividad');
+        }else {
+             $actividad = $this->input->post('idProcedimiento');
+        }
+        
+        
         $sol = array(
             'ticket' => $ticket,
             'actividad' => $actividad,
@@ -111,8 +140,6 @@ class Solicitud extends CI_Controller {
         );
 
         $tipolimi = $this->ticket_model->updateEstatusActividadTicket($sol);
-
-
         $tipolimit = $this->ticket_model->buscarActividadDependiente($actividad);
 
         if ($tipolimit) {
@@ -129,14 +156,14 @@ class Solicitud extends CI_Controller {
                 else $data=true;
             }
         } else
-            $data = false;
+            $data = true;
 
         if ($tipolimi && $data) {
 
             $this->output->set_content_type('application/json');
             $this->output->set_output(json_encode(array(
                 'msg' => 'Procedimiento Completado',
-                "success" => True,
+                "success" => true,
                 'data' => $tipolimi)));
         }
     }
@@ -162,7 +189,7 @@ class Solicitud extends CI_Controller {
             $this->output->set_content_type('application/json');
             $this->output->set_output(json_encode(array(
                 'msg' => 'Procedimiento Rechazado',
-                "success" => True,
+                "success" => true,
                 'data' => $tipolimi)));
         }
     }
@@ -246,8 +273,9 @@ class Solicitud extends CI_Controller {
     public function buscarRecuadosTicket() {
         $tipolimi = array();
         $ticket = $this->input->get('ticket');
-   
-        $tipolimi = $this->ticket_model->obtenerrecaudosticket($ticket);
+      $username = $this->session->userdata('data');
+      
+        $tipolimi = $this->ticket_model->obtenerrecaudosticket($ticket, $username['ente']);
 
         if ($tipolimi) {
            $this->output->set_content_type('application/json');
@@ -255,6 +283,86 @@ class Solicitud extends CI_Controller {
                 "success" => True,
                 'data' => $tipolimi)));
         }
+    }
+    
+        public function aprobarActividadTicketDocumentos($ticket, $actividad) {
+        $tipolimi = array();
+        $fecha = date('Y-m-d H:i:s');
+
+        $sol = array(
+            'ticket' => $ticket,
+            'actividad' => $actividad,
+            'fechaaprobado' => $fecha,
+            'estatus' => 4
+        );
+
+        $tipolimi = $this->ticket_model->updateEstatusActividadTicket($sol);
+
+
+        $tipolimit = $this->ticket_model->buscarActividadDependiente($actividad);
+
+        if ($tipolimit) {
+            foreach ($tipolimit as $row) {
+                $act = $row->id;
+                if ($act != null) {
+                    $datos = array(
+                        'ticket' => $ticket,
+                        'actividad' => $act,
+                        'estatus' => 1
+                    );
+                    $data = $this->ticket_model->updateEstatusActividadTicket($datos);
+                }
+                else $data=true;
+            }
+        } else
+            $data=true;
+
+       return $data;
+    }
+    
+    
+     public function guardarRecuadosTicket() {
+        $add       = $_POST['recordsGrid'];
+         $ticket   = $this->input->post('ticket');
+         $actividad= $this->input->post('actividad');
+         
+         
+        if(isset($add)){
+            //coloca todos los recaudos como pendientes. 
+                  $arregloRecaudosT = array(
+                    "ticket"      => $ticket,
+                    'estatus' => 0
+                );
+        $recaudosT= $this->ticket_model->updateEstatusRecaudosTicketT($arregloRecaudosT);
+        
+             //actualiza todos los recaudos entregados. 
+            $records = json_decode(stripslashes($add));
+            foreach($records as $record){
+                 $arregloRecaudos = array(
+                    "id"      => $record->idrecaudoticket,
+                    'estatus' => 1
+                );
+                 
+                $recaudos= $this->ticket_model->updateEstatusRecaudosTicket($arregloRecaudos);  
+            }
+            
+                
+                
+            if($recaudosT){ 
+              echo json_encode(array(
+                "success"   => true,
+                "actualizo" => true,
+                "msg"       => 'Operación exitosa.'
+              ));
+            }else {
+                echo json_encode(array(
+                "success"   => true,
+                "successDocu" => $documentos, 
+                "msg"       => 'Operación fallida.'
+              )); 
+            }
+        }
+       
     }
 
 }

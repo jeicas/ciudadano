@@ -181,22 +181,19 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
             }
 
         }
-
-
         storeT = formPanel.down('combobox[name=nombret]').getStore();
         valorT = formPanel.down('combobox[name=nombret]').getValue();
-
+        
+        
         for (i = 0; i < storeT.data.items.length; ++i) {
             if (storeT.data.items[i].data['id'] == valorT || storeT.data.items[i].data['descripcion'] == valorT) {
                 trami = storeT.data.items[i].data['id'];
                 i = storeT.data.items.length + 1;
             }
-            
+             
         }
-
-
-
-
+       
+       
 
         if (store.data.items[num - 1].data.cmbprocedimiento == '' || store.data.items[num - 1].data.cmbprocedimiento == null)
         {
@@ -222,8 +219,6 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
 
             }
         }
-        console.log("valor depende " + actividaddependiente);
-
 
 
         Ext.Ajax.request({//AQUI ENVIO LA DATA 
@@ -324,7 +319,7 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
         formPanel = this.getPanelTramite();
         idtram = formPanel.down('textfield[name=idtramite]').getValue();
         store = formPanel.down('combobox[name=nombret]').getStore();
-        console.log('tramite' + idtram);
+      
         for (i = 0; i < store.data.items.length; ++i) {
             if (store.data.items[i].data['id'] == idtram || store.data.items[i].data['descripcion'] == idtram) {
                 nomb = store.data.items[i].data['descripcion'];
@@ -345,8 +340,7 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
         formPanel = this.getPanelTramite();
         idttrami = formPanel.down('textfield[name=tipot]').getValue();
         store1 = formPanel.down('combobox[name=tipot]').getStore();
-        console.log('Tipo tramite' + idttrami);
-        console.log(store1);
+       
         for (i = 0; i < store1.data.items.length; ++i) {
             if (store1.data.items[i].data['id'] == idttrami || store1.data.items[i].data['nombre'] == idttrami) {
                 nombtt = store1.data.items[i].data['nombre'];
@@ -375,14 +369,14 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
         formPanel = this.getPanelTramite();
         idtram = formPanel.down('textfield[name=ayudat]').getValue();
         store2 = formPanel.down('combobox[name=ayudat]').getStore();
-        console.log(store2);
+   
         for (i = 0; i < store2.data.items.length; ++i) {
-            console.log(store2.data.items[i].data['idAyuda']);
+           
             if (store2.data.items[i].data['idAyuda'] == idtram || store2.data.items[i].data['ayuda'] == idtram) {
                 nombta = store2.data.items[i].data['ayuda'];
                 idta = store2.data.items[i].data['idAyuda'];
                 i = store2.data.items.length + 1;
-                console.log(nombta);
+              
             }
 
         }
@@ -404,7 +398,7 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
         storeT = formPanel.down('combobox[name=nombret]').getStore();
         valorT = formPanel.down('combobox[name=nombret]').getValue();
 
-        console.log(storeT);
+      
         for (i = 0; i < storeT.data.items.length; ++i) {
             if (storeT.data.items[i].data['id'] == valorT || storeT.data.items[i].data['descripcion'] == valorT) {
                 tramite = storeT.data.items[i].data['id'];
@@ -428,7 +422,7 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
         valorT = formPanel.down("textfield[name=idtramite]").getValue();
         storeT = formPanel.down("textfield[name=nombret]").getStore();
         estatus = grid.down("textfield[name=cmbestatus1]").getValue();
-
+ 
         for (i = 0; i < storeT.data.items.length; ++i) {
             if (storeT.data.items[i].data['id'] == valorT || storeT.data.items[i].data['descripcion'] == valorT) {
                 tramite = storeT.data.items[i].data['id'];
@@ -440,7 +434,6 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
         if (estatus == 'INICIO') {
             //Ext.MessageBox.show({title: 'Alerta', msg: 'Este tipo de procedimiento no puede depender de una actividad previa', buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
         } else {
-
             store1 = grid.down("combobox[name=cmbprocedimiento1]").getStore();
             store1.clearData();
             store1.proxy.extraParams.tramite = tramite;
@@ -474,7 +467,7 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
         storeRL.proxy.extraParams.tramite = tramiteid;
         grid2.getView().refresh(true);
         storeRL.load();
-        //console.log(store1.data.items[0].get('idrecaudo'));
+        
         if (storeRL.count() > 0) {
             formPanel.down('radiofield[name=seleccionar]').setValue(1);
         } else {
@@ -850,7 +843,7 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
     },
     cambio: function (a, newValue, oldValue, eOpts) {
         me = this;
-        // console.log(newValue);
+       
         var form = this.getPanelTramite();
         var lista = this.getGridActividad();
         ente = form.down('combobox[name=ente]').getValue();
@@ -865,7 +858,7 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
     },
     changeEnte: function (a, newValue, oldValue, eOpts) {
         me = this;
-        // console.log(newValue);
+        
         var form2 = this.getPanelTramite();
         var lista2 = this.getGridActividad();
         ente2 = form2.down('combobox[name=ente]').getValue();
@@ -879,7 +872,7 @@ Ext.define('MyApp.controller.tramite.TramiteController', {
             // listaItem=lista.columns[3].initialConfig.editor.store;
 
             // listaItem.proxy.extraParams.nombre=form.down('combobox[name=ente]').getValue();
-            // console.log( listaItem.proxy.extraParams.nombre);
+           
             // listaItem.load();
         }
     },
