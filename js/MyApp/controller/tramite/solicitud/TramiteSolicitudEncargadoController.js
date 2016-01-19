@@ -99,8 +99,6 @@ Ext.define('MyApp.controller.tramite.solicitud.TramiteSolicitudEncargadoControll
             gridStore = grid.getStore();
             gridStore.load(function (records, operation, success) {
                 gridStore.each(function (record) {
-
-
                     if (record.data.estatusrecaudo == 'ENTREGADO') {
                         grid.getSelectionModel().select(this, true);
                     } else {
@@ -278,7 +276,8 @@ Ext.define('MyApp.controller.tramite.solicitud.TramiteSolicitudEncargadoControll
 
                                 formw.close();
                                 store = grid.getStore();
-                                store.load();
+                                
+                                
 
                             },
                             failure: function (form, action) {
@@ -523,7 +522,8 @@ Ext.define('MyApp.controller.tramite.solicitud.TramiteSolicitudEncargadoControll
         grid = this.getRecaudosTicketLista(),
         grid2 = this.getListaPeticionEncargado();
         modified = grid.getSelectionModel().getSelection();
-        var numero=0;
+        var numero = 0;
+        var i= 0;
         var collection = grid.getStore().queryBy(function (record, id) {
             return record.get('requerido') == 'SI';
         });
@@ -553,7 +553,26 @@ Ext.define('MyApp.controller.tramite.solicitud.TramiteSolicitudEncargadoControll
                     if (result.success) {
                         Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
                         grid2.getStore().load();
+                        store2=grid.getStore();
                         
+                        store2.load(function (records, operation, success) {
+                                    store.each(function (record) {
+                                        if (record.data.estatusrecaudo == 'ENTREGADO') {
+                                            grid.getSelectionModel().select(this, true);
+                                        } else {
+                                            i = i + 1;
+                                        }
+                                   
+                                    })
+                                    if (i > 0) {
+                                        win.down('button[name=btnAprobar]').setVisible(false);
+                                    }else {
+                                         win.down('button[name=btnAprobar]').setVisible(true);
+                                    }
+                                   
+                                }); 
+                               
+
                     }
                     else {
 
