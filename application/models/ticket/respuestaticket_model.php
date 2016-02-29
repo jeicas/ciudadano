@@ -44,8 +44,8 @@ class Respuestaticket_model extends CI_Model{
         INNER JOIN ente_sector ON ente.id=ente_sector.ente AND sector.id=ente_sector.sector
         ORDER BY historicoticket.fecharegistro");
         
-        echo json_encode($sql);
-      /* if ($sql->num_rows() > 0){
+        
+      if ($sql->num_rows() > 0){
             foreach ($sql->result() as $usuario){
                 $consulta[] = $usuario;
             }
@@ -53,6 +53,6 @@ class Respuestaticket_model extends CI_Model{
             $sql->free->result();
         }else{
             return false;
-        }*/
+        }
     }    
 }

@@ -22,6 +22,10 @@ class Ente_model extends CI_Model{
       public function insertEnteSector($arregloEnte){
         return $this->db->insert('ente_sector',$arregloEnte);
     }
+     public function obtenerEnteSector($ente, $sector){
+        $this->db->order_by("id", "asc");
+        return $consulta = $this->db->get_where('ente_sector',array('ente' => $ente,'sector' => $sector));
+    }
     public function buscarEnteFuncionario($ente){
         $sql=$this->db->query("SELECT id FROM funcionario WHERE ente=$ente");
         if ($sql->num_rows() > 0){

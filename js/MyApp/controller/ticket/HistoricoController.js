@@ -29,6 +29,7 @@ Ext.define('MyApp.controller.ticket.HistoricoController',{
         });
     },
     buscar: function(a, e, eOpts){
+
         me=this;
         var formulario = this.getPanelHistorico();
         gridStore= this.getListaHistorico().getStore();

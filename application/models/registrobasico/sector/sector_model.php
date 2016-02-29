@@ -40,12 +40,13 @@ class Sector_model extends CI_Model{
             $sql->free->result();
         }
     }
-    public function obtenerSectorTipoayuda($sector){
-        $sql=$this->db->query("SELECT tipoayuda.id as idAyuda, tipoayuda.nombre as ayuda, sector.id as idSector
-            FROM tipoayuda
-            INNER JOIN sector ON sector.id=$sector
-            INNER JOIN sector_tipoayuda ON sector.id=sector_tipoayuda.sector AND tipoayuda.id=sector_tipoayuda.tipoayuda
-            ORDER BY tipoayuda.nombre asc");
+    public function obtenerSectorTipoayuda($sector, $ente){
+        $sql=$this->db->query("SELECT tipoayuda.id as idAyuda, tipoayuda.nombre as ayuda, es.sector as idSector
+                                FROM tipoayuda
+                                INNER JOIN ente_sector es ON es.sector=$sector and es.ente=$ente
+                                INNER JOIN sector_tipoayuda sta ON sta.sector=es.id and sta.tipoayuda=tipoayuda.id
+
+            ORDER BY tipoayuda.nombre asc");    
         if ($sql->num_rows() > 0){
             foreach ($sql->result() as $sector){
                 $tipo[] = $sector;

@@ -112,7 +112,7 @@ if (!defined('K_TCPDF_EXTERNAL_CONFIG')) {
 	 * page format
 	 */
 	define ('PDF_PAGE_FORMAT', 'A4');
-
+        
 	/**
 	 * page orientation (P=portrait, L=landscape)
 	 */
@@ -131,18 +131,18 @@ if (!defined('K_TCPDF_EXTERNAL_CONFIG')) {
 	/**
 	 * header title
 	 */
-	define ('PDF_HEADER_TITLE', 'Planilla de Registro en pdf');
+	define ('PDF_HEADER_TITLE', 'Gobernación del Estado Lara');
 
 	/**
 	 * header description string
 	 */
-	define ('PDF_HEADER_STRING', "Gobernación del Estado Lara - lara.gob.ve\nCeapdis");
+	define ('PDF_HEADER_STRING', "Gobernación del Estado Lara - prevengo.lara.gob.ve");
 
 	/**
 	 * image logo
 	 */
-	define ('PDF_HEADER_LOGO', 'lara.png');
-	define ('PDF_HEADER_LOGO1', 'ceapdis.png');
+	define ('PDF_HEADER_LOGO', 'logo_example.png');
+	
 
 	/**
 	 * header logo image width [mm]

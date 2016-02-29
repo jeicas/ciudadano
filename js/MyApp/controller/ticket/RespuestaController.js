@@ -53,6 +53,7 @@ Ext.define('MyApp.controller.ticket.RespuestaController',{
         }
     },
     buscar: function(a, e, eOpts){
+        
         me=this;
         var formulario = this.getPanelRespuesta();
         gridStore= this.getListaRespuesta().getStore();

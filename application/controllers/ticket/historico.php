@@ -14,7 +14,6 @@ class Historico extends CI_Controller {
     public function historicoTicket() {
         
         $username = $this->session->userdata('data');
-        
         if ($username['tipousuario'] == 4) {
             $ticket = $this->historicoticket_model->obtenerTicketSolicitante($username['id']);
         } else {
@@ -66,4 +65,8 @@ class Historico extends CI_Controller {
         )));
     }
 
+    
+     
+    
+    
 }

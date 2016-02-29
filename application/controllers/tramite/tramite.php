@@ -8,6 +8,7 @@ class Tramite extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model("tramite/tramite_model");
+        $this->load->model("registrobasico/ente/ente_model");
     }
 
     public function obtenerTramiteid() {
@@ -391,14 +392,23 @@ class Tramite extends CI_Controller {
         $id = $this->input->post("idtipoayuda");
         $descripcion = $this->input->post("nombre");
         $sector = $this->input->post("idsector");
+        $username = $this->session->userdata('data');
+
 
         if ($id == 0) {
+
+            $ente_sector = $this->ente_model->obtenerEnteSector($username['ente'], $sector);
+            foreach ($ente_sector->result_array() as $row) {
+                $sector_ente = $row['id'];
+            }
+
             $arreglo = array(
                 "nombre" => $descripcion,
             );
             $tatramite = $this->tramite_model->insertTipoAyuda($arreglo);
+
             $arreglota = array(
-                "sector" => $sector,
+                "sector" => $sector_ente,
                 "tipoayuda" => $tatramite
             );
             $tastramite = $this->tramite_model->insertSectorTipoAyuda($arreglota);
@@ -440,8 +450,7 @@ class Tramite extends CI_Controller {
             $estatus = 3;
         } else if ($this->input->post('estatus') == 'FINAL') {
             $estatus = 4;
-        }
-         else if ($this->input->post('estatus') == 'DOCUMENTOS') {
+        } else if ($this->input->post('estatus') == 'DOCUMENTOS') {
             $estatus = 5;
         }
 
@@ -559,8 +568,8 @@ class Tramite extends CI_Controller {
     function buscarSolicitudesEncargadoProcedimiento() {
         $username = $this->session->userdata('data');
 
-        $condicion = 'f.usuario=' . $username['id'] . ' and e.id=' .$username['ente'].' and ft.ente=' .$username['ente'];
-                // echo json_encode($condicion);
+        $condicion = 'f.usuario=' . $username['id'] . ' and e.id=' . $username['ente'] . ' and ft.ente=' . $username['ente'];
+        // echo json_encode($condicion);
         $solicitudes = $this->tramite_model->obtenerSolicitudesProcedimientoEncargado($condicion);
         $this->output->set_content_type('application/json');
         $this->output->set_output(json_encode(array(
@@ -599,7 +608,5 @@ class Tramite extends CI_Controller {
             'data' => $datos
         )));
     }
-    
-     
 
 }

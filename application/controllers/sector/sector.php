@@ -19,7 +19,7 @@ class Sector extends CI_Controller{
     )));
     }
    
-  }
+  } 
     public function obtenerSector(){
       $username = $this->session->userdata('data');
       
@@ -32,14 +32,17 @@ class Sector extends CI_Controller{
     )));
   }
   public function obtenerSectorTipoayuda(){
+       $username = $this->session->userdata('data');
     if($this->input->get("sector")!=""){
-      $sector = $this->sector_model->obtenerSectorTipoayuda($this->input->get("sector"));
+      $sector = $this->sector_model->obtenerSectorTipoayuda($this->input->get("sector"), $username['ente']);
       $this->output->set_content_type('application/json');
       $this->output->set_output(json_encode(array(
         'success'   => true,
         'total'     => count($sector),
         'data'      => $sector
       )));
+    }else{
+         $this->obtenerSector();
     }
   }
 }
